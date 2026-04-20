@@ -1,0 +1,73 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "4_Axis_Serial_Robot_Arm",
+    "summary": "设计并装配一个串联4轴机械臂，包含底座、大臂、小臂、末端旋转轴及夹爪，采用轴同心和平面重合配合。",
+    "global_coordinate_system": {
+      "origin": "底座中心底面",
+      "x_direction": "机械臂正前方",
+      "y_direction": "机械臂左侧",
+      "z_direction": "垂直向上"
+    },
+    "design_rules": [
+      "所有销轴孔直径统一为 20mm",
+      "所有长度单位在建模脚本中需转换为米 (m)",
+      "零件间留有 1mm 的装配间隙以防干涉",
+      "采用顺序装配，从底座开始逐级向上"
+    ],
+    "assembly_sequence": [
+      "1. 插入 base_station 并固定",
+      "2. 插入 upper_arm，与 base_station 进行轴同心和面重合配合",
+      "3. 插入 forearm，与 upper_arm 进行轴同心和面重合配合",
+      "4. 插入 gripper_unit，与 forearm 进行轴同心和面重合配合"
+    ]
+  },
+  "part": {
+    "part_id": "base_station",
+    "name": "底座",
+    "function": "支撑整个机械臂并提供第一轴旋转接口",
+    "shape": "圆柱形底座，顶部中心带有轴孔",
+    "key_dimensions": [
+      "直径: 200mm",
+      "高度: 50mm",
+      "中心孔径: 20mm"
+    ],
+    "material_or_notes": "钢材，作为装配基准件",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "base_bottom_face",
+          "purpose": "地面接触面",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "base_top_face",
+          "purpose": "与大臂连接的支撑面",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_1_rot",
+          "purpose": "第一轴旋转中心",
+          "direction_relation": "along local Z"
+        }
+      ]
+    },
+    "assembly_relation_notes": [
+      "固定在全局原点"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\base_station",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\base_station\\base_station_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\base_station\\base_station.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\logs\\base_station_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\json\\base_station_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在XY平面绘制直径200mm圆，向上拉伸50mm",
+      "在顶面中心绘制直径20mm圆，向下切除通孔",
+      "创建穿过中心孔的参考轴 axis_1_rot"
+    ]
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "家用矩形餐桌",
+    "summary": "一张由1200×800×20mm桌面和四条50×50×720mm方柱桌腿组成的餐桌，桌面顶面边缘R5圆角，桌面底面四角各有一个Φ8mm安装孔，桌腿顶部对应位置有M6螺纹孔，通过螺钉紧固连接。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "桌面底面几何中心",
+      "x_direction": "沿桌面长边（1200mm方向）正向",
+      "y_direction": "沿桌面宽边（800mm方向）正向",
+      "z_direction": "垂直桌面向上（+Z指向桌面顶面）"
+    },
+    "design_rules": [
+      "所有尺寸以毫米为工程单位，建模时需转换为米",
+      "桌面底面四角安装孔位置：距长边50mm、宽边50mm",
+      "桌腿顶部M6螺纹孔深15mm，仅建孔特征，不建螺钉",
+      "装配时桌面底面与桌腿顶面完全贴合，孔轴线同心",
+      "四条桌腿对称布置于桌面四角下方"
+    ],
+    "parts": [
+      {
+        "part_id": "table_top",
+        "name": "桌面",
+        "function": "承载用餐物品的主平台",
+        "shape": "在XY基准面绘制1200×800mm矩形，单向沿+Z拉伸20mm形成平板；顶面四周边缘添加R5圆角；底面四角（距长边50mm、宽边50mm）各切除Φ8mm通孔。",
+        "key_dimensions": [
+          "长: 1200 mm",
+          "宽: 800 mm",
+          "厚: 20 mm",
+          "顶面圆角: R5 mm",
+          "安装孔直径: Φ8 mm",
+          "安装孔位置: (±550, ±350, 0) mm（相对于桌面底面中心）"
+        ],
+        "material_or_notes": "建议使用实木或人造板；建模时单位为米，所有尺寸需除以1000；仅建孔，不建螺纹细节。",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "top_face",
+              "purpose": "使用面",
+              "normal_direction_relation": "normal +Z"
+            },
+            {
+              "name": "bottom_face",
+              "purpose": "安装基准面",
+              "normal_direction_relation": "normal -Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "mount_hole_axis_fl",
+              "purpose": "前左安装孔轴线",
+              "direction_relation": "along global Z"
+            },
+            {
+              "name": "mount_hole_axis_fr",
+              "purpose": "前右安装孔轴线",
+              "direction_relation": "along global Z"
+            },
+            {
+              "name": "mount_hole_axis_bl",
+              "purpose": "后左安装孔轴线",
+              "direction_relation": "along global Z"
+            },
+            {
+              "name": "mount_hole_axis_br",
+              "purpose": "后右安装孔轴线",
+              "direction_relation": "along global Z"
+            }
+          ],
+          "points": [
+            {
+              "name": "mount_hole_center_fl",
+              "purpose": "前左安装孔中心",
+              "location_hint": "(+550, +350, 0) mm"
+            },
+            {
+              "name": "mount_hole_center_fr",
+              "purpose": "前右安装孔中心",
+              "location_hint": "(+550, -350, 0) mm"
+            },
+            {
+              "name": "mount_hole_center_bl",
+              "purpose": "后左安装孔中心",
+              "location_hint": "(-550, +350, 0) mm"
+            },
+            {
+              "name": "mount_hole_center_br",
+              "purpose": "后右安装孔中心",
+              "location_hint": "(-550, -350, 0) mm"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "桌面作为装配基准件，固定于全局坐标系",
+          "四条桌腿通过其顶面与桌面底面贴合，并通过孔轴线同心配合安装"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\parts\\table_top",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\parts\\table_top\\table_top_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\parts\\table_top\\table_top.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\logs\\table_top_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\json\\table_top_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY基准面绘制中心矩形（1.2m × 0.8m）",
+          "沿+Z方向拉伸0.02m",
+          "在顶面四边添加R0.005m圆角",
+          "在底面创建四个草图点：(±0.55, ±0.35, 0)",
+          "在每个点处切除Φ0.008m通孔（贯穿）",
+          "为每个孔创建参考轴，命名如 mount_hole_axis_fl 等",
+          "确保所有参考轴方向为+Z"
+        ]
+      },
+      {
+        "part_id": "table_leg",
+        "name": "桌腿",
+        "function": "支撑桌面并提供安装接口",
+        "shape": "在XY基准面绘制50×50mm正方形，沿+Z拉伸720mm形成方柱；顶面中心切除M6螺纹孔（深15mm，直径按Φ5.0mm建简化孔）。",
+        "key_dimensions": [
+          "截面: 50×50 mm",
+          "高度: 720 mm",
+          "顶部螺纹孔: M6（建模用Φ5.0mm通孔，深15mm）"
+        ],
+        "material_or_notes": "建议使用实木或金属方管；M6螺纹孔仅建简化孔（Φ5.0mm，深15mm），不建螺纹；单位为米。",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "top_face",
+              "purpose": "与桌面底面贴合安装",
+              "normal_direction_relation": "normal +Z"
+            },
+            {
+              "name": "bottom_face",
+              "purpose": "接触地面",
+              "normal_direction_relation": "normal -Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "mount_axis",
+              "purpose": "顶部安装孔轴线",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": [
+            {
+              "name": "mount_center",
+              "purpose": "顶部安装孔中心",
+              "location_hint": "顶面几何中心 (0, 0, 0.72) m"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "桌腿顶面与桌面底面对应区域完全贴合",
+          "桌腿 mount_axis 与桌面对应 mount_hole_axis 同心配合",
+          "四条桌腿分别安装于桌面四角下方，对称布置"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\parts\\table_leg",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\parts\\table_leg\\table_leg_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\parts\\table_leg\\table_leg.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\logs\\table_leg_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\json\\table_leg_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY基准面绘制中心正方形（0.05m × 0.05m）",
+          "沿+Z方向拉伸0.72m",
+          "在顶面中心创建草图点 (0, 0)",
+          "从顶面向下切除Φ0.005m孔，深度0.015m",
+          "为该孔创建参考轴，命名为 mount_axis，方向沿+Z",
+          "确保顶面为完整平面，无倒角（便于与桌面贴合）"
+        ]
+      }
+    ],
+    "assembly_sequence": [
+      "1. 插入桌面零件并固定（作为GROUND）",
+      "2. 插入第一条桌腿，使其顶面与桌面底面贴合，并使 mount_axis 与对应桌面安装孔轴线同心",
+      "3. 重复步骤2，依次安装其余三条桌腿至其余三个角位"
+    ],
+    "constraints": [
+      {
+        "source_part_id": "table_leg",
+        "source_interface": "top_face",
+        "target_part_id": "table_top",
+        "target_interface": "bottom_face",
+        "relation": "coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "前左桌腿顶面与桌面底面贴合"
+      },
+      {
+        "source_part_id": "table_leg",
+        "source_interface": "mount_axis",
+        "target_part_id": "table_top",
+        "target_interface": "mount_hole_axis_fl",
+        "relation": "concentric",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "前左桌腿安装孔与桌面前左孔同心"
+      },
+      {
+        "source_part_id": "table_leg",
+        "source_interface": "top_face",
+        "target_part_id": "table_top",
+        "target_interface": "bottom_face",
+        "relation": "coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "前右桌腿顶面与桌面底面贴合"
+      },
+      {
+        "source_part_id": "table_leg",
+        "source_interface": "mount_axis",
+        "target_part_id": "table_top",
+        "target_interface": "mount_hole_axis_fr",
+        "relation": "concentric",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "前右桌腿安装孔与桌面前右孔同心"
+      },
+      {
+        "source_part_id": "table_leg",
+        "source_interface": "top_face",
+        "target_part_id": "table_top",
+        "target_interface": "bottom_face",
+        "relation": "coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "后左桌腿顶面与桌面底面贴合"
+      },
+      {
+        "source_part_id": "table_leg",
+        "source_interface": "mount_axis",
+        "target_part_id": "table_top",
+        "target_interface": "mount_hole_axis_bl",
+        "relation": "concentric",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "后左桌腿安装孔与桌面后左孔同心"
+      },
+      {
+        "source_part_id": "table_leg",
+        "source_interface": "top_face",
+        "target_part_id": "table_top",
+        "target_interface": "bottom_face",
+        "relation": "coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "后右桌腿顶面与桌面底面贴合"
+      },
+      {
+        "source_part_id": "table_leg",
+        "source_interface": "mount_axis",
+        "target_part_id": "table_top",
+        "target_interface": "mount_hole_axis_br",
+        "relation": "concentric",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "后右桌腿安装孔与桌面后右孔同心"
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\assembly\\家用矩形餐桌.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\家用矩形餐桌-20260416_184654\\logs\\assembly.log"
+    }
+  }
+}

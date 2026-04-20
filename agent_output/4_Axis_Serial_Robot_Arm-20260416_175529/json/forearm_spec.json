@@ -1,0 +1,79 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "4_Axis_Serial_Robot_Arm",
+    "summary": "设计并装配一个串联4轴机械臂，包含底座、大臂、小臂、末端旋转轴及夹爪，采用轴同心和平面重合配合。",
+    "global_coordinate_system": {
+      "origin": "底座中心底面",
+      "x_direction": "机械臂正前方",
+      "y_direction": "机械臂左侧",
+      "z_direction": "垂直向上"
+    },
+    "design_rules": [
+      "所有销轴孔直径统一为 20mm",
+      "所有长度单位在建模脚本中需转换为米 (m)",
+      "零件间留有 1mm 的装配间隙以防干涉",
+      "采用顺序装配，从底座开始逐级向上"
+    ],
+    "assembly_sequence": [
+      "1. 插入 base_station 并固定",
+      "2. 插入 upper_arm，与 base_station 进行轴同心和面重合配合",
+      "3. 插入 forearm，与 upper_arm 进行轴同心和面重合配合",
+      "4. 插入 gripper_unit，与 forearm 进行轴同心和面重合配合"
+    ]
+  },
+  "part": {
+    "part_id": "forearm",
+    "name": "小臂",
+    "function": "连接大臂与末端执行器",
+    "shape": "矩形连杆结构",
+    "key_dimensions": [
+      "长度: 300mm",
+      "宽度: 40mm",
+      "轴孔直径: 20mm"
+    ],
+    "material_or_notes": "铝合金",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "joint_face_3_conn",
+          "purpose": "与大臂连接的侧平面",
+          "normal_direction_relation": "normal -Y"
+        },
+        {
+          "name": "end_face",
+          "purpose": "末端安装面",
+          "normal_direction_relation": "normal +X"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_3_conn",
+          "purpose": "连接大臂的旋转轴",
+          "direction_relation": "along local Y"
+        },
+        {
+          "name": "axis_4_rot",
+          "purpose": "末端旋转轴",
+          "direction_relation": "along local X"
+        }
+      ]
+    },
+    "assembly_relation_notes": [
+      "axis_3_conn 与大臂 axis_3_rot 同心",
+      "joint_face_3_conn 与大臂 joint_face_3 重合"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\forearm",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\forearm\\forearm_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\forearm\\forearm.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\logs\\forearm_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\json\\forearm_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在YZ平面绘制40x40矩形拉伸300mm",
+      "在后端创建20mm横向轴孔",
+      "在前端中心创建20mm纵向轴孔"
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+----------------------------------------
+Python 成功接收到的新零件名称: tabletop
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 17:47:49 - 接收到参数，尝试创建并激活文档: tabletop
+[DEBUG] 17:47:49 - 尝试连接 SolidWorks...
+[DEBUG] 17:47:49 - 成功连接到已运行的实例。
+
+开始建模：正方形桌面 (tabletop)
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+主体拉伸完成：0.8x0.8x0.03m
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择失败，无法拉伸
+✅ 成功创建基准轴 [hole_axis_1]
+孔 1 及轴接口 hole_axis_1 创建完成
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择失败，无法拉伸
+✅ 成功创建基准轴 [hole_axis_2]
+孔 2 及轴接口 hole_axis_2 创建完成
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择失败，无法拉伸
+✅ 成功创建基准轴 [hole_axis_3]
+孔 3 及轴接口 hole_axis_3 创建完成
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择失败，无法拉伸
+✅ 成功创建基准轴 [hole_axis_4]
+孔 4 及轴接口 hole_axis_4 创建完成
+接口面 bottom_face 和 hole_step_face_1 创建完成
+零件已保存至: D:\a_src\python\sw_agent\agent_output\Square_Table_Assembly-20260416_174727\parts\tabletop\tabletop.SLDPRT
+零件成功保存至: D:\a_src\python\sw_agent\agent_output\Square_Table_Assembly-20260416_174727\parts\tabletop\tabletop.SLDPRT

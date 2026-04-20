@@ -1,0 +1,315 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "4_Axis_Serial_Robot_Arm",
+    "summary": "设计并装配一个串联4轴机械臂，包含底座、大臂、小臂、末端旋转轴及夹爪，采用轴同心和平面重合配合。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "底座中心底面",
+      "x_direction": "机械臂正前方",
+      "y_direction": "机械臂左侧",
+      "z_direction": "垂直向上"
+    },
+    "design_rules": [
+      "所有销轴孔直径统一为 20mm",
+      "所有长度单位在建模脚本中需转换为米 (m)",
+      "零件间留有 1mm 的装配间隙以防干涉",
+      "采用顺序装配，从底座开始逐级向上"
+    ],
+    "parts": [
+      {
+        "part_id": "base_station",
+        "name": "底座",
+        "function": "支撑整个机械臂并提供第一轴旋转接口",
+        "shape": "圆柱形底座，顶部中心带有轴孔",
+        "key_dimensions": [
+          "直径: 200mm",
+          "高度: 50mm",
+          "中心孔径: 20mm"
+        ],
+        "material_or_notes": "钢材，作为装配基准件",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "base_bottom_face",
+              "purpose": "地面接触面",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "base_top_face",
+              "purpose": "与大臂连接的支撑面",
+              "normal_direction_relation": "normal +Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_1_rot",
+              "purpose": "第一轴旋转中心",
+              "direction_relation": "along local Z"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "固定在全局原点"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\base_station",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\base_station\\base_station_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\base_station\\base_station.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\logs\\base_station_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\json\\base_station_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制直径200mm圆，向上拉伸50mm",
+          "在顶面中心绘制直径20mm圆，向下切除通孔",
+          "创建穿过中心孔的参考轴 axis_1_rot"
+        ]
+      },
+      {
+        "part_id": "upper_arm",
+        "name": "大臂",
+        "function": "连接底座与小臂，提供第二轴和第三轴接口",
+        "shape": "U型连接座加长臂结构",
+        "key_dimensions": [
+          "长度: 400mm",
+          "宽度: 60mm",
+          "轴孔直径: 20mm"
+        ],
+        "material_or_notes": "铝合金",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "arm_bottom_face",
+              "purpose": "与底座顶面贴合",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "joint_face_3",
+              "purpose": "与小臂连接的侧平面",
+              "normal_direction_relation": "normal +Y"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_1_conn",
+              "purpose": "连接底座的旋转轴",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_2_rot",
+              "purpose": "肩部俯仰轴",
+              "direction_relation": "along local Y"
+            },
+            {
+              "name": "axis_3_rot",
+              "purpose": "肘部俯仰轴",
+              "direction_relation": "along local Y"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "axis_1_conn 与底座 axis_1_rot 同心",
+          "arm_bottom_face 与底座 base_top_face 重合"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\upper_arm",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\upper_arm\\upper_arm_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\upper_arm\\upper_arm.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\logs\\upper_arm_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\json\\upper_arm_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制60x60矩形拉伸400mm作为主体",
+          "在底部中心创建20mm轴孔",
+          "在顶部和底部分别创建横向贯穿的20mm轴孔用于俯仰关节"
+        ]
+      },
+      {
+        "part_id": "forearm",
+        "name": "小臂",
+        "function": "连接大臂与末端执行器",
+        "shape": "矩形连杆结构",
+        "key_dimensions": [
+          "长度: 300mm",
+          "宽度: 40mm",
+          "轴孔直径: 20mm"
+        ],
+        "material_or_notes": "铝合金",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "joint_face_3_conn",
+              "purpose": "与大臂连接的侧平面",
+              "normal_direction_relation": "normal -Y"
+            },
+            {
+              "name": "end_face",
+              "purpose": "末端安装面",
+              "normal_direction_relation": "normal +X"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_3_conn",
+              "purpose": "连接大臂的旋转轴",
+              "direction_relation": "along local Y"
+            },
+            {
+              "name": "axis_4_rot",
+              "purpose": "末端旋转轴",
+              "direction_relation": "along local X"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "axis_3_conn 与大臂 axis_3_rot 同心",
+          "joint_face_3_conn 与大臂 joint_face_3 重合"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\forearm",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\forearm\\forearm_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\forearm\\forearm.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\logs\\forearm_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\json\\forearm_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在YZ平面绘制40x40矩形拉伸300mm",
+          "在后端创建20mm横向轴孔",
+          "在前端中心创建20mm纵向轴孔"
+        ]
+      },
+      {
+        "part_id": "gripper_unit",
+        "name": "夹爪组件",
+        "function": "执行抓取动作",
+        "shape": "简化块状结构带夹持端",
+        "key_dimensions": [
+          "总长: 100mm",
+          "接口直径: 20mm"
+        ],
+        "material_or_notes": "简化模型",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "mount_face",
+              "purpose": "与小臂末端贴合",
+              "normal_direction_relation": "normal -X"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_4_conn",
+              "purpose": "连接小臂的旋转轴",
+              "direction_relation": "along local X"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "axis_4_conn 与小臂 axis_4_rot 同心",
+          "mount_face 与小臂 end_face 重合"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\gripper_unit",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\gripper_unit\\gripper_unit_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\parts\\gripper_unit\\gripper_unit.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\logs\\gripper_unit_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\json\\gripper_unit_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在YZ平面绘制50x50矩形拉伸100mm",
+          "在后端中心创建20mm凸起轴"
+        ]
+      }
+    ],
+    "assembly_sequence": [
+      "1. 插入 base_station 并固定",
+      "2. 插入 upper_arm，与 base_station 进行轴同心和面重合配合",
+      "3. 插入 forearm，与 upper_arm 进行轴同心和面重合配合",
+      "4. 插入 gripper_unit，与 forearm 进行轴同心和面重合配合"
+    ],
+    "constraints": [
+      {
+        "source_part_id": "base_station",
+        "source_interface": "base_bottom_face",
+        "target_part_id": "GROUND",
+        "target_interface": "XY_PLANE",
+        "relation": "fix",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "固定底座"
+      },
+      {
+        "source_part_id": "upper_arm",
+        "source_interface": "axis_1_conn",
+        "target_part_id": "base_station",
+        "target_interface": "axis_1_rot",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "第一轴同心"
+      },
+      {
+        "source_part_id": "upper_arm",
+        "source_interface": "arm_bottom_face",
+        "target_part_id": "base_station",
+        "target_interface": "base_top_face",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "大臂底面贴合底座顶面"
+      },
+      {
+        "source_part_id": "forearm",
+        "source_interface": "axis_3_conn",
+        "target_part_id": "upper_arm",
+        "target_interface": "axis_3_rot",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "第三轴同心"
+      },
+      {
+        "source_part_id": "forearm",
+        "source_interface": "joint_face_3_conn",
+        "target_part_id": "upper_arm",
+        "target_interface": "joint_face_3",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 1,
+        "notes": "小臂与大臂侧面贴合，预留1mm间隙"
+      },
+      {
+        "source_part_id": "gripper_unit",
+        "source_interface": "axis_4_conn",
+        "target_part_id": "forearm",
+        "target_interface": "axis_4_rot",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "第四轴同心"
+      },
+      {
+        "source_part_id": "gripper_unit",
+        "source_interface": "mount_face",
+        "target_part_id": "forearm",
+        "target_interface": "end_face",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "末端执行器贴合"
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\assembly\\4_Axis_Serial_Robot_Arm.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4_Axis_Serial_Robot_Arm-20260416_175529\\logs\\assembly.log"
+    }
+  }
+}

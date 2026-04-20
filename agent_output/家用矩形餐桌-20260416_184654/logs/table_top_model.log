@@ -1,0 +1,53 @@
+----------------------------------------
+Python 成功接收到的新零件名称: table_top
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 18:49:12 - 接收到参数，尝试创建并激活文档: table_top
+[DEBUG] 18:49:12 - 尝试连接 SolidWorks...
+[DEBUG] 18:49:12 - 成功连接到已运行的实例。
+
+已创建桌面零件文档
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+已完成桌面主体拉伸
+正在尝试选中 4 条边...
+
+--- 开始动态旋转扫描选择 (0.6, 0, 0.02) ---
+
+--- 开始动态旋转扫描选择 (-0.6, 0, 0.02) ---
+
+--- 开始动态旋转扫描选择 (0, 0.4, 0.02) ---
+
+--- 开始动态旋转扫描选择 (0, -0.4, 0.02) ---
+倒角成功，半径: 0.005
+已完成顶面四周边缘圆角
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+已创建安装孔 mount_hole_axis_fl
+✅ 成功创建基准轴 [mount_hole_axis_fl]
+已创建参考轴 mount_hole_axis_fl
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+已创建安装孔 mount_hole_axis_fr
+✅ 成功创建基准轴 [mount_hole_axis_fr]
+已创建参考轴 mount_hole_axis_fr
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+已创建安装孔 mount_hole_axis_bl
+✅ 成功创建基准轴 [mount_hole_axis_bl]
+已创建参考轴 mount_hole_axis_bl
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+已创建安装孔 mount_hole_axis_br
+✅ 成功创建基准轴 [mount_hole_axis_br]
+已创建参考轴 mount_hole_axis_br
+已创建 top_face 和 bottom_face 参考面
+零件已保存至: D:\a_src\python\sw_agent\agent_output\家用矩形餐桌-20260416_184654\parts\table_top\table_top.SLDPRT
+桌面零件建模完成并成功保存

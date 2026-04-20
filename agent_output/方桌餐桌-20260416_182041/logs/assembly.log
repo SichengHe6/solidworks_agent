@@ -1,0 +1,57 @@
+============================================================
+[装配开始] 装配体: 方桌餐桌
+  桌面零件路径: D:\a_src\python\sw_agent\agent_output\方桌餐桌-20260416_182041\parts\table_top\table_top.SLDPRT
+  桌腿零件路径: D:\a_src\python\sw_agent\agent_output\方桌餐桌-20260416_182041\parts\table_leg\table_leg.SLDPRT
+  装配体保存路径: D:\a_src\python\sw_agent\agent_output\方桌餐桌-20260416_182041\assembly\方桌餐桌.SLDASM
+============================================================
+----------------------------------------
+Python 成功接收到的新装配名称: 
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 18:22:09 - 接收到参数，尝试创建并激活文档: 方桌餐桌
+[DEBUG] 18:22:09 - 尝试连接 SolidWorks...
+[DEBUG] 18:22:10 - 成功连接到已运行的实例。
+
+[步骤1] 装配文档创建成功
+成功导入组件: table_top-2
+[步骤2.1] 桌面插入成功, comp_name = table_top-2
+成功导入组件: table_leg-5
+[步骤2.2] 前左桌腿插入成功, comp_name = table_leg-5
+成功导入组件: table_leg-6
+[步骤2.3] 前右桌腿插入成功, comp_name = table_leg-6
+成功导入组件: table_leg-7
+[步骤2.4] 后左桌腿插入成功, comp_name = table_leg-7
+成功导入组件: table_leg-8
+[步骤2.5] 后右桌腿插入成功, comp_name = table_leg-8
+[步骤3] 开始施加配合约束...
+  [3.1a] 前左桌腿 - 轴同心配合: boss_axis <-> hole_axis_front_left
+✅ 轴配合完成 (boss_axis <-> hole_axis_front_left)
+  [3.1a] 前左桌腿 - 轴同心配合完成
+  [3.1b] 前左桌腿 - 面重合配合: leg_top_face <-> bottom_face
+✅ 平面配合 leg_top_face-bottom_face 完成 (table_leg-5 <-> table_top-2)
+  [3.1b] 前左桌腿 - 面重合配合完成
+  [3.2a] 前右桌腿 - 轴同心配合: boss_axis <-> hole_axis_front_right
+✅ 轴配合完成 (boss_axis <-> hole_axis_front_right)
+  [3.2a] 前右桌腿 - 轴同心配合完成
+  [3.2b] 前右桌腿 - 面重合配合: leg_top_face <-> bottom_face
+✅ 平面配合 leg_top_face-bottom_face 完成 (table_leg-6 <-> table_top-2)
+  [3.2b] 前右桌腿 - 面重合配合完成
+  [3.3a] 后左桌腿 - 轴同心配合: boss_axis <-> hole_axis_rear_left
+✅ 轴配合完成 (boss_axis <-> hole_axis_rear_left)
+  [3.3a] 后左桌腿 - 轴同心配合完成
+  [3.3b] 后左桌腿 - 面重合配合: leg_top_face <-> bottom_face
+✅ 平面配合 leg_top_face-bottom_face 完成 (table_leg-7 <-> table_top-2)
+  [3.3b] 后左桌腿 - 面重合配合完成
+  [3.4a] 后右桌腿 - 轴同心配合: boss_axis <-> hole_axis_rear_right
+✅ 轴配合完成 (boss_axis <-> hole_axis_rear_right)
+  [3.4a] 后右桌腿 - 轴同心配合完成
+  [3.4b] 后右桌腿 - 面重合配合: leg_top_face <-> bottom_face
+✅ 平面配合 leg_top_face-bottom_face 完成 (table_leg-8 <-> table_top-2)
+  [3.4b] 后右桌腿 - 面重合配合完成
+[步骤3] 所有配合约束施加完成
+Assembly save failed, code: True
+[步骤4] 装配体已保存至: D:\a_src\python\sw_agent\agent_output\方桌餐桌-20260416_182041\assembly\方桌餐桌.SLDASM
+============================================================
+[装配完成] 方桌餐桌装配流程结束
+============================================================

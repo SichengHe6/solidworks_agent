@@ -1,0 +1,233 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "Square_Table_Assembly",
+    "summary": "一个由桌面、四根桌腿和四枚螺钉组成的方桌装配体。桌面与桌腿通过中心孔位配合，并使用螺钉进行紧固连接。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "桌面顶面几何中心",
+      "x_direction": "平行于桌面长边",
+      "y_direction": "平行于桌面短边",
+      "z_direction": "垂直桌面向上"
+    },
+    "design_rules": [
+      "所有尺寸单位默认为 mm，建模时需换算为 m",
+      "桌腿安装在桌面底面的四个顶角，外侧面与桌面侧面齐平",
+      "螺钉轴线必须与桌面通孔及桌腿盲孔轴线重合"
+    ],
+    "parts": [
+      {
+        "part_id": "table_top",
+        "name": "桌面",
+        "function": "支撑平台，提供安装孔位",
+        "shape": "长方体平板，四个角部各有一个直径 8.5mm 的通孔",
+        "key_dimensions": [
+          "800mm x 800mm x 25mm",
+          "孔位中心距离边缘：25mm, 25mm"
+        ],
+        "material_or_notes": "木质或金属，孔径 8.5mm",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "bottom_face",
+              "purpose": "与桌腿顶面贴合",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "top_face",
+              "purpose": "与螺钉头下表面贴合",
+              "normal_direction_relation": "normal +Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "hole_axis_1",
+              "purpose": "左上角安装孔轴线",
+              "direction_relation": "along global Z"
+            },
+            {
+              "name": "hole_axis_2",
+              "purpose": "右上角安装孔轴线",
+              "direction_relation": "along global Z"
+            },
+            {
+              "name": "hole_axis_3",
+              "purpose": "左下角安装孔轴线",
+              "direction_relation": "along global Z"
+            },
+            {
+              "name": "hole_axis_4",
+              "purpose": "右下角安装孔轴线",
+              "direction_relation": "along global Z"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "作为装配基准件固定"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\table_top",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\table_top\\table_top_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\table_top\\table_top.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\logs\\table_top_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\json\\table_top_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在 XY 平面绘制 800x800 中心矩形，拉伸 25mm",
+          "在顶面四个角部（中心距边缘25mm）绘制直径 8.5mm 圆形并做完全贯穿切除"
+        ]
+      },
+      {
+        "part_id": "table_leg",
+        "name": "桌腿",
+        "function": "支撑桌面",
+        "shape": "方柱体，顶面中心有一个直径 8.5mm 的盲孔",
+        "key_dimensions": [
+          "50mm x 50mm x 375mm",
+          "盲孔深度：20mm"
+        ],
+        "material_or_notes": "4根相同零件",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "top_end_face",
+              "purpose": "与桌面底面贴合",
+              "normal_direction_relation": "normal +Z"
+            },
+            {
+              "name": "side_face_x",
+              "purpose": "与桌面边缘对齐参考",
+              "normal_direction_relation": "normal +X"
+            },
+            {
+              "name": "side_face_y",
+              "purpose": "与桌面边缘对齐参考",
+              "normal_direction_relation": "normal +Y"
+            }
+          ],
+          "axes": [
+            {
+              "name": "leg_hole_axis",
+              "purpose": "顶面中心孔轴线",
+              "direction_relation": "along local Z"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "共需实例化4次"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\table_leg",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\table_leg\\table_leg_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\table_leg\\table_leg.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\logs\\table_leg_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\json\\table_leg_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在 XY 平面绘制 50x50 中心矩形，拉伸 375mm",
+          "在顶面中心绘制直径 8.5mm 圆形，向下切除深度 20mm"
+        ]
+      },
+      {
+        "part_id": "m8_screw",
+        "name": "M8螺钉",
+        "function": "紧固连接",
+        "shape": "圆柱头台阶轴",
+        "key_dimensions": [
+          "头部直径 13mm，厚度 8mm",
+          "螺杆直径 8mm，长度 40mm"
+        ],
+        "material_or_notes": "4枚相同零件，简化模型",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "head_bottom_face",
+              "purpose": "与桌面顶面贴合",
+              "normal_direction_relation": "normal -Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "screw_axis",
+              "purpose": "螺钉中心轴线",
+              "direction_relation": "along local Z"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "共需实例化4次"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\m8_screw",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\m8_screw\\m8_screw_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\m8_screw\\m8_screw.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\logs\\m8_screw_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\json\\m8_screw_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在 XY 平面绘制直径 13mm 圆形拉伸 8mm 作为头部",
+          "在头部底面中心绘制直径 8mm 圆形拉伸 40mm 作为螺杆"
+        ]
+      }
+    ],
+    "assembly_sequence": [
+      "1. 插入 table_top 并固定在原点",
+      "2. 插入 4 根 table_leg 并分别与 table_top 的四个角部孔位对齐贴合",
+      "3. 插入 4 枚 m8_screw 并分别装入对应的安装孔中"
+    ],
+    "constraints": [
+      {
+        "source_part_id": "table_top",
+        "source_interface": "bottom_face",
+        "target_part_id": "table_leg",
+        "target_interface": "top_end_face",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "桌面底面与桌腿顶面贴合"
+      },
+      {
+        "source_part_id": "table_top",
+        "source_interface": "hole_axis_1",
+        "target_part_id": "table_leg_1",
+        "target_interface": "leg_hole_axis",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "孔轴线同心"
+      },
+      {
+        "source_part_id": "m8_screw_1",
+        "source_interface": "screw_axis",
+        "target_part_id": "table_top",
+        "target_interface": "hole_axis_1",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "螺钉进入桌面孔"
+      },
+      {
+        "source_part_id": "m8_screw_1",
+        "source_interface": "head_bottom_face",
+        "target_part_id": "table_top",
+        "target_interface": "top_face",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "螺钉头压紧桌面"
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\assembly\\Square_Table_Assembly.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\logs\\assembly.log"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+[INFO] 开始装配：家用矩形餐桌
+----------------------------------------
+Python 成功接收到的新装配名称: 
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 18:50:49 - 接收到参数，尝试创建并激活文档: 家用矩形餐桌
+[DEBUG] 18:50:49 - 尝试连接 SolidWorks...
+[DEBUG] 18:50:49 - 成功连接到已运行的实例。
+
+[INFO] 装配文档已创建并激活
+成功导入组件: table_top-2
+[INFO] 桌面已插入: D:\a_src\python\sw_agent\agent_output\家用矩形餐桌-20260416_184654\parts\table_top\table_top.SLDPRT
+成功导入组件: table_leg-5
+[INFO] 桌腿 front_left 已插入: D:\a_src\python\sw_agent\agent_output\家用矩形餐桌-20260416_184654\parts\table_leg\table_leg.SLDPRT
+成功导入组件: table_leg-6
+[INFO] 桌腿 front_right 已插入: D:\a_src\python\sw_agent\agent_output\家用矩形餐桌-20260416_184654\parts\table_leg\table_leg.SLDPRT
+成功导入组件: table_leg-7
+[INFO] 桌腿 back_left 已插入: D:\a_src\python\sw_agent\agent_output\家用矩形餐桌-20260416_184654\parts\table_leg\table_leg.SLDPRT
+成功导入组件: table_leg-8
+[INFO] 桌腿 back_right 已插入: D:\a_src\python\sw_agent\agent_output\家用矩形餐桌-20260416_184654\parts\table_leg\table_leg.SLDPRT
+[INFO] 开始施加配合约束...
+✅ 平面配合 top_face-bottom_face 完成 (table_leg-5 <-> table_top-2)
+[INFO] 面配合成功：桌腿 0 顶面 ↔ 桌面底面
+✅ 轴配合完成 (mount_axis <-> mount_hole_axis_fl)
+[INFO] 轴配合成功：桌腿 0 mount_axis ↔ mount_hole_axis_fl
+✅ 平面配合 top_face-bottom_face 完成 (table_leg-6 <-> table_top-2)
+[INFO] 面配合成功：桌腿 1 顶面 ↔ 桌面底面
+✅ 轴配合完成 (mount_axis <-> mount_hole_axis_fr)
+[INFO] 轴配合成功：桌腿 1 mount_axis ↔ mount_hole_axis_fr
+✅ 平面配合 top_face-bottom_face 完成 (table_leg-7 <-> table_top-2)
+[INFO] 面配合成功：桌腿 2 顶面 ↔ 桌面底面
+✅ 轴配合完成 (mount_axis <-> mount_hole_axis_bl)
+[INFO] 轴配合成功：桌腿 2 mount_axis ↔ mount_hole_axis_bl
+✅ 平面配合 top_face-bottom_face 完成 (table_leg-8 <-> table_top-2)
+[INFO] 面配合成功：桌腿 3 顶面 ↔ 桌面底面
+✅ 轴配合完成 (mount_axis <-> mount_hole_axis_br)
+[INFO] 轴配合成功：桌腿 3 mount_axis ↔ mount_hole_axis_br
+Assembly save failed, code: True
+[INFO] 装配完成，已保存至: D:\a_src\python\sw_agent\agent_output\家用矩形餐桌-20260416_184654\assembly\家用矩形餐桌.SLDASM

@@ -1,0 +1,64 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Square_Table_Assembly",
+    "summary": "一个由桌面、四根桌腿和四枚螺钉组成的方桌装配体。桌面与桌腿通过中心孔位配合，并使用螺钉进行紧固连接。",
+    "global_coordinate_system": {
+      "origin": "桌面顶面几何中心",
+      "x_direction": "平行于桌面长边",
+      "y_direction": "平行于桌面短边",
+      "z_direction": "垂直桌面向上"
+    },
+    "design_rules": [
+      "所有尺寸单位默认为 mm，建模时需换算为 m",
+      "桌腿安装在桌面底面的四个顶角，外侧面与桌面侧面齐平",
+      "螺钉轴线必须与桌面通孔及桌腿盲孔轴线重合"
+    ],
+    "assembly_sequence": [
+      "1. 插入 table_top 并固定在原点",
+      "2. 插入 4 根 table_leg 并分别与 table_top 的四个角部孔位对齐贴合",
+      "3. 插入 4 枚 m8_screw 并分别装入对应的安装孔中"
+    ]
+  },
+  "part": {
+    "part_id": "m8_screw",
+    "name": "M8螺钉",
+    "function": "紧固连接",
+    "shape": "圆柱头台阶轴",
+    "key_dimensions": [
+      "头部直径 13mm，厚度 8mm",
+      "螺杆直径 8mm，长度 40mm"
+    ],
+    "material_or_notes": "4枚相同零件，简化模型",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "head_bottom_face",
+          "purpose": "与桌面顶面贴合",
+          "normal_direction_relation": "normal -Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "screw_axis",
+          "purpose": "螺钉中心轴线",
+          "direction_relation": "along local Z"
+        }
+      ]
+    },
+    "assembly_relation_notes": [
+      "共需实例化4次"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\m8_screw",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\m8_screw\\m8_screw_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\parts\\m8_screw\\m8_screw.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\logs\\m8_screw_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_173236\\json\\m8_screw_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在 XY 平面绘制直径 13mm 圆形拉伸 8mm 作为头部",
+      "在头部底面中心绘制直径 8mm 圆形拉伸 40mm 作为螺杆"
+    ]
+  }
+}

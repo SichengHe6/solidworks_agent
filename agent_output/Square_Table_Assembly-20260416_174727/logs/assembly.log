@@ -1,0 +1,45 @@
+开始创建装配体: Square_Table_Assembly
+----------------------------------------
+Python 成功接收到的新装配名称: 
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 17:48:38 - 接收到参数，尝试创建并激活文档: Square_Table_Assembly
+[DEBUG] 17:48:38 - 尝试连接 SolidWorks...
+[DEBUG] 17:48:38 - 成功连接到已运行的实例。
+
+正在插入桌面...
+成功导入组件: tabletop-1
+正在插入桌腿...
+成功导入组件: table_leg-1
+成功导入组件: table_leg-2
+成功导入组件: table_leg-3
+成功导入组件: table_leg-4
+正在插入螺钉...
+成功导入组件: screw-1
+成功导入组件: screw-2
+成功导入组件: screw-3
+成功导入组件: screw-4
+正在执行第 1 组配合...
+✅ 轴配合完成 (leg_hole_axis <-> hole_axis_1)
+✅ 平面配合 top_face-bottom_face 完成 (table_leg-1 <-> tabletop-1)
+✅ 轴配合完成 (screw_axis <-> hole_axis_1)
+✅ 平面配合 head_bottom_face-hole_step_face_1 完成 (screw-1 <-> tabletop-1)
+正在执行第 2 组配合...
+✅ 轴配合完成 (leg_hole_axis <-> hole_axis_2)
+✅ 平面配合 top_face-bottom_face 完成 (table_leg-2 <-> tabletop-1)
+✅ 轴配合完成 (screw_axis <-> hole_axis_2)
+✅ 平面配合 head_bottom_face-hole_step_face_1 完成 (screw-2 <-> tabletop-1)
+正在执行第 3 组配合...
+✅ 轴配合完成 (leg_hole_axis <-> hole_axis_3)
+✅ 平面配合 top_face-bottom_face 完成 (table_leg-3 <-> tabletop-1)
+✅ 轴配合完成 (screw_axis <-> hole_axis_3)
+✅ 平面配合 head_bottom_face-hole_step_face_1 完成 (screw-3 <-> tabletop-1)
+正在执行第 4 组配合...
+✅ 轴配合完成 (leg_hole_axis <-> hole_axis_4)
+✅ 平面配合 top_face-bottom_face 完成 (table_leg-4 <-> tabletop-1)
+✅ 轴配合完成 (screw_axis <-> hole_axis_4)
+✅ 平面配合 head_bottom_face-hole_step_face_1 完成 (screw-4 <-> tabletop-1)
+正在保存装配体到: D:\a_src\python\sw_agent\agent_output\Square_Table_Assembly-20260416_174727\assembly\Square_Table_Assembly.SLDASM
+Assembly save failed, code: True
+装配任务完成。

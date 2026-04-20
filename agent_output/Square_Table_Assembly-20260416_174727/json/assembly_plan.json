@@ -1,0 +1,243 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "Square_Table_Assembly",
+    "summary": "一个由正方形桌面、四根方柱桌腿以及四个简化沉头螺钉组成的装配体。桌面通过沉头螺钉与桌腿固定。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "桌面几何中心在XY平面的投影点，高度位于桌面顶面",
+      "x_direction": "平行于桌面一边",
+      "y_direction": "垂直于X轴的桌面另一边",
+      "z_direction": "垂直桌面向上"
+    },
+    "design_rules": [
+      "所有尺寸单位默认为 mm，建模时需换算为 m",
+      "装配以桌面为基准件固定",
+      "孔位布局为中心对称，距离边缘 40mm"
+    ],
+    "parts": [
+      {
+        "part_id": "tabletop",
+        "name": "正方形桌面",
+        "function": "支撑主体，提供安装孔",
+        "shape": "800x800x30 的长方体，四个角设有沉头孔",
+        "key_dimensions": [
+          "外形: 800mm x 800mm x 30mm",
+          "孔位: 距离边缘 40mm (即坐标 +/-360, +/-360)",
+          "沉头孔: 大头直径 10mm, 小头直径 8mm, 沉头深 10mm"
+        ],
+        "material_or_notes": "木材或金属，简化建模",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "bottom_face",
+              "purpose": "与桌腿顶面贴合",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "hole_step_face_1",
+              "purpose": "螺钉1座面",
+              "normal_direction_relation": "normal -Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "hole_axis_1",
+              "purpose": "定位孔1轴线",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "hole_axis_2",
+              "purpose": "定位孔2轴线",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "hole_axis_3",
+              "purpose": "定位孔3轴线",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "hole_axis_4",
+              "purpose": "定位孔4轴线",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "作为装配基准件固定"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\parts\\tabletop",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\parts\\tabletop\\tabletop_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\parts\\tabletop\\tabletop.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\logs\\tabletop_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\json\\tabletop_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY面绘制800x800中心矩形，拉伸30mm",
+          "在顶面绘制四个点用于孔特征，坐标为(360,360), (-360,360), (-360,-360), (360,-360)",
+          "使用旋转切除或孔向导生成沉头孔"
+        ]
+      },
+      {
+        "part_id": "table_leg",
+        "name": "方柱桌腿",
+        "function": "支撑桌面",
+        "shape": "50x50x720 的长方体，顶面中心有深30mm的直径8mm孔",
+        "key_dimensions": [
+          "截面: 50mm x 50mm",
+          "高度: 720mm",
+          "顶孔: 直径 8mm, 深度 30mm"
+        ],
+        "material_or_notes": "需生成4个实例",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "top_face",
+              "purpose": "与桌面底面贴合",
+              "normal_direction_relation": "normal +Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "leg_hole_axis",
+              "purpose": "与桌面孔同心",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "顶面与桌面底面重合",
+          "中心孔轴线与桌面孔轴线同心"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\parts\\table_leg",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\parts\\table_leg\\table_leg_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\parts\\table_leg\\table_leg.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\logs\\table_leg_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\json\\table_leg_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY面绘制50x50中心矩形，拉伸720mm",
+          "在顶面中心拉伸切除直径8mm、深30mm的孔"
+        ]
+      },
+      {
+        "part_id": "screw",
+        "name": "简化沉头螺钉",
+        "function": "紧固件",
+        "shape": "阶梯圆柱，头部直径10mm长10mm，杆部直径8mm长50mm",
+        "key_dimensions": [
+          "总长: 60mm",
+          "头部: 直径 10mm, 长度 10mm",
+          "杆部: 直径 8mm, 长度 50mm"
+        ],
+        "material_or_notes": "无螺纹简化模型",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "head_bottom_face",
+              "purpose": "与桌面沉头孔台阶面贴合",
+              "normal_direction_relation": "normal -Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "screw_axis",
+              "purpose": "与孔同心",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "杆部与桌面孔同心",
+          "头下表面与桌面沉头座面重合"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\parts\\screw",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\parts\\screw\\screw_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\parts\\screw\\screw.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\logs\\screw_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\json\\screw_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XZ面绘制剖面并绕Z轴旋转：(0,0)->(4,0)->(4,-50)->(5,-50)->(5,-60)->(0,-60) 闭合路径"
+        ]
+      }
+    ],
+    "assembly_sequence": [
+      "1. 插入 tabletop 并固定在原点",
+      "2. 插入 4 个 table_leg 实例",
+      "3. 插入 4 个 screw 实例",
+      "4. 依次约束桌腿与桌面的底面及孔轴线",
+      "5. 依次约束螺钉与桌面的孔轴线及沉头座面"
+    ],
+    "constraints": [
+      {
+        "source_part_id": "tabletop",
+        "source_interface": "NA",
+        "target_part_id": "GROUND",
+        "target_interface": "NA",
+        "relation": "fix",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "固定桌面作为基准"
+      },
+      {
+        "source_part_id": "table_leg_1",
+        "source_interface": "top_face",
+        "target_part_id": "tabletop",
+        "target_interface": "bottom_face",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": ""
+      },
+      {
+        "source_part_id": "table_leg_1",
+        "source_interface": "leg_hole_axis",
+        "target_part_id": "tabletop",
+        "target_interface": "hole_axis_1",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": ""
+      },
+      {
+        "source_part_id": "screw_1",
+        "source_interface": "screw_axis",
+        "target_part_id": "tabletop",
+        "target_interface": "hole_axis_1",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": ""
+      },
+      {
+        "source_part_id": "screw_1",
+        "source_interface": "head_bottom_face",
+        "target_part_id": "tabletop",
+        "target_interface": "hole_step_face_1",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": ""
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\assembly\\Square_Table_Assembly.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Square_Table_Assembly-20260416_174727\\logs\\assembly.log"
+    }
+  }
+}

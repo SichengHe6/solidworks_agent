@@ -1,0 +1,24 @@
+----------------------------------------
+Python 成功接收到的新零件名称: table_leg
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 17:48:16 - 接收到参数，尝试创建并激活文档: table_leg
+[DEBUG] 17:48:16 - 尝试连接 SolidWorks...
+[DEBUG] 17:48:16 - 成功连接到已运行的实例。
+
+开始建模零件: table_leg
+[table_leg] 正在创建主体拉伸...
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+[table_leg] 正在创建顶面安装孔...
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+✅ 成功创建基准轴 [Axis2]
+[table_leg] 装配接口 'top_face' 和 'leg_hole_axis' 已定义
+[table_leg] 正在保存模型至: D:\a_src\python\sw_agent\agent_output\Square_Table_Assembly-20260416_174727\parts\table_leg\table_leg.SLDPRT
+零件已保存至: D:\a_src\python\sw_agent\agent_output\Square_Table_Assembly-20260416_174727\parts\table_leg\table_leg.SLDPRT
+[table_leg] 建模任务成功完成。

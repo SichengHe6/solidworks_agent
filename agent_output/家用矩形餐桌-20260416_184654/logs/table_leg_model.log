@@ -1,0 +1,27 @@
+----------------------------------------
+Python 成功接收到的新零件名称: table_leg
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 18:49:51 - 接收到参数，尝试创建并激活文档: table_leg
+[DEBUG] 18:49:51 - 尝试连接 SolidWorks...
+[DEBUG] 18:49:51 - 成功连接到已运行的实例。
+
+已创建桌腿零件文档
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+已绘制桌腿截面草图
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+已拉伸形成桌腿主体
+已绘制顶部安装孔草图
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除失败
+已切除顶部安装孔
+已创建顶面参考面: top_face
+已创建底面参考面: bottom_face
+✅ 成功创建基准轴 [mount_axis]
+已创建安装孔参考轴: mount_axis，方向沿 +Z
+零件已保存至: D:\a_src\python\sw_agent\agent_output\家用矩形餐桌-20260416_184654\parts\table_leg\table_leg.SLDPRT
+桌腿零件建模完成并成功保存

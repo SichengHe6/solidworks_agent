@@ -1,0 +1,192 @@
+<svg width="1600" height="920" viewBox="0 0 1600 920" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="920" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6F8FC"/>
+      <stop offset="1" stop-color="#EEF3F6"/>
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1600" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#103B73"/>
+      <stop offset="1" stop-color="#1C6E8C"/>
+    </linearGradient>
+    <filter id="shadow" x="-40" y="-40" width="260" height="180" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#123B5C" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10V0Z" fill="#2E6AA3"/>
+    </marker>
+    <marker id="arrowTeal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10V0Z" fill="#2C8C7A"/>
+    </marker>
+    <style>
+      .title { font: 700 34px "Microsoft YaHei", "PingFang SC", sans-serif; fill: #0E2E4F; }
+      .subtitle { font: 500 16px "Microsoft YaHei", "PingFang SC", sans-serif; fill: #4C647A; }
+      .section { font: 700 18px "Microsoft YaHei", "PingFang SC", sans-serif; fill: #113A5C; }
+      .nodeTitle { font: 700 20px "Microsoft YaHei", "PingFang SC", sans-serif; fill: #10314E; }
+      .nodeText { font: 500 14px "Microsoft YaHei", "PingFang SC", sans-serif; fill: #51687B; }
+      .small { font: 600 13px "Microsoft YaHei", "PingFang SC", sans-serif; fill: #49606E; }
+      .label { font: 700 14px "Microsoft YaHei", "PingFang SC", sans-serif; fill: #FFFFFF; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="920" rx="28" fill="url(#bg)"/>
+  <rect x="44" y="34" width="1512" height="92" rx="24" fill="white" opacity="0.94"/>
+  <rect x="64" y="52" width="10" height="56" rx="5" fill="url(#titleGrad)"/>
+  <text x="96" y="80" class="title">多智能体 CAD 设计系统流程图</text>
+  <text x="96" y="108" class="subtitle">需求识别 -> 分流决策 -> 装配规划 -> 零件建模 -> 校验反馈 -> 装配生成</text>
+
+  <text x="98" y="172" class="section">统一入口</text>
+  <text x="98" y="486" class="section">零件需求路径</text>
+  <text x="882" y="486" class="section">装配需求路径</text>
+  <text x="1308" y="172" class="section">知识库支撑</text>
+
+  <g filter="url(#shadow)">
+    <rect x="90" y="196" width="230" height="106" rx="22" fill="#FFFFFF"/>
+    <rect x="90" y="196" width="230" height="106" rx="22" stroke="#C8D6E5"/>
+    <text x="120" y="236" class="nodeTitle">用户需求输入</text>
+    <text x="120" y="262" class="nodeText">自然语言描述零件或装配需求</text>
+    <text x="120" y="284" class="nodeText">支持多轮补充与 уточ清</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="390" y="176" width="294" height="146" rx="26" fill="#FFFFFF"/>
+    <rect x="390" y="176" width="294" height="146" rx="26" stroke="#BED2E2"/>
+    <rect x="414" y="196" width="138" height="28" rx="14" fill="#DCEEFF"/>
+    <text x="435" y="215" class="small">Requirement Agent</text>
+    <text x="420" y="252" class="nodeTitle">需求分析与任务识别</text>
+    <text x="420" y="279" class="nodeText">1. 澄清需求边界与关键参数</text>
+    <text x="420" y="301" class="nodeText">2. 判断 request_type = part / assembly</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="758" y="184" width="254" height="130" rx="24" fill="#FFFFFF"/>
+    <rect x="758" y="184" width="254" height="130" rx="24" stroke="#BDD5D1"/>
+    <rect x="784" y="204" width="88" height="28" rx="14" fill="#D9F3EA"/>
+    <text x="806" y="223" class="small">分流器</text>
+    <text x="786" y="258" class="nodeTitle">需求类型分流</text>
+    <text x="786" y="284" class="nodeText">输出结构化 JSON</text>
+    <text x="786" y="306" class="nodeText">进入零件或装配路径</text>
+  </g>
+
+  <path d="M320 249H390" stroke="#2E6AA3" stroke-width="4" marker-end="url(#arrowBlue)"/>
+  <path d="M684 249H758" stroke="#2E6AA3" stroke-width="4" marker-end="url(#arrowBlue)"/>
+
+  <path d="M885 314V386H420V438" stroke="#2E6AA3" stroke-width="4" fill="none" marker-end="url(#arrowBlue)"/>
+  <rect x="710" y="352" width="70" height="28" rx="14" fill="#2E6AA3"/>
+  <text x="732" y="371" class="label">part</text>
+
+  <path d="M885 314V384H1098V438" stroke="#2C8C7A" stroke-width="4" fill="none" marker-end="url(#arrowTeal)"/>
+  <rect x="1002" y="352" width="98" height="28" rx="14" fill="#2C8C7A"/>
+  <text x="1022" y="371" class="label">assembly</text>
+
+  <g filter="url(#shadow)">
+    <rect x="156" y="512" width="264" height="122" rx="24" fill="#FFFFFF"/>
+    <rect x="156" y="512" width="264" height="122" rx="24" stroke="#C8D6E5"/>
+    <text x="184" y="552" class="nodeTitle">工作区创建</text>
+    <text x="184" y="578" class="nodeText">自动生成任务目录</text>
+    <text x="184" y="600" class="nodeText">写入 part_request.json 与 spec.json</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="468" y="502" width="282" height="142" rx="24" fill="#FFFFFF"/>
+    <rect x="468" y="502" width="282" height="142" rx="24" stroke="#C8D6E5"/>
+    <rect x="492" y="522" width="148" height="28" rx="14" fill="#DCEEFF"/>
+    <text x="520" y="541" class="small">PartModelingAgent</text>
+    <text x="494" y="578" class="nodeTitle">零件建模代码生成</text>
+    <text x="494" y="605" class="nodeText">按单零件 JSON 生成 Python 代码</text>
+    <text x="494" y="627" class="nodeText">保存到指定 .SLDPRT 路径</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="798" y="512" width="272" height="122" rx="24" fill="#FFFFFF"/>
+    <rect x="798" y="512" width="272" height="122" rx="24" stroke="#C8D6E5"/>
+    <text x="826" y="552" class="nodeTitle">代码执行与动态检查</text>
+    <text x="826" y="578" class="nodeText">执行建模代码</text>
+    <text x="826" y="600" class="nodeText">失败则返回日志重试</text>
+  </g>
+
+  <path d="M420 573H468" stroke="#2E6AA3" stroke-width="4" marker-end="url(#arrowBlue)"/>
+  <path d="M750 573H798" stroke="#2E6AA3" stroke-width="4" marker-end="url(#arrowBlue)"/>
+
+  <path d="M934 634V706H611V644" stroke="#2E6AA3" stroke-width="3.5" fill="none" marker-end="url(#arrowBlue)"/>
+  <text x="762" y="694" class="small">失败日志反馈，驱动重新生成</text>
+
+  <g filter="url(#shadow)">
+    <rect x="104" y="698" width="966" height="112" rx="24" fill="#E8F2FF"/>
+    <rect x="104" y="698" width="966" height="112" rx="24" stroke="#B8D2EE"/>
+    <text x="134" y="744" class="nodeTitle">输出结果</text>
+    <text x="134" y="770" class="nodeText">单零件路径直接产出：零件代码 + 执行日志 + 结构化 JSON + 最终 .SLDPRT</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="914" y="510" width="304" height="124" rx="24" fill="#FFFFFF"/>
+    <rect x="914" y="510" width="304" height="124" rx="24" stroke="#BED5CF"/>
+    <rect x="938" y="530" width="164" height="28" rx="14" fill="#D9F3EA"/>
+    <text x="956" y="549" class="small">AssemblyPlanningAgent</text>
+    <text x="940" y="586" class="nodeTitle">装配规划</text>
+    <text x="940" y="612" class="nodeText">创建装配工作区并生成完整规划 JSON</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1272" y="510" width="246" height="124" rx="24" fill="#FFFFFF"/>
+    <rect x="1272" y="510" width="246" height="124" rx="24" stroke="#BED5CF"/>
+    <text x="1300" y="550" class="nodeTitle">零件 JSON 拆分分发</text>
+    <text x="1300" y="576" class="nodeText">为每个零件生成独立 spec</text>
+    <text x="1300" y="598" class="nodeText">分配各自输出路径</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="914" y="682" width="300" height="148" rx="24" fill="#FFFFFF"/>
+    <rect x="914" y="682" width="300" height="148" rx="24" stroke="#BED5CF"/>
+    <rect x="938" y="702" width="150" height="28" rx="14" fill="#D9F3EA"/>
+    <text x="960" y="721" class="small">PartModelingAgent × N</text>
+    <text x="940" y="758" class="nodeTitle">多零件建模</text>
+    <text x="940" y="785" class="nodeText">各零件独立生成代码并执行</text>
+    <text x="940" y="807" class="nodeText">共享完整规划但按子 JSON 工作</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1260" y="682" width="258" height="148" rx="24" fill="#FFFFFF"/>
+    <rect x="1260" y="682" width="258" height="148" rx="24" stroke="#BED5CF"/>
+    <rect x="1284" y="702" width="154" height="28" rx="14" fill="#D9F3EA"/>
+    <text x="1302" y="721" class="small">PartValidationAgent</text>
+    <text x="1286" y="758" class="nodeTitle">静态校验</text>
+    <text x="1286" y="785" class="nodeText">检查接口、方向、路径、一致性</text>
+    <text x="1286" y="807" class="nodeText">失败则给出简短反馈</text>
+  </g>
+
+  <path d="M1218 572H1272" stroke="#2C8C7A" stroke-width="4" marker-end="url(#arrowTeal)"/>
+  <path d="M1395 634V682" stroke="#2C8C7A" stroke-width="4" marker-end="url(#arrowTeal)"/>
+  <path d="M1214 756H1260" stroke="#2C8C7A" stroke-width="4" marker-end="url(#arrowTeal)"/>
+  <path d="M1388 830V860H1064V830" stroke="#2C8C7A" stroke-width="3.5" fill="none" marker-end="url(#arrowTeal)"/>
+  <text x="1140" y="878" class="small">静态反馈闭环</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1260" y="336" width="262" height="118" rx="24" fill="#FFFFFF"/>
+    <rect x="1260" y="336" width="262" height="118" rx="24" stroke="#BED5CF"/>
+    <rect x="1284" y="356" width="126" height="28" rx="14" fill="#D9F3EA"/>
+    <text x="1317" y="375" class="small">AssemblyAgent</text>
+    <text x="1288" y="411" class="nodeTitle">装配代码生成与执行</text>
+    <text x="1288" y="437" class="nodeText">导入零件、执行配合、保存 .SLDASM</text>
+  </g>
+
+  <path d="M1390 682V454" stroke="#2C8C7A" stroke-width="4" marker-end="url(#arrowTeal)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="1092" y="196" width="430" height="106" rx="24" fill="#E6F5F0"/>
+    <rect x="1092" y="196" width="430" height="106" rx="24" stroke="#B8DDD2"/>
+    <text x="1120" y="236" class="nodeTitle">按 Agent 划分的专属知识库</text>
+    <text x="1120" y="262" class="nodeText">Requirement / Assembly Planning / Part Modeling / Part Validation / Assembly</text>
+    <text x="1120" y="284" class="nodeText">为每个阶段提供能力边界、接口规则、装配范式和校验标准</text>
+  </g>
+
+  <path d="M1306 302V336" stroke="#7BAE9C" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  <path d="M1222 302V510" stroke="#7BAE9C" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  <path d="M1124 302V682" stroke="#7BAE9C" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  <path d="M1464 302V682" stroke="#7BAE9C" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  <path d="M1148 302V176H537" stroke="#7BAE9C" stroke-width="3" marker-end="url(#arrowTeal)"/>
+
+  <g>
+    <rect x="1110" y="860" width="408" height="34" rx="17" fill="#0F3A5B"/>
+    <text x="1132" y="882" class="label">核心思想：先识别任务类型，再用规划、执行、校验和反馈闭环提升 CAD 生成可靠性</text>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+Execution Failed with error:
+Traceback (most recent call last):
+  File "D:\a_src\python\sw_agent\agent_output\Square_Table_Assembly-20260416_173236\assembly\assembly_build.py", line 152, in <module>
+    main()
+  File "D:\a_src\python\sw_agent\agent_output\Square_Table_Assembly-20260416_173236\assembly\assembly_build.py", line 122, in main
+    top_comp = builder.add_component(parts_map["table_top"], 0, 0, 0)
+  File "D:\a_src\python\sw_agent\agent_output\Square_Table_Assembly-20260416_173236\assembly\assembly_build.py", line 43, in add_component
+    comp = self.assembly_doc.AddComponent5(path, 0, "", False, "", x, y, z)
+  File "D:\work\conda_python_env\conda\envs\cad\lib\site-packages\win32com\client\dynamic.py", line 629, in __getattr__
+    raise AttributeError(f"{self._username_}.{attr}")
+AttributeError: <unknown>.AddComponent5

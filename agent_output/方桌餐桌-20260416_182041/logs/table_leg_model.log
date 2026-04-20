@@ -1,0 +1,40 @@
+============================================================
+开始建模：桌腿 (table_leg)
+  方柱截面: 50.0×50.0 mm
+  方柱高度: 720.0 mm
+  凸台直径: 20.0 mm, 高度: 15.0 mm
+============================================================
+----------------------------------------
+Python 成功接收到的新零件名称: table_leg
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 18:21:34 - 接收到参数，尝试创建并激活文档: table_leg
+[DEBUG] 18:21:34 - 尝试连接 SolidWorks...
+[DEBUG] 18:21:34 - 成功连接到已运行的实例。
+
+[步骤1] 零件文档已创建: table_leg
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+[步骤2] 方柱截面草图已绘制 (50×50mm 中心矩形)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+[步骤3] 方柱主体已拉伸, 高度=720.0mm
+[步骤4] 顶面偏移平面已创建, 偏移=720.0mm
+[步骤5] 凸台圆草图已绘制, 直径=20.0mm
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+[步骤6] 凸台已拉伸, 高度=15.0mm
+✅ 成功创建基准轴 [boss_axis]
+[步骤7] 参考轴 'boss_axis' 已创建, 从(0,0,0)到(0,0,0.735)
+[步骤8] 参考面 'leg_top_face' 已创建, 偏移=720.0mm
+[步骤9] 参考面 'leg_bottom_face' 已创建, 偏移=0mm
+零件已保存至: D:\a_src\python\sw_agent\agent_output\方桌餐桌-20260416_182041\parts\table_leg\table_leg.SLDPRT
+[完成] 桌腿零件已成功保存至: D:\a_src\python\sw_agent\agent_output\方桌餐桌-20260416_182041\parts\table_leg\table_leg.SLDPRT
+============================================================
+桌腿 (table_leg) 建模完成
+  接口面: leg_top_face, leg_bottom_face
+  接口轴: boss_axis
+  关键点: bottom_center(0,0,0), top_center(0,0,720mm), boss_top_center(0,0,735mm)
+============================================================

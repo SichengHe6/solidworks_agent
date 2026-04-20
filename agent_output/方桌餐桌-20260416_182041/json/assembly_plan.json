@@ -1,0 +1,314 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "方桌餐桌",
+    "summary": "一张方形餐桌，由1个桌面和4条桌腿通过插接方式装配而成。桌面800×800×30mm，底部四角各有直径20mm深15mm盲孔；桌腿50×50×720mm方柱，顶部中心有直径20mm高15mm圆柱凸台插入桌面盲孔。整体高度750mm。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "桌面底面中心投影到地面的点，即桌面几何中心正下方地面处",
+      "x_direction": "桌面一条边方向（800mm边方向）",
+      "y_direction": "桌面另一条边方向（另一条800mm边方向），右手系确定",
+      "z_direction": "竖直向上，从地面指向桌面顶面"
+    },
+    "design_rules": [
+      "所有尺寸规划以mm为单位，建模代码中需转换为m（除以1000）",
+      "桌面以其几何中心为零件原点，主草图在XY平面，拉伸沿Z轴正方向",
+      "桌腿以其底面中心为零件原点，主草图在XY平面，拉伸沿Z轴正方向",
+      "凸台与盲孔均为直径20mm，间隙配合不考虑公差",
+      "无圆角、无倒角、无壳化、无加强筋",
+      "桌腿安装位置从桌面边缘内缩50mm，盲孔中心距桌面边缘75mm（内缩50mm + 桌腿半宽25mm）",
+      "四条桌腿使用同一个零件文件，装配时插入4个实例"
+    ],
+    "parts": [
+      {
+        "part_id": "table_top",
+        "name": "桌面",
+        "function": "提供水平承载面，底部四角盲孔用于插接桌腿凸台",
+        "shape": "800×800×30mm的方形板，底部四角各有一个直径20mm、深15mm的盲孔。盲孔从底面向上切入（不贯穿）。",
+        "key_dimensions": [
+          "桌面长度：800mm（X方向）",
+          "桌面宽度：800mm（Y方向）",
+          "桌面厚度：30mm（Z方向）",
+          "盲孔直径：20mm",
+          "盲孔深度：15mm（从底面向上）",
+          "盲孔中心距桌面边缘：75mm（X和Y方向各75mm）",
+          "四个盲孔中心相对于桌面中心的坐标：(-325,-325), (325,-325), (-325,325), (325,325)mm"
+        ],
+        "material_or_notes": "实木或木质材料，此处不指定具体材质，按默认处理",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "top_face",
+              "purpose": "桌面顶面，使用面",
+              "normal_direction_relation": "normal +Z（零件局部坐标系）"
+            },
+            {
+              "name": "bottom_face",
+              "purpose": "桌面底面，与桌腿顶面重合配合的基准面",
+              "normal_direction_relation": "normal -Z（零件局部坐标系）"
+            }
+          ],
+          "axes": [
+            {
+              "name": "hole_axis_front_left",
+              "purpose": "前左盲孔轴线，用于与桌腿凸台轴线同心配合",
+              "direction_relation": "along local Z，通过盲孔中心(-325, -325)mm相对于桌面中心"
+            },
+            {
+              "name": "hole_axis_front_right",
+              "purpose": "前右盲孔轴线，用于与桌腿凸台轴线同心配合",
+              "direction_relation": "along local Z，通过盲孔中心(325, -325)mm相对于桌面中心"
+            },
+            {
+              "name": "hole_axis_rear_left",
+              "purpose": "后左盲孔轴线，用于与桌腿凸台轴线同心配合",
+              "direction_relation": "along local Z，通过盲孔中心(-325, 325)mm相对于桌面中心"
+            },
+            {
+              "name": "hole_axis_rear_right",
+              "purpose": "后右盲孔轴线，用于与桌腿凸台轴线同心配合",
+              "direction_relation": "along local Z，通过盲孔中心(325, 325)mm相对于桌面中心"
+            }
+          ],
+          "points": [
+            {
+              "name": "center_origin",
+              "purpose": "桌面几何中心，零件原点",
+              "location_hint": "桌面底面中心 (0, 0, 0)mm"
+            },
+            {
+              "name": "hole_center_front_left",
+              "purpose": "前左盲孔中心",
+              "location_hint": "(-325, -325, 0)mm 相对于桌面中心，在底面上"
+            },
+            {
+              "name": "hole_center_front_right",
+              "purpose": "前右盲孔中心",
+              "location_hint": "(325, -325, 0)mm 相对于桌面中心，在底面上"
+            },
+            {
+              "name": "hole_center_rear_left",
+              "purpose": "后左盲孔中心",
+              "location_hint": "(-325, 325, 0)mm 相对于桌面中心，在底面上"
+            },
+            {
+              "name": "hole_center_rear_right",
+              "purpose": "后右盲孔中心",
+              "location_hint": "(325, 325, 0)mm 相对于桌面中心，在底面上"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "桌面作为装配基准件，固定在装配体中",
+          "桌面底面朝下（全局-Z方向），底面Z坐标为全局750mm处（桌面底面距地面750-30=720mm）——注意：在装配中桌面底面位于全局Z=720mm",
+          "四个盲孔分别与四条桌腿的凸台配合"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\parts\\table_top",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\parts\\table_top\\table_top_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\parts\\table_top\\table_top.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\logs\\table_top_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\json\\table_top_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "零件原点设在桌面底面中心",
+          "在XY平面绘制以原点为中心的800×800mm矩形草图",
+          "沿Z轴正方向拉伸30mm形成桌面板体",
+          "在底面（Z=0平面）绘制四个圆，圆心分别在(-325,-325), (325,-325), (-325,325), (325,325)mm，直径20mm",
+          "对四个圆执行切除拉伸，从底面向Z轴正方向（即向板体内部）切入15mm，形成盲孔",
+          "为每个盲孔创建参考轴（通过圆柱面），分别命名为hole_axis_front_left, hole_axis_front_right, hole_axis_rear_left, hole_axis_rear_right",
+          "不加圆角、倒角、壳化",
+          "所有尺寸建模时除以1000转换为米"
+        ]
+      },
+      {
+        "part_id": "table_leg",
+        "name": "桌腿",
+        "function": "支撑桌面，顶部凸台插入桌面底部盲孔实现连接",
+        "shape": "50×50×720mm的方柱主体，顶面中心有一个直径20mm、高15mm的圆柱凸台。总高度735mm（方柱720mm + 凸台15mm）。",
+        "key_dimensions": [
+          "方柱截面：50×50mm",
+          "方柱高度：720mm（Z方向）",
+          "凸台直径：20mm",
+          "凸台高度：15mm",
+          "凸台位于方柱顶面中心",
+          "零件总高度：735mm（720mm方柱 + 15mm凸台）"
+        ],
+        "material_or_notes": "实木或木质材料，与桌面相同，按默认处理",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "leg_top_face",
+              "purpose": "桌腿方柱顶面（不含凸台），与桌面底面重合配合",
+              "normal_direction_relation": "normal +Z（零件局部坐标系）"
+            },
+            {
+              "name": "leg_bottom_face",
+              "purpose": "桌腿底面，接触地面",
+              "normal_direction_relation": "normal -Z（零件局部坐标系）"
+            }
+          ],
+          "axes": [
+            {
+              "name": "boss_axis",
+              "purpose": "凸台圆柱轴线，用于与桌面盲孔轴线同心配合",
+              "direction_relation": "along local Z，通过方柱顶面中心"
+            }
+          ],
+          "points": [
+            {
+              "name": "bottom_center",
+              "purpose": "桌腿底面中心，零件原点",
+              "location_hint": "(0, 0, 0)mm"
+            },
+            {
+              "name": "top_center",
+              "purpose": "桌腿方柱顶面中心，凸台底面中心",
+              "location_hint": "(0, 0, 720)mm"
+            },
+            {
+              "name": "boss_top_center",
+              "purpose": "凸台顶面中心",
+              "location_hint": "(0, 0, 735)mm"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "共4个实例，分别安装在桌面四角盲孔位置",
+          "每个实例的凸台轴线与对应盲孔轴线同心配合",
+          "每个实例的方柱顶面（leg_top_face）与桌面底面（bottom_face）重合配合",
+          "装配后凸台插入盲孔内，桌腿顶面紧贴桌面底面",
+          "桌腿底面接触地面（全局Z=0）"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\parts\\table_leg",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\parts\\table_leg\\table_leg_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\parts\\table_leg\\table_leg.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\logs\\table_leg_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\json\\table_leg_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "零件原点设在桌腿底面中心",
+          "在XY平面绘制以原点为中心的50×50mm矩形草图",
+          "沿Z轴正方向拉伸720mm形成方柱主体",
+          "在方柱顶面（Z=720mm平面）绘制以顶面中心为圆心、直径20mm的圆",
+          "沿Z轴正方向拉伸15mm形成凸台",
+          "为凸台创建参考轴（通过凸台圆柱面），命名为boss_axis",
+          "不加圆角、倒角、壳化",
+          "所有尺寸建模时除以1000转换为米"
+        ]
+      }
+    ],
+    "assembly_sequence": [
+      "1. 将桌面（table_top）插入装配体并固定，桌面底面朝向全局-Z方向，桌面底面位于全局Z=720mm处",
+      "2. 插入第1条桌腿（table_leg实例1-前左），凸台轴线与桌面前左盲孔轴线同心，桌腿顶面与桌面底面重合",
+      "3. 插入第2条桌腿（table_leg实例2-前右），凸台轴线与桌面前右盲孔轴线同心，桌腿顶面与桌面底面重合",
+      "4. 插入第3条桌腿（table_leg实例3-后左），凸台轴线与桌面后左盲孔轴线同心，桌腿顶面与桌面底面重合",
+      "5. 插入第4条桌腿（table_leg实例4-后右），凸台轴线与桌面后右盲孔轴线同心，桌腿顶面与桌面底面重合"
+    ],
+    "constraints": [
+      {
+        "source_part_id": "table_top",
+        "source_interface": "",
+        "target_part_id": "GROUND",
+        "target_interface": "",
+        "relation": "fix",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "桌面作为基准件固定在装配体中，桌面底面位于全局Z=720mm"
+      },
+      {
+        "source_part_id": "table_leg_instance_1",
+        "source_interface": "boss_axis",
+        "target_part_id": "table_top",
+        "target_interface": "hole_axis_front_left",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "前左桌腿凸台轴线与桌面前左盲孔轴线同心"
+      },
+      {
+        "source_part_id": "table_leg_instance_1",
+        "source_interface": "leg_top_face",
+        "target_part_id": "table_top",
+        "target_interface": "bottom_face",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "前左桌腿顶面与桌面底面贴合，法线方向相反（桌腿顶面法线+Z，桌面底面法线-Z）"
+      },
+      {
+        "source_part_id": "table_leg_instance_2",
+        "source_interface": "boss_axis",
+        "target_part_id": "table_top",
+        "target_interface": "hole_axis_front_right",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "前右桌腿凸台轴线与桌面前右盲孔轴线同心"
+      },
+      {
+        "source_part_id": "table_leg_instance_2",
+        "source_interface": "leg_top_face",
+        "target_part_id": "table_top",
+        "target_interface": "bottom_face",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "前右桌腿顶面与桌面底面贴合"
+      },
+      {
+        "source_part_id": "table_leg_instance_3",
+        "source_interface": "boss_axis",
+        "target_part_id": "table_top",
+        "target_interface": "hole_axis_rear_left",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "后左桌腿凸台轴线与桌面后左盲孔轴线同心"
+      },
+      {
+        "source_part_id": "table_leg_instance_3",
+        "source_interface": "leg_top_face",
+        "target_part_id": "table_top",
+        "target_interface": "bottom_face",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "后左桌腿顶面与桌面底面贴合"
+      },
+      {
+        "source_part_id": "table_leg_instance_4",
+        "source_interface": "boss_axis",
+        "target_part_id": "table_top",
+        "target_interface": "hole_axis_rear_right",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "后右桌腿凸台轴线与桌面后右盲孔轴线同心"
+      },
+      {
+        "source_part_id": "table_leg_instance_4",
+        "source_interface": "leg_top_face",
+        "target_part_id": "table_top",
+        "target_interface": "bottom_face",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "后右桌腿顶面与桌面底面贴合"
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\assembly\\方桌餐桌.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\方桌餐桌-20260416_182041\\logs\\assembly.log"
+    }
+  }
+}

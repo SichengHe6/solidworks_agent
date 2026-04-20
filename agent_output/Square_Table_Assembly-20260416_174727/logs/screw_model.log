@@ -1,0 +1,18 @@
+----------------------------------------
+Python 成功接收到的新零件名称: screw
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 17:48:27 - 接收到参数，尝试创建并激活文档: screw
+[DEBUG] 17:48:27 - 尝试连接 SolidWorks...
+[DEBUG] 17:48:27 - 成功连接到已运行的实例。
+
+开始建模：简化沉头螺钉
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+旋转拉伸成功
+旋转特征创建完成
+✅ 成功创建基准轴 [screw_axis]
+装配接口 (screw_axis, head_bottom_face) 创建完成
+零件已保存至: D:\a_src\python\sw_agent\agent_output\Square_Table_Assembly-20260416_174727\parts\screw\screw.SLDPRT
+零件成功保存至: D:\a_src\python\sw_agent\agent_output\Square_Table_Assembly-20260416_174727\parts\screw\screw.SLDPRT

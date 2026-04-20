@@ -1,0 +1,19 @@
+开始装配任务: 4_Axis_Serial_Robot_Arm
+----------------------------------------
+Python 成功接收到的新装配名称: 
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 17:57:21 - 接收到参数，尝试创建并激活文档: 4_Axis_Serial_Robot_Arm
+[DEBUG] 17:57:21 - 尝试连接 SolidWorks...
+[DEBUG] 17:57:21 - 成功连接到已运行的实例。
+
+步骤 1: 插入底座 (基准件)
+成功导入组件: base_station-1
+步骤 2: 插入大臂
+成功导入组件: upper_arm-1
+步骤 3: 插入小臂
+成功导入组件: forearm-1
+步骤 4: 插入夹爪组件
+文件不存在: D:\a_src\python\sw_agent\agent_output\4_Axis_Serial_Robot_Arm-20260416_175529\parts\gripper_unit\gripper_unit.SLDPRT
+错误: 零件 gripper_unit 插入失败

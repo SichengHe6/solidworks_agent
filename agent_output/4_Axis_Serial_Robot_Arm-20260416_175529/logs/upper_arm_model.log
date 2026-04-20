@@ -1,0 +1,32 @@
+----------------------------------------
+Python 成功接收到的新零件名称: upper_arm
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 17:56:08 - 接收到参数，尝试创建并激活文档: upper_arm
+[DEBUG] 17:56:08 - 尝试连接 SolidWorks...
+[DEBUG] 17:56:08 - 成功连接到已运行的实例。
+
+开始建模零件: upper_arm (大臂)
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+主体拉伸完成: 高度 0.4m
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+底部轴孔切除完成
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+底部横向轴孔 (axis_2_rot) 完成
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+顶部横向轴孔 (axis_3_rot) 完成
+✅ 成功创建基准轴 [axis_1_conn]
+✅ 成功创建基准轴 [axis_2_rot]
+✅ 成功创建基准轴 [axis_3_rot]
+零件已保存至: D:\a_src\python\sw_agent\agent_output\4_Axis_Serial_Robot_Arm-20260416_175529\parts\upper_arm\upper_arm.SLDPRT
+零件成功保存至: D:\a_src\python\sw_agent\agent_output\4_Axis_Serial_Robot_Arm-20260416_175529\parts\upper_arm\upper_arm.SLDPRT

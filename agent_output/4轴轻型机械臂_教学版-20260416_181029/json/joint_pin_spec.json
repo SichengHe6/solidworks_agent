@@ -1,0 +1,75 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "4轴轻型机械臂_教学版",
+    "summary": "设计一个包含底座、回转台、大臂、小臂、末端法兰及关节销轴的4轴机械臂装配体。各连杆采用矩形截面拉伸，关节采用销轴连接，通过平面重合和轴同心配合实现运动。",
+    "global_coordinate_system": {
+      "origin": "底座底面几何中心",
+      "x_direction": "机械臂正前方(大臂伸展方向)",
+      "y_direction": "底座右侧(右手系)",
+      "z_direction": "垂直向上(第一回转轴方向)"
+    },
+    "design_rules": [
+      "所有尺寸在底层代码生成时需将mm转换为m",
+      "主草图默认在XY基准面绘制，特征沿Z轴拉伸",
+      "装配配合仅允许使用face_coincident和axi_coincident",
+      "相邻零件配合面预留0.5mm工程间隙以防干涉",
+      "接口命名严格使用snake_case且全局唯一，不依赖运行时推断"
+    ],
+    "assembly_sequence": [
+      "1. 插入 base_plate 并固定为 GROUND",
+      "2. 插入 turntable，施加 face_coincident(base_face_top, turntable_face_bottom) 与 axi_coincident(base_axis_z, turntable_axis_z)",
+      "3. 插入 upper_arm，施加 face_coincident(turntable_face_side_y, upper_arm_face_root) 与 axi_coincident(turntable_axis_y, upper_arm_axis_root_y)",
+      "4. 插入 forearm，施加 face_coincident(upper_arm_face_tip, forearm_face_root) 与 axi_coincident(upper_arm_axis_tip_y, forearm_axis_root_y)",
+      "5. 插入 end_flange，施加 face_coincident(forearm_face_tip, flange_face_back) 与 axi_coincident(forearm_axis_tip_y, flange_axis_z)",
+      "6. 依次插入 4 个 joint_pin，分别与各关节孔施加 axi_coincident 配合"
+    ]
+  },
+  "part": {
+    "part_id": "joint_pin",
+    "name": "关节销轴",
+    "function": "连接相邻连杆，传递扭矩并允许相对转动",
+    "shape": "标准圆柱销，两端平头，中心无螺纹",
+    "key_dimensions": [
+      "Ø20x80 mm"
+    ],
+    "material_or_notes": "45钢调质处理，表面镀硬铬，需保证Ø20g6公差",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "pin_face_end1",
+          "purpose": "轴向定位参考面",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "pin_face_end2",
+          "purpose": "轴向定位参考面",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "pin_axis_main",
+          "purpose": "销轴中心线",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "插入各关节孔中，与孔轴同心，两端面与连杆凸耳外侧面平齐或略缩进"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4轴轻型机械臂_教学版-20260416_181029\\parts\\joint_pin",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4轴轻型机械臂_教学版-20260416_181029\\parts\\joint_pin\\joint_pin_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4轴轻型机械臂_教学版-20260416_181029\\parts\\joint_pin\\joint_pin.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4轴轻型机械臂_教学版-20260416_181029\\logs\\joint_pin_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4轴轻型机械臂_教学版-20260416_181029\\json\\joint_pin_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在XY基准面绘制Ø20圆，单向拉伸80mm",
+      "两端可添加1x45°倒角便于装配",
+      "创建中心Z向参考轴"
+    ]
+  }
+}
