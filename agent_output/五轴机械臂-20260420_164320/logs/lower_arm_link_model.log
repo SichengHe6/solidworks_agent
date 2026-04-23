@@ -1,0 +1,25 @@
+[lower_arm_link] 正在创建零件文档: lower_arm_link
+----------------------------------------
+Python 成功接收到的新零件名称: lower_arm_link
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 16:54:20 - 接收到参数，尝试创建并激活文档: lower_arm_link
+[DEBUG] 16:54:20 - 尝试连接 SolidWorks...
+[DEBUG] 16:54:20 - 成功连接到已运行的实例。
+
+[lower_arm_link] 尺寸参数: 直径=55mm, 高度=180mm, 半径=0.0275m, 拉伸高度=0.18m
+[lower_arm_link] 在 XY 面绘制圆形草图...
+[lower_arm_link] 沿 Z 轴正向拉伸，高度: 0.18 m...
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+[lower_arm_link] 创建装配接口特征...
+[lower_arm_link] 已创建面接口: mount_face_bottom (偏移 XY 0m)
+[lower_arm_link] 已创建面接口: mount_face_top (偏移 XY 0.18m)
+✅ 成功创建基准轴 [Axis3]
+[lower_arm_link] 已创建轴接口: main_axis_z (从 (0,0,0) 到 (0,0,0.18))
+[lower_arm_link] 点接口记录: center_point_bottom 坐标为 (0, 0, 0)
+[lower_arm_link] 准备保存零件至: D:\a_src\python\sw_agent\agent_output\五轴机械臂-20260420_164320\parts\lower_arm_link\lower_arm_link.SLDPRT
+零件已保存至: D:\a_src\python\sw_agent\agent_output\五轴机械臂-20260420_164320\parts\lower_arm_link\lower_arm_link.SLDPRT
+[lower_arm_link] 零件建模与保存完成！

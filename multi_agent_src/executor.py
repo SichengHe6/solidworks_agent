@@ -74,8 +74,29 @@ def run_basic_python_checks(code: str) -> list[str]:
     try:
         ast.parse(code)
     except SyntaxError as exc:
-        issues.append(f"Python 语法错误: line {exc.lineno}, offset {exc.offset}, {exc.msg}")
+        issues.append(f"HARD: Python 语法错误: line {exc.lineno}, offset {exc.offset}, {exc.msg}")
     return issues
+
+
+def code_uses_save_path(code: str, expected_path: str) -> bool:
+    normalized_code = code.replace("\\\\", "\\")
+    normalized_path = expected_path.replace("\\\\", "\\")
+    filename = Path(expected_path).name
+    parent = str(Path(expected_path).parent).replace("\\\\", "\\")
+
+    if normalized_path and normalized_path in normalized_code:
+        return True
+
+    has_save_call = "save_as(" in normalized_code
+    mentions_filename = filename and filename in normalized_code
+    mentions_parent = parent and parent in normalized_code
+    mentions_path_variable = any(
+        token in normalized_code
+        for token in ("model_file", "model_path", "save_path", "output_path", "target_path")
+    )
+    uses_path_join = "os.path.join" in normalized_code or "Path(" in normalized_code
+
+    return has_save_call and mentions_filename and (mentions_parent or mentions_path_variable or uses_path_join)
 
 
 def run_part_plan_checks(full_plan: dict[str, Any], part_spec: dict[str, Any], code: str) -> list[str]:
@@ -83,12 +104,12 @@ def run_part_plan_checks(full_plan: dict[str, Any], part_spec: dict[str, Any], c
 
     workspace = part_spec.get("workspace", {})
     model_file = workspace.get("model_file", "")
-    if model_file and model_file not in code:
-        issues.append("代码中未显式使用 part_spec.workspace.model_file 指定的保存路径。")
+    if model_file and not code_uses_save_path(code, model_file):
+        issues.append("WARN: 代码中未能明确识别到 part_spec.workspace.model_file 对应的保存路径。")
 
     part_name = part_spec.get("name", "")
     if part_name and part_name not in code:
-        issues.append("代码中未显式体现零件名称，后续排查日志会较困难。")
+        issues.append("WARN: 代码中未显式体现零件名称，后续排查日志会较困难。")
 
     interface_names: list[str] = []
     interfaces = part_spec.get("interfaces", {})
@@ -99,7 +120,7 @@ def run_part_plan_checks(full_plan: dict[str, Any], part_spec: dict[str, Any], c
                 interface_names.append(name)
 
     if interface_names and not any(name in code for name in interface_names):
-        issues.append("代码中没有体现任何规划接口名称，可能无法支撑后续装配引用。")
+        issues.append("WARN: 代码中没有体现任何规划接口名称，可能无法支撑后续装配引用。")
 
     assembly_name = (
         full_plan.get("assembly", {}).get("name")
@@ -107,7 +128,7 @@ def run_part_plan_checks(full_plan: dict[str, Any], part_spec: dict[str, Any], c
         else full_plan.get("name")
     )
     if assembly_name and assembly_name not in code:
-        issues.append("代码中未包含装配或任务名称，建议补充到日志或文件名相关代码中。")
+        issues.append("WARN: 代码中未包含装配或任务名称，建议补充到日志或文件名相关代码中。")
 
     return issues
 
@@ -118,12 +139,12 @@ def run_assembly_plan_checks(plan: dict[str, Any], code: str) -> list[str]:
     assembly = plan.get("assembly", {})
     assembly_output = assembly.get("assembly_output", {})
     model_file = assembly_output.get("model_file", "")
-    if model_file and model_file not in code:
-        issues.append("装配代码中未显式使用 assembly_output.model_file 指定的保存路径。")
+    if model_file and not code_uses_save_path(code, model_file):
+        issues.append("WARN: 装配代码中未能明确识别到 assembly_output.model_file 对应的保存路径。")
 
     for part in assembly.get("parts", []):
         model_path = part.get("workspace", {}).get("model_file", "")
-        if model_path and model_path not in code:
-            issues.append(f"装配代码中未显式使用零件路径: {model_path}")
+        if model_path and not code_uses_save_path(code, model_path) and Path(model_path).name not in code:
+            issues.append(f"WARN: 装配代码中未显式使用零件路径: {model_path}")
 
     return issues

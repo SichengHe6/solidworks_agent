@@ -1,0 +1,32 @@
+----------------------------------------
+Python 成功接收到的新零件名称: Base
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 17:15:57 - 接收到参数，尝试创建并激活文档: Base
+[DEBUG] 17:15:57 - 尝试连接 SolidWorks...
+[DEBUG] 17:15:57 - 成功连接到已运行的实例。
+
+开始建模零件: Base
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+底座主体创建完成
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+下部台阶创建完成
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+上部台阶创建完成
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+顶部凸台创建完成
+✅ 成功创建基准轴 [main_axis_z]
+装配接口创建完成
+正在保存零件到: D:\a_src\python\sw_agent\agent_output\4Axis_RobotArm_Assembly-20260421_171347\parts\base\base.SLDPRT ...
+零件已保存至: D:\a_src\python\sw_agent\agent_output\4Axis_RobotArm_Assembly-20260421_171347\parts\base\base.SLDPRT
+零件成功保存至: D:\a_src\python\sw_agent\agent_output\4Axis_RobotArm_Assembly-20260421_171347\parts\base\base.SLDPRT

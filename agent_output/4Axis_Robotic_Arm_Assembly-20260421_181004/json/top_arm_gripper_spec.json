@@ -1,0 +1,90 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "4Axis_Robotic_Arm_Assembly",
+    "summary": "生成一个包含底座、3个中间臂段和1个带夹爪顶臂的4轴机械臂装配体。底座为长方体加圆台接口；臂段由两端方块（60x60x60mm）和中间圆柱组成，通过侧面销孔配合实现竖直转动；底座与第一臂通过中心轴孔配合实现水平转动。所有方块棱边倒角C2。交付SolidWorks零件及装配文件。",
+    "global_coordinate_system": {
+      "origin": "Base bottom center",
+      "x_direction": "Forward (Arm extension direction when neutral)",
+      "y_direction": "Right (perpendicular to X and Z)",
+      "z_direction": "Up (Vertical axis of Base)"
+    },
+    "design_rules": [
+      "All dimensions in mm, convert to meters for modeling API.",
+      "Chamfer C2 on all cube edges of arm segments.",
+      "Clearance fit assumed for pin/hole interfaces (nominal size used for geometry).",
+      "Gripper fingers are modeled in half-open state."
+    ],
+    "assembly_sequence": [
+      "Insert base_plate and fix to GROUND.",
+      "Insert arm_segment_1.",
+      "Mate arm_segment_1.central_hole_axis concentric with base_plate.main_axis_z.",
+      "Mate arm_segment_1.bottom_face coincident with base_plate.boss_top_face.",
+      "Insert arm_segment_2.",
+      "Mate arm_segment_2.bottom_hole_axis concentric with arm_segment_1.pin_axis.",
+      "Mate arm_segment_2.bottom_side_face coincident with arm_segment_1.top_pin_face (or appropriate offset).",
+      "Insert arm_segment_3.",
+      "Mate arm_segment_3.bottom_hole_axis concentric with arm_segment_2.pin_axis.",
+      "Mate arm_segment_3.bottom_side_face coincident with arm_segment_2.top_pin_face.",
+      "Insert top_arm_gripper.",
+      "Mate top_arm_gripper.bottom_hole_axis concentric with arm_segment_3.pin_axis.",
+      "Mate top_arm_gripper.bottom_side_face coincident with arm_segment_3.top_pin_face."
+    ]
+  },
+  "part": {
+    "part_id": "top_arm_gripper",
+    "name": "Top Arm with Gripper",
+    "function": "Final link with integrated parallel gripper.",
+    "shape": "Bottom part: 60x60x60mm cube with side Φ10 through-hole, connected via Φ40x150mm cylinder to a top mounting block. Top mounting block holds two parallel fingers (40x10x5mm) in half-open state. No top pin. All cube/block edges chamfered C2.",
+    "key_dimensions": [
+      "Bottom Cube: 60x60x60 mm",
+      "Connector Cylinder: Dia 40mm, Length 150mm",
+      "Bottom Side Hole: Dia 10mm, Through",
+      "Fingers: 40x10x5 mm each",
+      "Chamfer: C2"
+    ],
+    "material_or_notes": "Aluminum body, plastic or metal fingers.",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "bottom_side_face",
+          "purpose": "Mates with Arm 3 top pin face",
+          "normal_direction_relation": "normal -X (local)"
+        },
+        {
+          "name": "gripper_base_face",
+          "purpose": "Mounting surface for fingers",
+          "normal_direction_relation": "normal +Z (local)"
+        }
+      ],
+      "axes": [
+        {
+          "name": "bottom_hole_axis",
+          "purpose": "Concentric with Arm 3 pin_axis",
+          "direction_relation": "along local X, offset in bottom cube"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Bottom hole concentric with Arm 3 pin_axis.",
+      "Bottom side face coincident/offset with Arm 3 top_pin_face.",
+      "No further assembly constraints above this part."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\parts\\top_arm_gripper",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\parts\\top_arm_gripper\\top_arm_gripper_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\parts\\top_arm_gripper\\top_arm_gripper.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\logs\\top_arm_gripper_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\json\\top_arm_gripper_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Model bottom cube with side hole Dia 10.",
+      "Extrude connector cylinder Dia 40, length 150.",
+      "Create top mounting block (e.g., 60x60x20mm).",
+      "Model two fingers 40x10x5mm attached to top block, spaced apart (half-open).",
+      "Chamfer C2 on all sharp edges of cubes/blocks.",
+      "Define bottom_hole_axis."
+    ]
+  }
+}

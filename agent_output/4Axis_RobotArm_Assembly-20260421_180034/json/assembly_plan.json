@@ -1,0 +1,355 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "4Axis_RobotArm_Assembly",
+    "summary": "一个包含底座和3节机械臂连杆的4轴机械臂装配体。底座提供水平旋转（Yaw），各臂之间提供竖直旋转（Pitch）。连杆主体为φ60圆柱，两端带80x80x25方块并倒角C5。连接方式采用轴孔配合：底座顶部φ40轴插入Link1底部φ42孔；Link1/2顶部侧面伸出φ30销轴，插入下一节臂底部侧面φ32孔，预留间隙防干涉。Link3末端集成固定式平行夹爪。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "Base bottom center",
+      "x_direction": "Forward (Front of robot)",
+      "y_direction": "Right (Side of robot)",
+      "z_direction": "Up (Vertical axis)"
+    },
+    "design_rules": [
+      "Units: mm in description, convert to meters for modeling code.",
+      "Clearance: Shaft-hole fit has 1mm radial clearance (2mm diameter difference).",
+      "Spacing: Adjacent arm end faces have 2mm gap.",
+      "Chamfer: C5 chamfer on block edges."
+    ],
+    "parts": [
+      {
+        "part_id": "base_plate",
+        "name": "Base Plate",
+        "function": "Provides stable foundation and Yaw rotation axis.",
+        "shape": "Rectangular prism 200x200x100mm with a central cylindrical boss φ40x30mm on top face.",
+        "key_dimensions": [
+          "Length: 200mm",
+          "Width: 200mm",
+          "Height: 100mm",
+          "Boss Diameter: 40mm",
+          "Boss Height: 30mm"
+        ],
+        "material_or_notes": "Steel or Aluminum. Boss is integral part of base.",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "base_bottom_face",
+              "purpose": "Mounting to ground/floor",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "base_top_face",
+              "purpose": "Mating surface for Link1",
+              "normal_direction_relation": "normal +Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "base_top_axis",
+              "purpose": "Yaw rotation axis, concentric with Link1 bottom hole",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "Fixed to GROUND.",
+          "Top face mates with Link1 bottom face.",
+          "Top axis mates with Link1 bottom hole axis."
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\base_plate",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\base_plate\\base_plate_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\base_plate\\base_plate.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\logs\\base_plate_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\json\\base_plate_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "Create sketch on XY plane centered at origin.",
+          "Draw rectangle 200x200mm.",
+          "Extrude up 100mm.",
+          "On top face, create sketch circle φ40mm centered.",
+          "Extrude up 30mm to form boss."
+        ]
+      },
+      {
+        "part_id": "link_1",
+        "name": "Link 1",
+        "function": "First arm segment, connects Base to Link 2 via Pitch joint.",
+        "shape": "Central cylinder φ60x300mm. Bottom end has 80x80x25mm block with φ42mm through hole. Top end has 80x80x25mm block with φ30mm side pin extending along X.",
+        "key_dimensions": [
+          "Cylinder Length: 300mm",
+          "Cylinder Diameter: 60mm",
+          "End Block Size: 80x80x25mm",
+          "Bottom Hole Diameter: 42mm",
+          "Top Pin Diameter: 30mm",
+          "Top Pin Length: 20mm"
+        ],
+        "material_or_notes": "Aluminum. Chamfer C5 on block edges.",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "link1_bottom_face",
+              "purpose": "Mates with Base top face",
+              "normal_direction_relation": "normal -Z (local)"
+            },
+            {
+              "name": "link1_top_side_face_pin_base",
+              "purpose": "Reference for pin location",
+              "normal_direction_relation": "normal +X (local)"
+            }
+          ],
+          "axes": [
+            {
+              "name": "link1_bottom_hole_axis",
+              "purpose": "Concentric with Base top axis",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "link1_top_pin_axis",
+              "purpose": "Pitch rotation axis, concentric with Link2 bottom side hole",
+              "direction_relation": "along local X"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "Bottom hole axis concentric with Base top axis.",
+          "Bottom face coincident with Base top face.",
+          "Top pin axis concentric with Link2 bottom side hole axis.",
+          "Top pin base face offset 2mm from Link2 bottom side face."
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_1",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_1\\link_1_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_1\\link_1.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\logs\\link_1_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\json\\link_1_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "Create sketch on XY plane, draw circle φ60mm, extrude 300mm along Z.",
+          "At bottom (Z=0), create sketch on XY plane, draw square 80x80mm centered, extrude down 25mm.",
+          "Cut hole φ42mm through the bottom block along Z.",
+          "Apply C5 chamfer to bottom block edges.",
+          "At top (Z=300), create sketch on XY plane, draw square 80x80mm centered, extrude up 25mm.",
+          "On the +X side face of the top block, create sketch circle φ30mm centered vertically.",
+          "Extrude out 20mm along +X to form pin.",
+          "Apply C5 chamfer to top block edges."
+        ]
+      },
+      {
+        "part_id": "link_2",
+        "name": "Link 2",
+        "function": "Second arm segment, connects Link 1 to Link 3 via Pitch joint.",
+        "shape": "Central cylinder φ60x250mm. Bottom end has 80x80x25mm block with φ32mm side hole. Top end has 80x80x25mm block with φ30mm side pin extending along X.",
+        "key_dimensions": [
+          "Cylinder Length: 250mm",
+          "Cylinder Diameter: 60mm",
+          "End Block Size: 80x80x25mm",
+          "Bottom Side Hole Diameter: 32mm",
+          "Top Pin Diameter: 30mm",
+          "Top Pin Length: 20mm"
+        ],
+        "material_or_notes": "Aluminum. Chamfer C5 on block edges.",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "link2_bottom_side_face_hole",
+              "purpose": "Mates with Link1 top pin base face (with gap)",
+              "normal_direction_relation": "normal -X (local)"
+            },
+            {
+              "name": "link2_top_side_face_pin_base",
+              "purpose": "Reference for pin location",
+              "normal_direction_relation": "normal +X (local)"
+            }
+          ],
+          "axes": [
+            {
+              "name": "link2_bottom_side_hole_axis",
+              "purpose": "Concentric with Link1 top pin axis",
+              "direction_relation": "along local X"
+            },
+            {
+              "name": "link2_top_pin_axis",
+              "purpose": "Pitch rotation axis, concentric with Link3 bottom side hole",
+              "direction_relation": "along local X"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "Bottom side hole axis concentric with Link1 top pin axis.",
+          "Bottom side face offset 2mm from Link1 top pin base face.",
+          "Top pin axis concentric with Link3 bottom side hole axis.",
+          "Top pin base face offset 2mm from Link3 bottom side face."
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_2",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_2\\link_2_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_2\\link_2.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\logs\\link_2_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\json\\link_2_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "Create sketch on XY plane, draw circle φ60mm, extrude 250mm along Z.",
+          "At bottom (Z=0), create sketch on XY plane, draw square 80x80mm centered, extrude down 25mm.",
+          "On the -X side face of the bottom block, create sketch circle φ32mm centered vertically.",
+          "Cut hole through the block along X.",
+          "Apply C5 chamfer to bottom block edges.",
+          "At top (Z=250), create sketch on XY plane, draw square 80x80mm centered, extrude up 25mm.",
+          "On the +X side face of the top block, create sketch circle φ30mm centered vertically.",
+          "Extrude out 20mm along +X to form pin.",
+          "Apply C5 chamfer to top block edges."
+        ]
+      },
+      {
+        "part_id": "link_3_with_gripper",
+        "name": "Link 3 with Gripper",
+        "function": "Third arm segment with integrated fixed parallel gripper.",
+        "shape": "Central cylinder φ60x200mm. Bottom end has 80x80x25mm block with φ32mm side hole. Top end integrates a fixed parallel gripper structure.",
+        "key_dimensions": [
+          "Cylinder Length: 200mm",
+          "Cylinder Diameter: 60mm",
+          "End Block Size: 80x80x25mm",
+          "Bottom Side Hole Diameter: 32mm",
+          "Gripper Width: 100mm (assumed)",
+          "Gripper Jaw Thickness: 10mm (assumed)"
+        ],
+        "material_or_notes": "Aluminum. Chamfer C5 on block edges. Gripper is static geometry.",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "link3_bottom_side_face_hole",
+              "purpose": "Mates with Link2 top pin base face (with gap)",
+              "normal_direction_relation": "normal -X (local)"
+            }
+          ],
+          "axes": [
+            {
+              "name": "link3_bottom_side_hole_axis",
+              "purpose": "Concentric with Link2 top pin axis",
+              "direction_relation": "along local X"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "Bottom side hole axis concentric with Link2 top pin axis.",
+          "Bottom side face offset 2mm from Link2 top pin base face."
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_3_with_gripper",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_3_with_gripper\\link_3_with_gripper_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_3_with_gripper\\link_3_with_gripper.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\logs\\link_3_with_gripper_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\json\\link_3_with_gripper_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "Create sketch on XY plane, draw circle φ60mm, extrude 200mm along Z.",
+          "At bottom (Z=0), create sketch on XY plane, draw square 80x80mm centered, extrude down 25mm.",
+          "On the -X side face of the bottom block, create sketch circle φ32mm centered vertically.",
+          "Cut hole through the block along X.",
+          "Apply C5 chamfer to bottom block edges.",
+          "At top (Z=200), model fixed parallel gripper: Create two rectangular jaws extending from the top face, symmetric about Z axis."
+        ]
+      }
+    ],
+    "assembly_sequence": [
+      "Insert base_plate and fix to GROUND.",
+      "Insert link_1.",
+      "Mate link_1.bottom_hole_axis to base_plate.base_top_axis (concentric).",
+      "Mate link_1.bottom_face to base_plate.base_top_face (coincident).",
+      "Insert link_2.",
+      "Mate link_2.bottom_side_hole_axis to link_1.top_pin_axis (concentric).",
+      "Mate link_2.bottom_side_face_hole to link_1.top_side_face_pin_base with 2mm offset (distance).",
+      "Insert link_3_with_gripper.",
+      "Mate link_3.bottom_side_hole_axis to link_2.top_pin_axis (concentric).",
+      "Mate link_3.bottom_side_face_hole to link_2.top_side_face_pin_base with 2mm offset (distance)."
+    ],
+    "constraints": [
+      {
+        "source_part_id": "base_plate",
+        "source_interface": "base_bottom_face",
+        "target_part_id": "GROUND",
+        "target_interface": "XY_Plane",
+        "relation": "fix",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Fix base to global origin"
+      },
+      {
+        "source_part_id": "link_1",
+        "source_interface": "link1_bottom_hole_axis",
+        "target_part_id": "base_plate",
+        "target_interface": "base_top_axis",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "Yaw joint concentricity"
+      },
+      {
+        "source_part_id": "link_1",
+        "source_interface": "link1_bottom_face",
+        "target_part_id": "base_plate",
+        "target_interface": "base_top_face",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "Yaw joint face contact"
+      },
+      {
+        "source_part_id": "link_2",
+        "source_interface": "link2_bottom_side_hole_axis",
+        "target_part_id": "link_1",
+        "target_interface": "link1_top_pin_axis",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "Pitch joint 1 concentricity"
+      },
+      {
+        "source_part_id": "link_2",
+        "source_interface": "link2_bottom_side_face_hole",
+        "target_part_id": "link_1",
+        "target_interface": "link1_top_side_face_pin_base",
+        "relation": "distance",
+        "alignment": "opposed",
+        "offset_mm": 2,
+        "notes": "Pitch joint 1 spacing"
+      },
+      {
+        "source_part_id": "link_3_with_gripper",
+        "source_interface": "link3_bottom_side_hole_axis",
+        "target_part_id": "link_2",
+        "target_interface": "link2_top_pin_axis",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "Pitch joint 2 concentricity"
+      },
+      {
+        "source_part_id": "link_3_with_gripper",
+        "source_interface": "link3_bottom_side_face_hole",
+        "target_part_id": "link_2",
+        "target_interface": "link2_top_side_face_pin_base",
+        "relation": "distance",
+        "alignment": "opposed",
+        "offset_mm": 2,
+        "notes": "Pitch joint 2 spacing"
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\assembly\\4Axis_RobotArm_Assembly.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\logs\\assembly.log"
+    }
+  }
+}

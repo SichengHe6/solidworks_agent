@@ -87,7 +87,7 @@
 
 ### 路径必须来自输入
 你必须使用传入的零件文件路径和装配输出路径。
-不要硬编码其它路径。
+允许在固定工作区内通过相对路径、路径变量或路径拼接来组织保存路径，但不要把文件保存到无关目录。
 
 ### 日志要简洁但关键
 建议至少打印：
@@ -192,4 +192,3 @@ if carrier and planet1 and planet2 and planet3 and sun and cycloidal1 and cycloi
     sw_assem.mate_faces(assem_name, planet1, cycloidal1, "p_c","p_c")
     sw_assem.mate_faces(assem_name, planet1, cycloidal2, "p_c1","p_c1")
     
-

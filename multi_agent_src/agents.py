@@ -28,14 +28,20 @@ def get_client():
                 "缺少 `openai` 依赖，无法初始化多智能体模型客户端。"
                 "请先安装 openai 包后再运行 multi_agent_src。"
             )
-        client = OpenAI(
-            base_url=OPENROUTER_BASE_URL,
-            api_key=OPENROUTER_API_KEY,
-        )
         # client = OpenAI(
-        #     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-        #     api_key=os.getenv("DASHSCOPE_API_KEY"),
+        #     base_url=OPENROUTER_BASE_URL,
+        #     api_key=OPENROUTER_API_KEY,
         # )
+        # client = OpenAI(
+        #     base_url="https://ark.cn-beijing.volces.com/api/v3",
+        #     api_key=os.getenv("ARK_API_KEY"),
+        # )
+
+        client = OpenAI(
+        # 如果没有配置环境变量，请用阿里云百炼API Key替换：api_key="sk-xxx"
+        api_key=os.getenv("DASHSCOPE_API_KEY"),
+        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+        )
 
     return client
 
@@ -101,10 +107,34 @@ class BaseAgent:
             model=MODEL_NAME,
             messages=self.history,
             temperature=self.temperature,
+            extra_body={"enable_thinking":False},
         )
         reply = response.choices[0].message.content or ""
         self.history.append({"role": "assistant", "content": reply})
         return reply
+
+    def stream_chat(self, user_input: str):
+        self.history.append({"role": "user", "content": user_input})
+        stream = get_client().chat.completions.create(
+            model=MODEL_NAME,
+            messages=self.history,
+            temperature=self.temperature,
+            extra_body={"enable_thinking": False},
+            stream=True,
+        )
+
+        chunks: list[str] = []
+        for event in stream:
+            if not event.choices:
+                continue
+            delta = getattr(event.choices[0].delta, "content", None)
+            if not delta:
+                continue
+            chunks.append(delta)
+            yield delta
+
+        reply = "".join(chunks)
+        self.history.append({"role": "assistant", "content": reply})
 
 
 class RequirementAgent(BaseAgent):
@@ -130,6 +160,7 @@ class RequirementAgent(BaseAgent):
             '"interfaces":["已明确的接口、装配面、装配轴、连接关系，没有则空数组"]'
             '}\n'
             "5. 除非确认，否则不要输出 JSON。\n"
+            "6. 注意，在用户没有确认前，千万千万不能在输出中出现任何形式的 `[CONFIRMED]` 标签！！！！！"
             f"参考知识库：\n{kb}"
         )
         super().__init__(system_prompt=system_prompt, temperature=0.3)
@@ -140,6 +171,7 @@ class AssemblyPlanningAgent(BaseAgent):
         kb = load_kb("assembly_planning_agent")
         system_prompt = (
             "你是装配规划智能体，负责把已经确认的装配需求转成严格的结构化 JSON。"
+            "你的输入可能是自然语言、半结构化文本、对话摘要或 JSON；即使输入不是 JSON，你也必须正常理解并完成规划。"
             "你必须只输出 JSON，不要输出解释。\n"
             "输出目标：给出完整装配规划，其中每个零件都能单独拿到自己的 JSON 子对象后独立建模。\n"
             "JSON 顶层结构必须是：\n"
@@ -191,6 +223,7 @@ class AssemblyPlanningAgent(BaseAgent):
             "3. `direction_relation` 或 `normal_direction_relation` 必须说明接口方向与零件局部方向/装配全局方向的关系。\n"
             "4. 如果尺寸不全，可给出合理工程假设并写入对应字段。\n"
             "5. `workspace` 与 `assembly_output` 会由外部提供，你必须保留并复用传入路径。\n"
+            "6. 输出前必须自行检查 JSON 是否可被严格解析，字段是否完整、括号和引号是否闭合；如果你发现不合法，必须先在内部修正，再输出最终 JSON。\n"
             f"参考知识库：\n{kb}"
         )
         super().__init__(system_prompt=system_prompt, temperature=0.1)
@@ -205,7 +238,7 @@ class PartModelingAgent(BaseAgent):
             "你的任务是输出可执行的 Python 建模代码，并保存零件到指定的 `model_file` 路径。"
             "要求：\n"
             "1. 只输出 Python 代码，使用 ```python 代码块``` 包裹。\n"
-            "2. 代码中必须显式使用输入 JSON 里的输出路径。\n"
+            "2. 代码必须保存到输入 JSON 指定的目标文件位置；如果工作区已固定，允许使用相对路径、路径变量或等价拼接方式，不要求硬编码完整绝对路径。\n"
             "3. 必须在代码中体现接口名称，便于后续装配引用。\n"
             "4. 优先写清晰、稳定、可重试的代码；必要时打印关键步骤日志。\n"
             f"参考知识库：\n{kb}"
@@ -220,11 +253,12 @@ class PartValidationAgent(BaseAgent):
             "你是零件静态校验智能体。"
             "你会拿到完整装配规划、单个零件 JSON、生成代码，以及程序侧的规则检查结果。"
             "你必须只输出 JSON："
-            '{"pass": true 或 false, "feedback": "一句到两句的简短意见"}\n'
+            '{"pass": true 或 false, "feedback": "一句到两句的简短意见,导致失败的原因，以及正确的零件信息以及保存路径"}\n'
             "校验重点：\n"
             "1. 局部的代码零件是否与完整装配体规划中要求的一致。\n"
             "2. 零件接口名称、方向关系、保存路径是否覆盖。\n"
             "3. 是否有明显导致后续装配失败的静态问题。\n"
+            "4. 关于保存路径，只要代码最终保存到规定工作区下的正确目标位置，即使通过相对路径、变量或路径拼接实现，也可视为正确，不要求完整绝对路径字面量必须直接出现。\n"
             "如果问题轻微但不影响继续，可判定 pass=true 并在 feedback 中提示。"
             f"参考知识库：\n{kb}"
         )
@@ -241,7 +275,8 @@ class AssemblyAgent(BaseAgent):
             "要求：\n"
             "1. 只输出 Python 代码，使用 ```python 代码块``` 包裹。\n"
             "2. 必须严格使用规划中的零件文件、装配顺序和配合关系。\n"
-            "3. 对关键装配步骤打印简短日志，便于失败时回退重试。\n"
+            "3. 保存装配时只要最终落到规定工作区下的目标位置即可，允许使用相对路径、变量或路径拼接，不要求硬编码完整绝对路径。\n"
+            "4. 对关键装配步骤打印简短日志，便于失败时回退重试。\n"
             f"参考知识库：\n{kb}"
         )
         super().__init__(system_prompt=system_prompt, temperature=0.2)

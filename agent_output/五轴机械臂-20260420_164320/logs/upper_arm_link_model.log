@@ -1,0 +1,21 @@
+----------------------------------------
+Python 成功接收到的新零件名称: upper_arm_link
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 16:50:17 - 接收到参数，尝试创建并激活文档: upper_arm_link
+[DEBUG] 16:50:17 - 尝试连接 SolidWorks...
+[DEBUG] 16:50:17 - 成功连接到已运行的实例。
+
+[upper_arm_link] 开始建模零件: 大臂连杆
+[upper_arm_link] 尺寸参数: 直径=70mm, 高度=250mm -> 半径=0.035m, 拉伸深度=0.25m
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+[upper_arm_link] 主体圆柱拉伸完成
+[upper_arm_link] 参考面接口创建完成: mount_face_bottom, mount_face_top
+✅ 成功创建基准轴 [Axis2]
+[upper_arm_link] 参考轴接口创建完成: main_axis_z
+[upper_arm_link] 点接口标注: center_point_bottom 位于 (0, 0, 0)
+零件已保存至: D:\a_src\python\sw_agent\agent_output\五轴机械臂-20260420_164320\parts\upper_arm_link\upper_arm_link.SLDPRT
+[upper_arm_link] 零件已保存至: D:\a_src\python\sw_agent\agent_output\五轴机械臂-20260420_164320\parts\upper_arm_link\upper_arm_link.SLDPRT

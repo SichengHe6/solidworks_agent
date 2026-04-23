@@ -1,0 +1,97 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "4Axis_RobotArm_Assembly",
+    "summary": "一个包含底座和3节机械臂连杆的4轴机械臂装配体。底座提供水平旋转（Yaw），各臂之间提供竖直旋转（Pitch）。连杆主体为φ60圆柱，两端带80x80x25方块并倒角C5。连接方式采用轴孔配合：底座顶部φ40轴插入Link1底部φ42孔；Link1/2顶部侧面伸出φ30销轴，插入下一节臂底部侧面φ32孔，预留间隙防干涉。Link3末端集成固定式平行夹爪。",
+    "global_coordinate_system": {
+      "origin": "Base bottom center",
+      "x_direction": "Forward (Front of robot)",
+      "y_direction": "Right (Side of robot)",
+      "z_direction": "Up (Vertical axis)"
+    },
+    "design_rules": [
+      "Units: mm in description, convert to meters for modeling code.",
+      "Clearance: Shaft-hole fit has 1mm radial clearance (2mm diameter difference).",
+      "Spacing: Adjacent arm end faces have 2mm gap.",
+      "Chamfer: C5 chamfer on block edges."
+    ],
+    "assembly_sequence": [
+      "Insert base_plate and fix to GROUND.",
+      "Insert link_1.",
+      "Mate link_1.bottom_hole_axis to base_plate.base_top_axis (concentric).",
+      "Mate link_1.bottom_face to base_plate.base_top_face (coincident).",
+      "Insert link_2.",
+      "Mate link_2.bottom_side_hole_axis to link_1.top_pin_axis (concentric).",
+      "Mate link_2.bottom_side_face_hole to link_1.top_side_face_pin_base with 2mm offset (distance).",
+      "Insert link_3_with_gripper.",
+      "Mate link_3.bottom_side_hole_axis to link_2.top_pin_axis (concentric).",
+      "Mate link_3.bottom_side_face_hole to link_2.top_side_face_pin_base with 2mm offset (distance)."
+    ]
+  },
+  "part": {
+    "part_id": "link_2",
+    "name": "Link 2",
+    "function": "Second arm segment, connects Link 1 to Link 3 via Pitch joint.",
+    "shape": "Central cylinder φ60x250mm. Bottom end has 80x80x25mm block with φ32mm side hole. Top end has 80x80x25mm block with φ30mm side pin extending along X.",
+    "key_dimensions": [
+      "Cylinder Length: 250mm",
+      "Cylinder Diameter: 60mm",
+      "End Block Size: 80x80x25mm",
+      "Bottom Side Hole Diameter: 32mm",
+      "Top Pin Diameter: 30mm",
+      "Top Pin Length: 20mm"
+    ],
+    "material_or_notes": "Aluminum. Chamfer C5 on block edges.",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "link2_bottom_side_face_hole",
+          "purpose": "Mates with Link1 top pin base face (with gap)",
+          "normal_direction_relation": "normal -X (local)"
+        },
+        {
+          "name": "link2_top_side_face_pin_base",
+          "purpose": "Reference for pin location",
+          "normal_direction_relation": "normal +X (local)"
+        }
+      ],
+      "axes": [
+        {
+          "name": "link2_bottom_side_hole_axis",
+          "purpose": "Concentric with Link1 top pin axis",
+          "direction_relation": "along local X"
+        },
+        {
+          "name": "link2_top_pin_axis",
+          "purpose": "Pitch rotation axis, concentric with Link3 bottom side hole",
+          "direction_relation": "along local X"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Bottom side hole axis concentric with Link1 top pin axis.",
+      "Bottom side face offset 2mm from Link1 top pin base face.",
+      "Top pin axis concentric with Link3 bottom side hole axis.",
+      "Top pin base face offset 2mm from Link3 bottom side face."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_2",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_2\\link_2_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\parts\\link_2\\link_2.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\logs\\link_2_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_180034\\json\\link_2_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Create sketch on XY plane, draw circle φ60mm, extrude 250mm along Z.",
+      "At bottom (Z=0), create sketch on XY plane, draw square 80x80mm centered, extrude down 25mm.",
+      "On the -X side face of the bottom block, create sketch circle φ32mm centered vertically.",
+      "Cut hole through the block along X.",
+      "Apply C5 chamfer to bottom block edges.",
+      "At top (Z=250), create sketch on XY plane, draw square 80x80mm centered, extrude up 25mm.",
+      "On the +X side face of the top block, create sketch circle φ30mm centered vertically.",
+      "Extrude out 20mm along +X to form pin.",
+      "Apply C5 chamfer to top block edges."
+    ]
+  }
+}

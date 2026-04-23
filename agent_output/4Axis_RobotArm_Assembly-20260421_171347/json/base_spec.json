@@ -1,0 +1,81 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "4Axis_RobotArm_Assembly",
+    "summary": "一个包含底座、3个活动关节臂（Link1-3）及集成夹爪的4轴机械臂装配体。底座为长方体带顶部旋转轴；连杆由中间圆柱和两端方块组成，通过侧面销孔配合连接；最上方连杆集成V型夹爪。所有尺寸单位为mm。",
+    "global_coordinate_system": {
+      "origin": "Base bottom center",
+      "x_direction": "Forward (aligned with Link1 initial extension direction)",
+      "y_direction": "Right hand rule relative to X and Z",
+      "z_direction": "Upward (vertical axis of Base)"
+    },
+    "design_rules": [
+      "All dimensions in mm, convert to meters for modeling code.",
+      "Use nominal dimensions for part modeling; assembly constraints handle fit/clearance.",
+      "Base is fixed to GROUND.",
+      "Links rotate around their respective joint axes."
+    ],
+    "assembly_sequence": [
+      "Insert Base and fix to GROUND.",
+      "Insert Link1. Constrain bottom_hole_axis to Base.main_axis_z (concentric). Constrain Link1.bottom_face_block to Base.top_face_main (coincident/offset).",
+      "Insert Link2. Constrain Link2.bottom_hole_axis to Link1.top_pin_axis (concentric). Constrain Link2.bottom_side_face to Link1.top_block_side_face (coincident).",
+      "Insert Link3_Gripper. Constrain Link3.bottom_hole_axis to Link2.top_pin_axis (concentric). Constrain Link3.bottom_side_face to Link2.top_block_side_face (coincident)."
+    ]
+  },
+  "part": {
+    "part_id": "base",
+    "name": "Base",
+    "function": "Stationary foundation providing vertical rotation axis for Link1.",
+    "shape": "Rectangular prism 200x200x100mm. Top surface has a two-stage frustum: lower stage D80xH20, upper stage D60xH20. Centered on top is a cylindrical boss D50xH20.",
+    "key_dimensions": [
+      "Body: 200x200x100 mm",
+      "Frustum Lower: D80, H20",
+      "Frustum Upper: D60, H20",
+      "Top Boss: D50, H20"
+    ],
+    "material_or_notes": "Default material. Origin at bottom center.",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "mount_face_bottom",
+          "purpose": "Contact with ground/floor",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "top_face_main",
+          "purpose": "Reference for frustum base",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "main_axis_z",
+          "purpose": "Rotation axis for Link1",
+          "direction_relation": "along local Z, passing through center of top boss"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Fixed to GROUND.",
+      "Provides concentric constraint for Link1 via main_axis_z."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_171347\\parts\\base",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_171347\\parts\\base\\base_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_171347\\parts\\base\\base.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_171347\\logs\\base_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_171347\\json\\base_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Create sketch on XY plane centered at origin: Rectangle 200x200.",
+      "Extrude up 100mm to form base body.",
+      "On top face (Z=100), create sketch: Circle D80 centered.",
+      "Extrude up 20mm.",
+      "On new top face (Z=120), create sketch: Circle D60 centered.",
+      "Extrude up 20mm.",
+      "On new top face (Z=140), create sketch: Circle D50 centered.",
+      "Extrude up 20mm to form the final boss."
+    ]
+  }
+}

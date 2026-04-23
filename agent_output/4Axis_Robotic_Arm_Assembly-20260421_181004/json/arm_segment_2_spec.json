@@ -1,0 +1,99 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "4Axis_Robotic_Arm_Assembly",
+    "summary": "生成一个包含底座、3个中间臂段和1个带夹爪顶臂的4轴机械臂装配体。底座为长方体加圆台接口；臂段由两端方块（60x60x60mm）和中间圆柱组成，通过侧面销孔配合实现竖直转动；底座与第一臂通过中心轴孔配合实现水平转动。所有方块棱边倒角C2。交付SolidWorks零件及装配文件。",
+    "global_coordinate_system": {
+      "origin": "Base bottom center",
+      "x_direction": "Forward (Arm extension direction when neutral)",
+      "y_direction": "Right (perpendicular to X and Z)",
+      "z_direction": "Up (Vertical axis of Base)"
+    },
+    "design_rules": [
+      "All dimensions in mm, convert to meters for modeling API.",
+      "Chamfer C2 on all cube edges of arm segments.",
+      "Clearance fit assumed for pin/hole interfaces (nominal size used for geometry).",
+      "Gripper fingers are modeled in half-open state."
+    ],
+    "assembly_sequence": [
+      "Insert base_plate and fix to GROUND.",
+      "Insert arm_segment_1.",
+      "Mate arm_segment_1.central_hole_axis concentric with base_plate.main_axis_z.",
+      "Mate arm_segment_1.bottom_face coincident with base_plate.boss_top_face.",
+      "Insert arm_segment_2.",
+      "Mate arm_segment_2.bottom_hole_axis concentric with arm_segment_1.pin_axis.",
+      "Mate arm_segment_2.bottom_side_face coincident with arm_segment_1.top_pin_face (or appropriate offset).",
+      "Insert arm_segment_3.",
+      "Mate arm_segment_3.bottom_hole_axis concentric with arm_segment_2.pin_axis.",
+      "Mate arm_segment_3.bottom_side_face coincident with arm_segment_2.top_pin_face.",
+      "Insert top_arm_gripper.",
+      "Mate top_arm_gripper.bottom_hole_axis concentric with arm_segment_3.pin_axis.",
+      "Mate top_arm_gripper.bottom_side_face coincident with arm_segment_3.top_pin_face."
+    ]
+  },
+  "part": {
+    "part_id": "arm_segment_2",
+    "name": "Arm Segment 2",
+    "function": "Second moving link, rotates vertically around Arm 1 pin.",
+    "shape": "Identical to Arm Segment 1 structure: Two 60x60x60mm cubes, Φ40x150mm cylinder. Bottom cube has side Φ10 through-hole. Top cube has side Φ10x15mm pin. All cube edges chamfered C2.",
+    "key_dimensions": [
+      "Cube: 60x60x60 mm",
+      "Connector Cylinder: Dia 40mm, Length 150mm",
+      "Bottom Side Hole: Dia 10mm, Through",
+      "Top Pin: Dia 10mm, Length 15mm",
+      "Chamfer: C2"
+    ],
+    "material_or_notes": "Aluminum.",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "bottom_side_face",
+          "purpose": "Mates with Arm 1 top pin face",
+          "normal_direction_relation": "normal -X (local, assuming hole on -X side)"
+        },
+        {
+          "name": "top_pin_face",
+          "purpose": "Face where pin originates",
+          "normal_direction_relation": "normal +X (local)"
+        },
+        {
+          "name": "side_mate_face_top",
+          "purpose": "Axial constraint against next arm",
+          "normal_direction_relation": "normal +X (local)"
+        }
+      ],
+      "axes": [
+        {
+          "name": "bottom_hole_axis",
+          "purpose": "Concentric with Arm 1 pin_axis",
+          "direction_relation": "along local X, offset in bottom cube"
+        },
+        {
+          "name": "pin_axis",
+          "purpose": "Rotation axis for Arm 3",
+          "direction_relation": "along local X, offset in top cube"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Bottom hole concentric with Arm 1 pin_axis.",
+      "Bottom side face coincident/offset with Arm 1 top_pin_face.",
+      "Pin axis will mate with Arm 3 bottom hole."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\parts\\arm_segment_2",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\parts\\arm_segment_2\\arm_segment_2_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\parts\\arm_segment_2\\arm_segment_2.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\logs\\arm_segment_2_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\json\\arm_segment_2_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Model similar to Arm 1.",
+      "Instead of central bottom hole, create side through-hole Dia 10 in bottom cube.",
+      "Ensure hole axis is parallel to the pin axis direction.",
+      "Add Chamfer C2.",
+      "Add top pin Dia 10x15 on opposite or same side depending on design (assume consistent orientation for simplicity, e.g., both on +X relative to local frame, but assembly rotates them)."
+    ]
+  }
+}

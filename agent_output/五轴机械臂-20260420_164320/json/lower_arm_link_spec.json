@@ -1,0 +1,85 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "五轴机械臂",
+    "summary": "五轴机械臂静态装配体，7个圆柱形零件沿Z轴垂直堆叠，尺寸递减避免干涉，面贴合与轴同心配合",
+    "global_coordinate_system": {
+      "origin": "底座底面圆心",
+      "x_direction": "沿底座径向，指向右侧",
+      "y_direction": "沿底座径向，指向前方",
+      "z_direction": "沿圆柱体主轴向上"
+    },
+    "design_rules": [
+      "尺寸单位为mm，建模代码需换算为m",
+      "所有零件均为实心圆柱体，无内部特征",
+      "相邻零件直径递减以避免视觉与结构干涉",
+      "主草图面为XY面，拉伸方向沿Z轴",
+      "所有零件局部坐标系原点位于自身底面圆心，Z轴沿圆柱体中心轴向上"
+    ],
+    "assembly_sequence": [
+      "base",
+      "shoulder_joint_shell",
+      "upper_arm_link",
+      "elbow_joint_shell",
+      "lower_arm_link",
+      "wrist_joint_shell",
+      "end_effector_base_plate"
+    ]
+  },
+  "part": {
+    "part_id": "lower_arm_link",
+    "name": "小臂连杆",
+    "function": "连接肘关节与腕关节，实现小臂伸展",
+    "shape": "实心圆柱体，在XY面画圆沿Z轴单向拉伸",
+    "key_dimensions": [
+      "直径Φ55mm",
+      "高度180mm"
+    ],
+    "material_or_notes": "实心，无圆角倒角，单位mm需转m",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "mount_face_bottom",
+          "purpose": "与肘关节壳顶面贴合",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "mount_face_top",
+          "purpose": "与腕关节壳底面贴合",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "main_axis_z",
+          "purpose": "圆柱体中心轴，与上下零件同心",
+          "direction_relation": "along global Z"
+        }
+      ],
+      "points": [
+        {
+          "name": "center_point_bottom",
+          "purpose": "底面圆心",
+          "location_hint": "XY面圆心，局部Z=0"
+        }
+      ]
+    },
+    "assembly_relation_notes": [
+      "底面与肘关节壳顶面贴合",
+      "顶面与腕关节壳底面贴合",
+      "Z轴与肘关节壳Z轴同心"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\五轴机械臂-20260420_164320\\parts\\lower_arm_link",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\五轴机械臂-20260420_164320\\parts\\lower_arm_link\\lower_arm_link_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\五轴机械臂-20260420_164320\\parts\\lower_arm_link\\lower_arm_link.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\五轴机械臂-20260420_164320\\logs\\lower_arm_link_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\五轴机械臂-20260420_164320\\json\\lower_arm_link_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在XY面绘制直径55mm的圆",
+      "沿Z轴正向拉伸180mm",
+      "以底面圆心为局部坐标系原点"
+    ]
+  }
+}

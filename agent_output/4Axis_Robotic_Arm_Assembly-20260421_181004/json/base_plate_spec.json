@@ -1,0 +1,85 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "4Axis_Robotic_Arm_Assembly",
+    "summary": "生成一个包含底座、3个中间臂段和1个带夹爪顶臂的4轴机械臂装配体。底座为长方体加圆台接口；臂段由两端方块（60x60x60mm）和中间圆柱组成，通过侧面销孔配合实现竖直转动；底座与第一臂通过中心轴孔配合实现水平转动。所有方块棱边倒角C2。交付SolidWorks零件及装配文件。",
+    "global_coordinate_system": {
+      "origin": "Base bottom center",
+      "x_direction": "Forward (Arm extension direction when neutral)",
+      "y_direction": "Right (perpendicular to X and Z)",
+      "z_direction": "Up (Vertical axis of Base)"
+    },
+    "design_rules": [
+      "All dimensions in mm, convert to meters for modeling API.",
+      "Chamfer C2 on all cube edges of arm segments.",
+      "Clearance fit assumed for pin/hole interfaces (nominal size used for geometry).",
+      "Gripper fingers are modeled in half-open state."
+    ],
+    "assembly_sequence": [
+      "Insert base_plate and fix to GROUND.",
+      "Insert arm_segment_1.",
+      "Mate arm_segment_1.central_hole_axis concentric with base_plate.main_axis_z.",
+      "Mate arm_segment_1.bottom_face coincident with base_plate.boss_top_face.",
+      "Insert arm_segment_2.",
+      "Mate arm_segment_2.bottom_hole_axis concentric with arm_segment_1.pin_axis.",
+      "Mate arm_segment_2.bottom_side_face coincident with arm_segment_1.top_pin_face (or appropriate offset).",
+      "Insert arm_segment_3.",
+      "Mate arm_segment_3.bottom_hole_axis concentric with arm_segment_2.pin_axis.",
+      "Mate arm_segment_3.bottom_side_face coincident with arm_segment_2.top_pin_face.",
+      "Insert top_arm_gripper.",
+      "Mate top_arm_gripper.bottom_hole_axis concentric with arm_segment_3.pin_axis.",
+      "Mate top_arm_gripper.bottom_side_face coincident with arm_segment_3.top_pin_face."
+    ]
+  },
+  "part": {
+    "part_id": "base_plate",
+    "name": "Base Plate",
+    "function": "Stationary foundation providing vertical rotation axis for Arm 1.",
+    "shape": "Rectangular block 200x200x100mm with a two-stage cylindrical boss on top. Bottom stage: Φ80x20mm. Top stage: Φ40x30mm.",
+    "key_dimensions": [
+      "Block: 200x200x100 mm",
+      "Boss Stage 1: Dia 80mm, Height 20mm",
+      "Boss Stage 2: Dia 40mm, Height 30mm"
+    ],
+    "material_or_notes": "Steel or Aluminum. Fillet edges if desired, but not specified.",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "mount_face_bottom",
+          "purpose": "Ground contact",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "boss_top_face",
+          "purpose": "Reference for Arm1 height",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "main_axis_z",
+          "purpose": "Rotation axis for Arm 1",
+          "direction_relation": "along local Z, centered on block"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Fixed to GROUND.",
+      "Provides concentric axis for Arm1_Bottom_Hole."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\parts\\base_plate",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\parts\\base_plate\\base_plate_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\parts\\base_plate\\base_plate.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\logs\\base_plate_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_Robotic_Arm_Assembly-20260421_181004\\json\\base_plate_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Sketch rectangle 200x200 on XY plane, extrude 100mm along +Z.",
+      "On top face, sketch circle Dia 80, extrude 20mm.",
+      "On new top face, sketch circle Dia 40, extrude 30mm.",
+      "Ensure main_axis_z is defined as the central axis of the cylinders."
+    ]
+  }
+}

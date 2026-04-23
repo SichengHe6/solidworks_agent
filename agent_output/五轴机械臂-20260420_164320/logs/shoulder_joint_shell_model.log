@@ -1,0 +1,20 @@
+启动SolidWorks应用并创建零件文档...
+----------------------------------------
+Python 成功接收到的新零件名称: shoulder_joint_shell
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 16:48:30 - 接收到参数，尝试创建并激活文档: shoulder_joint_shell
+[DEBUG] 16:48:30 - 尝试连接 SolidWorks...
+[DEBUG] 16:48:30 - 成功连接到已运行的实例。
+
+在XY面绘制草图圆...
+沿Z轴正向拉伸圆柱体...
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+创建装配接口参考面与参考轴...
+✅ 成功创建基准轴 [main_axis_z]
+保存零件至: D:\a_src\python\sw_agent\agent_output\五轴机械臂-20260420_164320\parts\shoulder_joint_shell\shoulder_joint_shell.SLDPRT
+零件已保存至: D:\a_src\python\sw_agent\agent_output\五轴机械臂-20260420_164320\parts\shoulder_joint_shell\shoulder_joint_shell.SLDPRT
+肩部关节壳 (shoulder_joint_shell) 建模完成！

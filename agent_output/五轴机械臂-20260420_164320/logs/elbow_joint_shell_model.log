@@ -1,0 +1,20 @@
+----------------------------------------
+Python 成功接收到的新零件名称: elbow_joint_shell
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 16:51:11 - 接收到参数，尝试创建并激活文档: elbow_joint_shell
+[DEBUG] 16:51:11 - 尝试连接 SolidWorks...
+[DEBUG] 16:51:11 - 成功连接到已运行的实例。
+
+已创建并激活零件文档: elbow_joint_shell
+步骤1: 在XY面绘制直径80mm的圆
+步骤2: 沿Z轴正向拉伸50mm
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+步骤3: 创建接口参考面和参考轴
+✅ 成功创建基准轴 [main_axis_z]
+步骤4: 保存零件到 D:\a_src\python\sw_agent\agent_output\五轴机械臂-20260420_164320\parts\elbow_joint_shell\elbow_joint_shell.SLDPRT
+零件已保存至: D:\a_src\python\sw_agent\agent_output\五轴机械臂-20260420_164320\parts\elbow_joint_shell\elbow_joint_shell.SLDPRT
+肘部关节壳建模完成！

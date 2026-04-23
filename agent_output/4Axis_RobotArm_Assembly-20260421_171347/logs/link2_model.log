@@ -1,0 +1,94 @@
+----------------------------------------
+Python 成功接收到的新零件名称: Link2
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 17:20:58 - 接收到参数，尝试创建并激活文档: Link2
+[DEBUG] 17:20:58 - 尝试连接 SolidWorks...
+[DEBUG] 17:20:58 - 成功连接到已运行的实例。
+
+Starting Link2 modeling...
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+Cylinder created.
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+Bottom block created.
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+Top block created.
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+Bottom hole created.
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+Top pin created.
+正在选中 8 条边以进行倒角...
+
+--- 开始动态旋转扫描选择 (0.03, 0.03, 0) ---
+
+--- 开始动态旋转扫描选择 (-0.03, 0.03, 0) ---
+
+--- 开始动态旋转扫描选择 (-0.03, -0.03, 0) ---
+[Debug] 动态扫描 1/12 ...
+[Debug] 动态扫描 2/12 ...
+[Success] 在第 2 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (0.03, -0.03, 0) ---
+
+--- 开始动态旋转扫描选择 (0.03, 0.03, -0.02) ---
+[Debug] 动态扫描 1/12 ...
+[Success] 在第 1 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (-0.03, 0.03, -0.02) ---
+
+--- 开始动态旋转扫描选择 (-0.03, -0.03, -0.02) ---
+[Debug] 动态扫描 1/12 ...
+[Debug] 动态扫描 2/12 ...
+[Success] 在第 2 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (0.03, -0.03, -0.02) ---
+倒角成功 (D=0.002m, A=45.0°)
+Bottom block chamfers applied.
+正在选中 8 条边以进行倒角...
+
+--- 开始动态旋转扫描选择 (0.03, 0.03, 0.15) ---
+[Debug] 动态扫描 1/12 ...
+[Success] 在第 1 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (-0.03, 0.03, 0.15) ---
+
+--- 开始动态旋转扫描选择 (-0.03, -0.03, 0.15) ---
+[Debug] 动态扫描 1/12 ...
+[Debug] 动态扫描 2/12 ...
+[Success] 在第 2 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (0.03, -0.03, 0.15) ---
+
+--- 开始动态旋转扫描选择 (0.03, 0.03, 0.17) ---
+
+--- 开始动态旋转扫描选择 (-0.03, 0.03, 0.17) ---
+
+--- 开始动态旋转扫描选择 (-0.03, -0.03, 0.17) ---
+
+--- 开始动态旋转扫描选择 (0.03, -0.03, 0.17) ---
+[Debug] 动态扫描 1/12 ...
+[Success] 在第 1 次旋转后选中目标！
+倒角成功 (D=0.002m, A=45.0°)
+Top block chamfers applied.
+Interface 'bottom_side_face' created.
+Interface 'top_side_face' created.
+✅ 成功创建基准轴 [Axis5]
+Interface 'bottom_hole_axis' created.
+✅ 成功创建基准轴 [Axis6]
+Interface 'top_pin_axis' created.
+正在保存零件到: D:\a_src\python\sw_agent\agent_output\4Axis_RobotArm_Assembly-20260421_171347\parts\link2\link2.SLDPRT ...
+零件已保存至: D:\a_src\python\sw_agent\agent_output\4Axis_RobotArm_Assembly-20260421_171347\parts\link2\link2.SLDPRT
+Link2 model saved successfully to D:\a_src\python\sw_agent\agent_output\4Axis_RobotArm_Assembly-20260421_171347\parts\link2\link2.SLDPRT

@@ -4,6 +4,7 @@ import json
 import re
 from datetime import datetime
 from pathlib import Path
+from typing import Callable
 from typing import Any
 
 try:
@@ -54,14 +55,37 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
 
 
 class MultiAgentOrchestrator:
-    def __init__(self) -> None:
+    def __init__(self, event_callback: Callable[[dict[str, Any]], None] | None = None) -> None:
         self.requirement_agent = RequirementAgent()
         self.assembly_planning_agent = AssemblyPlanningAgent()
         self.assembly_agent = AssemblyAgent()
+        self.event_callback = event_callback
+
+    def emit_event(self, event_type: str, **payload: Any) -> None:
+        if self.event_callback is None:
+            return
+        event = {"type": event_type, **payload}
+        self.event_callback(event)
+
+    def emit_status(self, message: str) -> None:
+        self.emit_event("status", message=message)
+
+    def run_agent(self, agent_name: str, agent: Any, prompt: str) -> str:
+        if self.event_callback is None:
+            return agent.chat(prompt)
+
+        self.emit_event("message_start", role="agent", agent_name=agent_name)
+        for chunk in agent.stream_chat(prompt):
+            self.emit_event("delta", content=chunk)
+        self.emit_event("message_end")
+        return agent.history[-1]["content"]
 
     def run(self) -> None:
         print("=== 多智能体 CAD 设计系统 ===")
         requirement_payload = self.collect_requirements()
+        self.process_confirmed_requirement(requirement_payload)
+
+    def process_confirmed_requirement(self, requirement_payload: dict[str, Any]) -> None:
         request_type = str(requirement_payload.get("request_type", "")).strip().lower()
 
         if request_type == "part":
@@ -82,7 +106,7 @@ class MultiAgentOrchestrator:
             if user_input.lower() in {"quit", "exit"}:
                 raise SystemExit(0)
 
-            reply = self.requirement_agent.chat(user_input)
+            reply = self.run_agent("RequirementAgent", self.requirement_agent, user_input)
             print(f"\n[需求分析 Agent]\n{reply}\n")
 
             if "[CONFIRMED]" in reply:
@@ -98,6 +122,7 @@ class MultiAgentOrchestrator:
         write_json(Path(plan["workspace"]["plan_file"]), plan)
 
         print("\n[阶段 2] 单零件建模")
+        self.emit_status("[阶段 2] 单零件建模")
         success = self.run_part_pipeline(
             full_plan=plan,
             part_spec=plan["part"],
@@ -111,12 +136,15 @@ class MultiAgentOrchestrator:
     def handle_assembly_request(self, requirement_payload: dict[str, Any]) -> None:
         workspace = self.create_assembly_workspace(requirement_payload)
         print("\n[阶段 2] 装配规划")
+        self.emit_status("[阶段 2] 装配规划")
         plan = self.generate_assembly_plan(requirement_payload, workspace)
 
         print("\n[阶段 3] 零件建模分发")
+        self.emit_status("[阶段 3] 零件建模分发")
         part_results: list[dict[str, Any]] = []
         for index, part_spec in enumerate(plan["assembly"]["parts"], start=1):
             print(f"\n  -> 零件 {index}/{len(plan['assembly']['parts'])}: {part_spec['name']}")
+            self.emit_status(f"[零件 {index}/{len(plan['assembly']['parts'])}] {part_spec['name']}")
             success = self.run_part_pipeline(
                 full_plan=plan,
                 part_spec=part_spec,
@@ -135,6 +163,7 @@ class MultiAgentOrchestrator:
                 return
 
         print("\n[阶段 4] 装配生成与执行")
+        self.emit_status("[阶段 4] 装配生成与执行")
         assembly_success = self.run_assembly_pipeline(plan, part_results)
         if assembly_success:
             print("\n=== 装配需求执行完成 ===")
@@ -243,31 +272,168 @@ class MultiAgentOrchestrator:
         requirement_payload: dict[str, Any],
         workspace: dict[str, str],
     ) -> dict[str, Any]:
-        prompt = json.dumps(
-            {
-                "confirmed_requirement": requirement_payload,
-                "precreated_workspace": {
-                    **workspace,
-                    "plan_file": str(Path(workspace["json_dir"]) / "assembly_plan.json"),
-                    "assembly_output": {
-                        "code_file": str(Path(workspace["assembly_dir"]) / "assembly_build.py"),
-                        "model_file": str(
-                            Path(workspace["assembly_dir"])
-                            / f"{slugify(requirement_payload.get('name', 'assembly'), 'assembly')}.SLDASM"
-                        ),
-                        "log_file": str(Path(workspace["logs_dir"]) / "assembly.log"),
-                    },
-                },
-            },
-            ensure_ascii=False,
-            indent=2,
+        prompt = self.build_assembly_plan_prompt(requirement_payload, workspace)
+        current_prompt = prompt
+
+        for attempt in range(1, 4):
+            print(f"  [装配规划尝试 {attempt}/3] 生成装配规划 JSON")
+            self.emit_status(f"[装配规划尝试 {attempt}/3] 生成装配规划 JSON")
+            response = self.run_agent("AssemblyPlanningAgent", self.assembly_planning_agent, current_prompt)
+
+            try:
+                plan = extract_json_payload(response)
+            except ValueError:
+                current_prompt = self.build_assembly_plan_retry_prompt(
+                    requirement_payload=requirement_payload,
+                    workspace=workspace,
+                    model_response=response,
+                    validation_errors=[
+                        "上一次输出不是可严格解析的 JSON。",
+                        "请只输出一个合法 JSON 对象，不要附带解释、前后缀、Markdown 说明或多余文本。",
+                    ],
+                )
+                continue
+
+            validation_errors = self.validate_assembly_plan_payload(plan)
+            if validation_errors:
+                current_prompt = self.build_assembly_plan_retry_prompt(
+                    requirement_payload=requirement_payload,
+                    workspace=workspace,
+                    model_response=response,
+                    validation_errors=validation_errors,
+                )
+                continue
+
+            plan = self.enrich_assembly_plan(plan, workspace)
+            write_json(Path(plan["assembly"]["workspace"]["plan_file"]), plan)
+            return plan
+
+        raise ValueError("AssemblyPlanningAgent failed to return a valid assembly planning JSON after retries.")
+
+    def build_assembly_plan_prompt(
+        self,
+        requirement_payload: dict[str, Any],
+        workspace: dict[str, str],
+    ) -> str:
+        assembly_output = {
+            "code_file": str(Path(workspace["assembly_dir"]) / "assembly_build.py"),
+            "model_file": str(
+                Path(workspace["assembly_dir"])
+                / f"{slugify(requirement_payload.get('name', 'assembly'), 'assembly')}.SLDASM"
+            ),
+            "log_file": str(Path(workspace["logs_dir"]) / "assembly.log"),
+        }
+
+        return (
+            "请根据下面的装配需求和预先创建好的工作空间，直接输出严格合法的 JSON 装配规划。\n\n"
+            "【已确认的装配需求】\n"
+            f"{json.dumps(requirement_payload, ensure_ascii=False, indent=2)}\n\n"
+            "【预先创建的工作空间】\n"
+            f"{json.dumps({**workspace, 'plan_file': str(Path(workspace['json_dir']) / 'assembly_plan.json'), 'assembly_output': assembly_output}, ensure_ascii=False, indent=2)}\n\n"
+            "要求：\n"
+            "1. 输入即使不是标准 JSON 语义，也要正常分析并完成规划。\n"
+            "2. 输出必须是一个可直接被 json.loads 解析的 JSON 对象。\n"
+            "3. 不要输出解释、标题、注释、Markdown 代码块或额外文本。\n"
+            "4. 输出前请自行检查 JSON 合法性和字段完整性。\n"
         )
 
-        response = self.assembly_planning_agent.chat(prompt)
-        plan = extract_json_payload(response)
-        plan = self.enrich_assembly_plan(plan, workspace)
-        write_json(Path(plan["assembly"]["workspace"]["plan_file"]), plan)
-        return plan
+    def build_assembly_plan_retry_prompt(
+        self,
+        requirement_payload: dict[str, Any],
+        workspace: dict[str, str],
+        model_response: str,
+        validation_errors: list[str],
+    ) -> str:
+        return (
+            self.build_assembly_plan_prompt(requirement_payload, workspace)
+            + "\n【上一次输出】\n"
+            + model_response
+            + "\n\n【必须修复的问题】\n- "
+            + "\n- ".join(validation_errors)
+            + "\n\n请基于同一需求重新输出完整 JSON，且只输出最终 JSON。"
+        )
+
+    def validate_assembly_plan_payload(self, plan: dict[str, Any]) -> list[str]:
+        issues: list[str] = []
+
+        if not isinstance(plan, dict):
+            return ["顶层输出必须是 JSON 对象。"]
+
+        if plan.get("request_type") != "assembly":
+            issues.append("顶层字段 `request_type` 必须是 `assembly`。")
+
+        assembly = plan.get("assembly")
+        if not isinstance(assembly, dict):
+            issues.append("必须包含对象类型的 `assembly` 字段。")
+            return issues
+
+        required_assembly_fields = [
+            "name",
+            "summary",
+            "workspace",
+            "global_coordinate_system",
+            "design_rules",
+            "parts",
+            "assembly_sequence",
+            "constraints",
+            "assembly_output",
+        ]
+        for field in required_assembly_fields:
+            if field not in assembly:
+                issues.append(f"`assembly.{field}` 缺失。")
+
+        parts = assembly.get("parts")
+        if not isinstance(parts, list) or not parts:
+            issues.append("`assembly.parts` 必须是非空数组。")
+        else:
+            required_part_fields = [
+                "part_id",
+                "name",
+                "function",
+                "shape",
+                "key_dimensions",
+                "material_or_notes",
+                "interfaces",
+                "assembly_relation_notes",
+                "workspace",
+                "standalone_modeling_instructions",
+            ]
+            for index, part in enumerate(parts, start=1):
+                if not isinstance(part, dict):
+                    issues.append(f"`assembly.parts[{index}]` 必须是对象。")
+                    continue
+
+                for field in required_part_fields:
+                    if field not in part:
+                        issues.append(f"`assembly.parts[{index}].{field}` 缺失。")
+
+                interfaces = part.get("interfaces", {})
+                if not isinstance(interfaces, dict):
+                    issues.append(f"`assembly.parts[{index}].interfaces` 必须是对象。")
+                else:
+                    for key in ("faces", "axes", "points"):
+                        if key not in interfaces:
+                            issues.append(f"`assembly.parts[{index}].interfaces.{key}` 缺失。")
+                        elif not isinstance(interfaces.get(key), list):
+                            issues.append(f"`assembly.parts[{index}].interfaces.{key}` 必须是数组。")
+
+        constraints = assembly.get("constraints")
+        if constraints is not None and not isinstance(constraints, list):
+            issues.append("`assembly.constraints` 必须是数组。")
+
+        sequence = assembly.get("assembly_sequence")
+        if sequence is not None and not isinstance(sequence, list):
+            issues.append("`assembly.assembly_sequence` 必须是数组。")
+
+        design_rules = assembly.get("design_rules")
+        if design_rules is not None and not isinstance(design_rules, list):
+            issues.append("`assembly.design_rules` 必须是数组。")
+
+        global_coordinate_system = assembly.get("global_coordinate_system")
+        if global_coordinate_system is not None and not isinstance(global_coordinate_system, dict):
+            issues.append("`assembly.global_coordinate_system` 必须是对象。")
+
+        return issues
 
     def enrich_assembly_plan(self, plan: dict[str, Any], workspace: dict[str, str]) -> dict[str, Any]:
         if plan.get("request_type") != "assembly":
@@ -340,21 +506,25 @@ class MultiAgentOrchestrator:
         current_prompt = self.build_part_prompt(full_plan, part_spec, None)
         for attempt in range(1, max_retries + 1):
             print(f"    [建模尝试 {attempt}/{max_retries}] 生成 {part_spec['name']} 代码")
-            response = part_agent.chat(current_prompt)
+            self.emit_status(f"[建模尝试 {attempt}/{max_retries}] 生成 {part_spec['name']} 代码")
+            response = self.run_agent("PartModelingAgent", part_agent, current_prompt)
             code = extract_python_code(response)
 
             workdir = Path(part_spec["workspace"]["part_dir"])
             script_name = Path(part_spec["workspace"]["code_file"]).name
             execution = execute_python_code(code, workdir=workdir, script_name=script_name)
             write_text(Path(part_spec["workspace"]["log_file"]), execution.log)
+            self.emit_event("execution_log", title=f"{part_spec['name']} 执行日志", content=execution.log)
 
             if not execution.success:
                 summary = execution.log.splitlines()[-1] if execution.log.splitlines() else execution.log
                 print(f"    [执行失败] {summary}")
+                self.emit_status(f"[执行失败] {summary}")
                 current_prompt = self.build_part_prompt(full_plan, part_spec, execution.log)
                 continue
 
             print("    [执行成功] 开始静态校验" if enable_static_validation else "    [执行成功] 动态校验通过")
+            self.emit_status("    [执行成功] 开始静态校验" if enable_static_validation else "    [执行成功] 动态校验通过")
             if not enable_static_validation:
                 return True
 
@@ -368,10 +538,12 @@ class MultiAgentOrchestrator:
             )
             if validator_feedback["pass"]:
                 print("    [静态校验通过]")
+                self.emit_status("[静态校验通过]")
                 return True
 
             feedback = validator_feedback.get("feedback", "静态校验未通过")
             print(f"    [静态校验失败] {feedback}")
+            self.emit_status(f"[静态校验失败] {feedback}")
             current_prompt = self.build_part_prompt(full_plan, part_spec, feedback)
 
         return False
@@ -398,7 +570,7 @@ class MultiAgentOrchestrator:
             indent=2,
         )
 
-        response = validation_agent.chat(prompt)
+        response = self.run_agent("PartValidationAgent", validation_agent, prompt)
         try:
             validation = extract_json_payload(response)
         except ValueError:
@@ -407,10 +579,21 @@ class MultiAgentOrchestrator:
                 "feedback": "静态校验 agent 未返回可解析 JSON，请重新生成并明确路径、接口和方向关系。",
             }
 
-        if deterministic_issues:
+        hard_issues = [issue for issue in deterministic_issues if issue.startswith("HARD:")]
+        soft_issues = [issue for issue in deterministic_issues if not issue.startswith("HARD:")]
+
+        if hard_issues:
             merged_feedback = validation.get("feedback", "")
             validation["pass"] = False
-            validation["feedback"] = "; ".join([*deterministic_issues, merged_feedback]).strip("; ")
+            validation["feedback"] = "; ".join([*hard_issues, merged_feedback]).strip("; ")
+            return validation
+
+        if soft_issues:
+            merged_feedback = validation.get("feedback", "")
+            if validation.get("pass", False):
+                validation["feedback"] = "; ".join([merged_feedback, *soft_issues]).strip("; ")
+            else:
+                validation["feedback"] = "; ".join([*soft_issues, merged_feedback]).strip("; ")
         return validation
 
     def build_part_prompt(
@@ -440,27 +623,32 @@ class MultiAgentOrchestrator:
 
         for attempt in range(1, max_retries + 1):
             print(f"  [装配尝试 {attempt}/{max_retries}] 生成装配代码")
-            response = self.assembly_agent.chat(current_prompt)
+            self.emit_status(f"[装配尝试 {attempt}/{max_retries}] 生成装配代码")
+            response = self.run_agent("AssemblyAgent", self.assembly_agent, current_prompt)
             code = extract_python_code(response)
 
             workdir = Path(plan["assembly"]["workspace"]["assembly_dir"])
             script_name = Path(assembly_output["code_file"]).name
             execution = execute_python_code(code, workdir=workdir, script_name=script_name)
             write_text(Path(assembly_output["log_file"]), execution.log)
+            self.emit_event("execution_log", title="装配执行日志", content=execution.log)
 
             if not execution.success:
                 summary = execution.log.splitlines()[-1] if execution.log.splitlines() else execution.log
                 print(f"  [装配执行失败] {summary}")
+                self.emit_status(f"[装配执行失败] {summary}")
                 current_prompt = self.build_assembly_prompt(plan, part_results, execution.log)
                 continue
 
             issues = run_assembly_plan_checks(plan, code)
             if not issues:
                 print("  [装配执行成功]")
+                self.emit_status("[装配执行成功]")
                 return True
 
             feedback = "; ".join(issues)
             print(f"  [装配静态检查失败] {feedback}")
+            self.emit_status(f"[装配静态检查失败] {feedback}")
             current_prompt = self.build_assembly_prompt(plan, part_results, feedback)
 
         return False

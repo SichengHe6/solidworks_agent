@@ -1,0 +1,81 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "4Axis_RobotArm_Assembly",
+    "summary": "一个包含底座、3个活动关节臂（Link1-3）及集成夹爪的4轴机械臂装配体。底座为长方体带顶部旋转轴；连杆由中间圆柱和两端方块组成，通过侧面销孔配合连接；最上方连杆集成V型夹爪。所有尺寸单位为mm。",
+    "global_coordinate_system": {
+      "origin": "Base bottom center",
+      "x_direction": "Forward (aligned with Link1 initial extension direction)",
+      "y_direction": "Right hand rule relative to X and Z",
+      "z_direction": "Upward (vertical axis of Base)"
+    },
+    "design_rules": [
+      "All dimensions in mm, convert to meters for modeling code.",
+      "Use nominal dimensions for part modeling; assembly constraints handle fit/clearance.",
+      "Base is fixed to GROUND.",
+      "Links rotate around their respective joint axes."
+    ],
+    "assembly_sequence": [
+      "Insert Base and fix to GROUND.",
+      "Insert Link1. Constrain bottom_hole_axis to Base.main_axis_z (concentric). Constrain Link1.bottom_face_block to Base.top_face_main (coincident/offset).",
+      "Insert Link2. Constrain Link2.bottom_hole_axis to Link1.top_pin_axis (concentric). Constrain Link2.bottom_side_face to Link1.top_block_side_face (coincident).",
+      "Insert Link3_Gripper. Constrain Link3.bottom_hole_axis to Link2.top_pin_axis (concentric). Constrain Link3.bottom_side_face to Link2.top_block_side_face (coincident)."
+    ]
+  },
+  "part": {
+    "part_id": "link3_gripper",
+    "name": "Link3_Gripper",
+    "function": "Third arm segment with integrated V-gripper.",
+    "shape": "Central cylinder D50xL150. Bottom block 60x60x20 with side hole D10. Top block replaced/integrated with V-gripper structure. Gripper is a block 60x60x40 with a V-slot cutout.",
+    "key_dimensions": [
+      "Cylinder: D50, L150",
+      "Bottom Block: 60x60x20",
+      "Gripper Body: 60x60x40 (approx)",
+      "V-Slot: Width 40, Depth 20, Angle 90 deg",
+      "Bottom Hole: D10, Side entry"
+    ],
+    "material_or_notes": "Default material.",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "bottom_side_face",
+          "purpose": "Face containing the bottom hole",
+          "normal_direction_relation": "normal -Y (local)"
+        },
+        {
+          "name": "gripper_top_face",
+          "purpose": "Top surface of gripper",
+          "normal_direction_relation": "normal +Z (local)"
+        }
+      ],
+      "axes": [
+        {
+          "name": "bottom_hole_axis",
+          "purpose": "Concentric with Link2 top_pin_axis",
+          "direction_relation": "along local Y, centered in bottom block side"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Bottom hole axis coincident with Link2 top_pin_axis.",
+      "Side face of bottom block coincident with side face of Link2 top block."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_171347\\parts\\link3_gripper",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_171347\\parts\\link3_gripper\\link3_gripper_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_171347\\parts\\link3_gripper\\link3_gripper.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_171347\\logs\\link3_gripper_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\4Axis_RobotArm_Assembly-20260421_171347\\json\\link3_gripper_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Cylinder Z=0 to 150.",
+      "Bottom Block Z=-20 to 0. Same as Link2 bottom block.",
+      "Bottom Hole: On side face (Y- face) of Bottom Block. Sketch Circle D10 centered at Z=-10. Extrude cut inward 20mm.",
+      "Gripper Body: Instead of simple top block, create a block at Z=150 to 190 (Height 40). Size 60x60.",
+      "V-Slot: On top face of Gripper Body (Z=190), sketch V-shape. Width 40 at top, depth 20. Extrude cut down 20mm (or through).",
+      "Ensure smooth transition from cylinder to gripper body if needed, or just butt joint.",
+      "Apply C2 chamfer to bottom block edges."
+    ]
+  }
+}

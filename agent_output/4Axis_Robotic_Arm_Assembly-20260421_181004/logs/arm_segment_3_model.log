@@ -1,0 +1,7 @@
+Execution Failed with error:
+Traceback (most recent call last):
+  File "D:\a_src\python\sw_agent\agent_output\4Axis_Robotic_Arm_Assembly-20260421_181004\parts\arm_segment_3\arm_segment_3_model.py", line 198, in <module>
+    main()
+  File "D:\a_src\python\sw_agent\agent_output\4Axis_Robotic_Arm_Assembly-20260421_181004\parts\arm_segment_3\arm_segment_3_model.py", line 79, in main
+    raise Exception("Failed to create bottom hole sketch")
+Exception: Failed to create bottom hole sketch
