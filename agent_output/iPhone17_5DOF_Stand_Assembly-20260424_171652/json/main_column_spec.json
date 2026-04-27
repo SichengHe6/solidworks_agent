@@ -1,0 +1,120 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "iPhone17_5DOF_Stand_Assembly",
+    "summary": "一个适用于iPhone 17的5自由度手机支架装配体，由底座、主立柱、悬臂、夹持头组成，实现水平旋转、两级俯仰、左右倾斜及前后倾斜。",
+    "global_coordinate_system": {
+      "origin": "Base center bottom",
+      "x_direction": "Forward (towards user)",
+      "y_direction": "Left (relative to forward)",
+      "z_direction": "Up (vertical)"
+    },
+    "design_rules": [
+      "所有尺寸单位为mm，建模时需转换为m",
+      "活动关节仅定义几何配合接口，不包含物理阻尼或锁定特征",
+      "优先使用同心轴和平面重合进行装配约束",
+      "零件建模应基于标准基准面（XY, XZ, YZ）进行拉伸或旋转"
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_column_01",
+        "part_id": "main_column",
+        "name": "Column Instance",
+        "instance_role": "Vertical Support with Yaw/Pitch1",
+        "placement_notes": "安装在底座上，可绕Z轴旋转，顶部连接悬臂",
+        "interface_usage": {
+          "faces": [
+            "bottom_flange_face",
+            "top_joint_side_left",
+            "top_joint_side_right"
+          ],
+          "axes": [
+            "column_main_axis",
+            "pitch1_axis"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Insert inst_base_01 and Fix to Ground",
+      "Insert inst_column_01",
+      "Mate inst_column_01.bottom_flange_face to inst_base_01.top_mount_face (Coincident)",
+      "Mate inst_column_01.column_main_axis to inst_base_01.central_axis_z (Concentric)",
+      "Insert inst_arm_01",
+      "Mate inst_arm_01.base_side_face to inst_column_01.top_joint_side_left (Coincident/Parallel depending on design, assume side contact)",
+      "Mate inst_arm_01.arm_pitch_axis to inst_column_01.pitch1_axis (Concentric)",
+      "Insert inst_clamp_01",
+      "Mate inst_clamp_01.socket_center_point to inst_arm_01.ball_center_point (Coincident)",
+      "Mate inst_clamp_01.back_socket_inner_face to inst_arm_01.tip_ball_surface (Tangent/Coincident approximation for ball joint)"
+    ]
+  },
+  "part": {
+    "part_id": "main_column",
+    "name": "Main Column",
+    "function": "连接底座与悬臂，提供第一级俯仰(Pitch1)调节",
+    "shape": "中空圆柱管状结构，底部有法兰盘与底座配合，顶部有球窝或U型叉耳结构用于连接悬臂。",
+    "key_dimensions": [
+      "Outer Diameter: 28mm",
+      "Inner Diameter: 20mm",
+      "Length: 150mm",
+      "Bottom Flange Thickness: 5mm",
+      "Top Joint Width: 30mm"
+    ],
+    "material_or_notes": "铝合金或高强度塑料",
+    "quantity": 1,
+    "instance_ids": [
+      "inst_column_01"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "bottom_flange_face",
+          "purpose": "与底座顶面贴合",
+          "normal_direction_relation": "normal -Z (local)"
+        },
+        {
+          "name": "top_joint_side_left",
+          "purpose": "悬臂铰接左侧面",
+          "normal_direction_relation": "normal -Y (local)"
+        },
+        {
+          "name": "top_joint_side_right",
+          "purpose": "悬臂铰接右侧面",
+          "normal_direction_relation": "normal +Y (local)"
+        }
+      ],
+      "axes": [
+        {
+          "name": "column_main_axis",
+          "purpose": "与底座同心旋转轴",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "pitch1_axis",
+          "purpose": "悬臂俯仰旋转轴",
+          "direction_relation": "along local Y, passing through top joint center"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "底部法兰面与底座top_mount_face重合",
+      "column_main_axis与底座central_axis_z同心",
+      "顶部pitch1_axis用于连接悬臂"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\main_column",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\main_column\\main_column_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\main_column\\main_column.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\logs\\main_column_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\json\\main_column_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在XY平面绘制外径28mm内径20mm圆环，向上拉伸150mm生成管体",
+      "在底部添加厚度5mm直径35mm的法兰盘",
+      "在顶部切除材料形成U型叉耳，宽度30mm，深度20mm",
+      "创建pitch1_axis参考轴，位于叉耳中心，沿Y方向"
+    ]
+  }
+}

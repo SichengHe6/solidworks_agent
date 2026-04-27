@@ -1,0 +1,33 @@
+----------------------------------------
+Python 成功接收到的新零件名称: Desktop Panel
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 14:33:01 - 接收到参数，尝试创建并激活文档: Desktop Panel
+[DEBUG] 14:33:01 - 尝试连接 SolidWorks...
+[DEBUG] 14:33:01 - 成功连接到已运行的实例。
+
+开始建模: Desktop Panel
+步骤 1: 绘制桌面主体轮廓
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+步骤 2: 拉伸生成桌面实体
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+步骤 3: 创建安装孔
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+步骤 4: 创建装配接口
+✅ 成功创建基准轴 [mount_hole_axis_fl_xp_yp]
+  创建轴: mount_hole_axis_fl_xp_yp at (0.58, 0.28)
+✅ 成功创建基准轴 [mount_hole_axis_fl_xp_ym]
+  创建轴: mount_hole_axis_fl_xp_ym at (0.58, -0.28)
+✅ 成功创建基准轴 [mount_hole_axis_bl_xm_yp]
+  创建轴: mount_hole_axis_bl_xm_yp at (-0.58, 0.28)
+✅ 成功创建基准轴 [mount_hole_axis_bl_xm_ym]
+  创建轴: mount_hole_axis_bl_xm_ym at (-0.58, -0.28)
+步骤 5: 保存文件至 D:\a_src\python\sw_agent\agent_output\Standard_Office_Table_Assembly-20260423_143100\parts\desktop_main\desktop_main.SLDPRT
+正在保存零件到: D:\a_src\python\sw_agent\agent_output\Standard_Office_Table_Assembly-20260423_143100\parts\desktop_main\desktop_main.SLDPRT ...
+零件已保存至: D:\a_src\python\sw_agent\agent_output\Standard_Office_Table_Assembly-20260423_143100\parts\desktop_main\desktop_main.SLDPRT
+建模完成并保存成功。

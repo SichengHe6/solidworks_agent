@@ -1,0 +1,55 @@
+{
+  "request_type": "part",
+  "part_context": {
+    "name": "石棉垫_圆形带槽孔",
+    "summary": "创建一个圆形石棉垫片零件。主体为直径50mm、厚度2mm的圆柱体。中心有一个20x10mm的矩形通槽（长边平行于Y轴）。在X轴方向上，距离圆心±18mm处有两个直径6mm的通孔。所有特征均基于XY平面草图拉伸或切除生成。",
+    "key_requirements": [
+      "主体：圆柱体，直径50mm，高度2mm，基于XY面拉伸",
+      "特征1：矩形通槽，尺寸20mm(长/Y向)x10mm(宽/X向)，居中，完全贯穿",
+      "特征2：两个圆通孔，直径6mm，中心坐标分别为(-18, 0)和(18, 0)，完全贯穿",
+      "单位：mm"
+    ],
+    "assumptions": [
+      "默认主草图面为XY平面",
+      "默认槽长边平行于Y轴，孔分布在X轴上",
+      "默认无圆角/倒角",
+      "默认材料属性不影响几何建模"
+    ],
+    "requested_outputs": [
+      ".SLDPRT 文件",
+      "Python 建模代码"
+    ],
+    "interfaces": []
+  },
+  "part": {
+    "part_id": "石棉垫_圆形带槽孔",
+    "name": "石棉垫_圆形带槽孔",
+    "function": "创建一个圆形石棉垫片零件。主体为直径50mm、厚度2mm的圆柱体。中心有一个20x10mm的矩形通槽（长边平行于Y轴）。在X轴方向上，距离圆心±18mm处有两个直径6mm的通孔。所有特征均基于XY平面草图拉伸或切除生成。",
+    "shape": "根据需求分析结果由建模智能体细化",
+    "key_dimensions": [
+      "主体：圆柱体，直径50mm，高度2mm，基于XY面拉伸",
+      "特征1：矩形通槽，尺寸20mm(长/Y向)x10mm(宽/X向)，居中，完全贯穿",
+      "特征2：两个圆通孔，直径6mm，中心坐标分别为(-18, 0)和(18, 0)，完全贯穿",
+      "单位：mm"
+    ],
+    "material_or_notes": "默认主草图面为XY平面; 默认槽长边平行于Y轴，孔分布在X轴上; 默认无圆角/倒角; 默认材料属性不影响几何建模",
+    "interfaces": {
+      "faces": [],
+      "axes": [],
+      "points": []
+    },
+    "standalone_modeling_instructions": [
+      "主体：圆柱体，直径50mm，高度2mm，基于XY面拉伸",
+      "特征1：矩形通槽，尺寸20mm(长/Y向)x10mm(宽/X向)，居中，完全贯穿",
+      "特征2：两个圆通孔，直径6mm，中心坐标分别为(-18, 0)和(18, 0)，完全贯穿",
+      "单位：mm"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\石棉垫_圆形带槽孔-20260424_164709\\part",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\石棉垫_圆形带槽孔-20260424_164709\\part\\石棉垫_圆形带槽孔_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\石棉垫_圆形带槽孔-20260424_164709\\part\\石棉垫_圆形带槽孔.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\石棉垫_圆形带槽孔-20260424_164709\\logs\\石棉垫_圆形带槽孔_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\石棉垫_圆形带槽孔-20260424_164709\\json\\石棉垫_圆形带槽孔_spec.json"
+    }
+  }
+}

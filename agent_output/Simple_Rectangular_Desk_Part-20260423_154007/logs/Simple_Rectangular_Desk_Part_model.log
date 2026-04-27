@@ -1,0 +1,88 @@
+----------------------------------------
+Python 成功接收到的新零件名称: Simple_Rectangular_Desk_Part
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 15:41:13 - 接收到参数，尝试创建并激活文档: Simple_Rectangular_Desk_Part
+[DEBUG] 15:41:13 - 尝试连接 SolidWorks...
+[DEBUG] 15:41:14 - 成功连接到已运行的实例。
+
+开始建模: Simple_Rectangular_Desk_Part
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+桌面主体创建完成
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+桌腿创建完成
+正在尝试选中 20 条边...
+
+--- 开始动态旋转扫描选择 (0, 0.3, 0.025) ---
+
+--- 开始动态旋转扫描选择 (0, -0.3, 0.025) ---
+
+--- 开始动态旋转扫描选择 (0.6, 0, 0.025) ---
+
+--- 开始动态旋转扫描选择 (-0.6, 0, 0.025) ---
+
+--- 开始动态旋转扫描选择 (-0.58, 0.23999999999999996, -0.375) ---
+
+--- 开始动态旋转扫描选择 (-0.5399999999999999, 0.23999999999999996, -0.375) ---
+
+--- 开始动态旋转扫描选择 (-0.5399999999999999, 0.27999999999999997, -0.375) ---
+[Debug] 动态扫描 1/12 ...
+[Success] 在第 1 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (-0.58, 0.27999999999999997, -0.375) ---
+
+--- 开始动态旋转扫描选择 (0.5399999999999999, 0.23999999999999996, -0.375) ---
+
+--- 开始动态旋转扫描选择 (0.58, 0.23999999999999996, -0.375) ---
+
+--- 开始动态旋转扫描选择 (0.58, 0.27999999999999997, -0.375) ---
+[Debug] 动态扫描 1/12 ...
+[Success] 在第 1 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (0.5399999999999999, 0.27999999999999997, -0.375) ---
+
+--- 开始动态旋转扫描选择 (-0.58, -0.27999999999999997, -0.375) ---
+[Debug] 动态扫描 1/12 ...
+[Debug] 动态扫描 2/12 ...
+[Success] 在第 2 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (-0.5399999999999999, -0.27999999999999997, -0.375) ---
+[Debug] 动态扫描 1/12 ...
+[Debug] 动态扫描 2/12 ...
+[Success] 在第 2 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (-0.5399999999999999, -0.23999999999999996, -0.375) ---
+[Debug] 动态扫描 1/12 ...
+[Debug] 动态扫描 2/12 ...
+[Success] 在第 2 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (-0.58, -0.23999999999999996, -0.375) ---
+[Debug] 动态扫描 1/12 ...
+[Debug] 动态扫描 2/12 ...
+[Debug] 动态扫描 3/12 ...
+[Success] 在第 3 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (0.5399999999999999, -0.27999999999999997, -0.375) ---
+
+--- 开始动态旋转扫描选择 (0.58, -0.27999999999999997, -0.375) ---
+
+--- 开始动态旋转扫描选择 (0.58, -0.23999999999999996, -0.375) ---
+[Debug] 动态扫描 1/12 ...
+[Success] 在第 1 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (0.5399999999999999, -0.23999999999999996, -0.375) ---
+倒角成功，半径: 0.003
+主要边缘圆角处理完成
+正在保存零件到: D:\a_src\python\sw_agent\agent_output\Simple_Rectangular_Desk_Part-20260423_154007\part\Simple_Rectangular_Desk_Part.SLDPRT ...
+零件已保存至: D:\a_src\python\sw_agent\agent_output\Simple_Rectangular_Desk_Part-20260423_154007\part\Simple_Rectangular_Desk_Part.SLDPRT
+模型已成功保存至: D:\a_src\python\sw_agent\agent_output\Simple_Rectangular_Desk_Part-20260423_154007\part\Simple_Rectangular_Desk_Part.SLDPRT

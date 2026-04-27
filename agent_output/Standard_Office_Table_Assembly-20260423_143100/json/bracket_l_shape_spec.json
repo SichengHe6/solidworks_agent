@@ -1,0 +1,90 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Standard_Office_Table_Assembly",
+    "summary": "设计一个包含桌面、4根圆形桌腿和8个L型角码的办公桌装配体。桌面为矩形板，边缘R5圆角；桌腿为圆柱体，通过角码连接；使用L型角码将桌腿固定在桌面底部四角内侧。",
+    "global_coordinate_system": {
+      "origin": "桌面几何中心",
+      "x_direction": "沿桌面长边方向 (1200mm)",
+      "y_direction": "沿桌面短边方向 (600mm)",
+      "z_direction": "垂直向上，指向桌面顶面"
+    },
+    "design_rules": [
+      "所有尺寸单位默认为毫米(mm)，建模时需转换为米(m)",
+      "桌面底面为Z=0平面（局部坐标系），全局Z轴向上",
+      "桌腿位于桌面四角内侧，距离边缘建议预留20mm间隙",
+      "角码对称分布在每根桌腿的两侧，确保稳定性",
+      "安装孔直径统一为6mm，用于M5或M6螺丝固定"
+    ],
+    "assembly_sequence": [
+      "Insert desktop_main and Fix it to GROUND",
+      "Insert 4 instances of leg_cylindrical",
+      "Insert 8 instances of bracket_l_shape",
+      "Mate leg_cylindrical_1 central_axis to desktop position (X=580, Y=280) roughly",
+      "Mate bracket_l_shape_1 horizontal_bottom_face to desktop_main bottom_face",
+      "Mate bracket_l_shape_1 hole_axis_horizontal to desktop_main mount_hole_axis_fl_xp_yp",
+      "Mate bracket_l_shape_1 vertical_inner_face to leg_cylindrical_1 side_face_mount_1",
+      "Mate bracket_l_shape_1 hole_axis_vertical to leg_cylindrical_1 mount_hole_axis_1",
+      "Repeat for remaining legs and brackets with appropriate coordinate transformations"
+    ]
+  },
+  "part": {
+    "part_id": "bracket_l_shape",
+    "name": "L-Bracket",
+    "function": "连接桌面与桌腿，提供刚性固定",
+    "shape": "L型角码，两臂长50mm，宽50mm，厚3mm。每个臂上有一个直径6mm的安装孔。",
+    "key_dimensions": [
+      "Arm Length: 50 mm",
+      "Arm Width: 50 mm",
+      "Thickness: 3 mm",
+      "Hole Diameter: 6 mm"
+    ],
+    "material_or_notes": "金属角码，镀锌或不锈钢",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "horizontal_bottom_face",
+          "purpose": "贴合桌面底面",
+          "normal_direction_relation": "normal -Z (当水平放置时)"
+        },
+        {
+          "name": "vertical_inner_face",
+          "purpose": "贴合桌腿侧面",
+          "normal_direction_relation": "normal +X (当垂直臂面向桌腿时)"
+        }
+      ],
+      "axes": [
+        {
+          "name": "hole_axis_horizontal",
+          "purpose": "水平臂上的安装孔轴线",
+          "direction_relation": "along local Z, centered on horizontal arm"
+        },
+        {
+          "name": "hole_axis_vertical",
+          "purpose": "垂直臂上的安装孔轴线",
+          "direction_relation": "along local X, centered on vertical arm"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "共8个，每根桌腿配2个",
+      "水平臂孔与桌面孔同心，垂直臂孔与桌腿孔同心",
+      "角码内角应朝向桌腿与桌面的夹角内部"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\bracket_l_shape",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\bracket_l_shape\\bracket_l_shape_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\bracket_l_shape\\bracket_l_shape.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\logs\\bracket_l_shape_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\json\\bracket_l_shape_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在前视基准面(XZ)绘制L型轮廓：水平段50x3，垂直段50x3，内角相连",
+      "向Y方向拉伸50mm形成实体",
+      "在水平臂中心(25, 25相对角点)创建直径6mm通孔，方向沿厚度方向(Z)",
+      "在垂直臂中心(25, 25相对角点)创建直径6mm通孔，方向沿宽度方向(Y)或根据实际安装调整。注意：通常L角码孔是垂直于臂面的。",
+      "修正：水平臂孔沿Z轴，垂直臂孔沿X轴（假设L开口朝向+X,+Z）。"
+    ]
+  }
+}

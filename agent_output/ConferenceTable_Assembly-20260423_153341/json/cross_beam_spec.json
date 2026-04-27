@@ -1,0 +1,140 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "ConferenceTable_Assembly",
+    "summary": "生成一个标准矩形会议桌装配体，包含桌面、4条方形管桌腿、2根横梁及8个简化螺丝。桌面尺寸2400x1200x25mm，总高750mm。桌腿位于四角内侧，横梁连接左右桌腿中部。所有连接通过同心和重合配合实现，螺丝忽略螺纹细节。",
+    "global_coordinate_system": {
+      "origin": "桌面几何中心",
+      "x_direction": "沿桌面长边方向 (2400mm)",
+      "y_direction": "沿桌面短边方向 (1200mm)",
+      "z_direction": "垂直向上，指向桌面顶面"
+    },
+    "design_rules": [
+      "单位统一为毫米(mm)，建模时需转换为米(m)",
+      "所有零件基于XY平面草图拉伸或旋转生成",
+      "装配基准以桌面为中心，Z轴向上",
+      "重复零件必须复用Part定义，通过Instance区分位置"
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_beam_front",
+        "part_id": "cross_beam",
+        "name": "前横梁",
+        "instance_role": "连接件",
+        "placement_notes": "连接左前和右前桌腿，位于Y正侧",
+        "interface_usage": {
+          "faces": [
+            "face_end_left",
+            "face_end_right"
+          ],
+          "axes": [
+            "axis_mount_left",
+            "axis_mount_right"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_beam_back",
+        "part_id": "cross_beam",
+        "name": "后横梁",
+        "instance_role": "连接件",
+        "placement_notes": "连接左后和右后桌腿，位于Y负侧",
+        "interface_usage": {
+          "faces": [
+            "face_end_left",
+            "face_end_right"
+          ],
+          "axes": [
+            "axis_mount_left",
+            "axis_mount_right"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "inst_table_top_1",
+      "inst_leg_fl",
+      "inst_leg_fr",
+      "inst_leg_bl",
+      "inst_leg_br",
+      "inst_beam_front",
+      "inst_beam_back",
+      "inst_screw_fl_top",
+      "inst_screw_fr_top",
+      "inst_screw_bl_top",
+      "inst_screw_br_top",
+      "inst_screw_fl_beam",
+      "inst_screw_fr_beam",
+      "inst_screw_bl_beam",
+      "inst_screw_br_beam"
+    ]
+  },
+  "part": {
+    "part_id": "cross_beam",
+    "name": "连接横梁",
+    "function": "连接左右桌腿，增加稳定性",
+    "shape": "空心方管，外截面40x40mm，壁厚2mm，长度1100mm",
+    "key_dimensions": [
+      "Outer Width: 40 mm",
+      "Outer Height: 40 mm",
+      "Wall Thickness: 2 mm",
+      "Length: 1100 mm"
+    ],
+    "material_or_notes": "金属方管，黑色喷涂",
+    "quantity": 2,
+    "instance_ids": [
+      "inst_beam_front",
+      "inst_beam_back"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "face_end_left",
+          "purpose": "与左侧桌腿侧面贴合",
+          "normal_direction_relation": "normal -X (local, assuming beam along X)"
+        },
+        {
+          "name": "face_end_right",
+          "purpose": "与右侧桌腿侧面贴合",
+          "normal_direction_relation": "normal +X (local, assuming beam along X)"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_main",
+          "purpose": "横梁中心轴线",
+          "direction_relation": "along local X"
+        },
+        {
+          "name": "axis_mount_left",
+          "purpose": "左端安装孔轴线",
+          "direction_relation": "along local X, at left end face center"
+        },
+        {
+          "name": "axis_mount_right",
+          "purpose": "右端安装孔轴线",
+          "direction_relation": "along local X, at right end face center"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "端面与桌腿侧面重合",
+      "端面孔轴线与桌腿侧面安装孔轴线同心"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\cross_beam",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\cross_beam\\cross_beam_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\cross_beam\\cross_beam.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\logs\\cross_beam_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\json\\cross_beam_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在YZ平面绘制40x40正方形，向内偏移2mm生成内轮廓",
+      "向+X方向拉伸1100mm",
+      "在两端面中心创建直径8mm的通孔，轴线沿X方向"
+    ]
+  }
+}

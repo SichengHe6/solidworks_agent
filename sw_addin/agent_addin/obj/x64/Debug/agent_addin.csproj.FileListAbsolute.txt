@@ -1,0 +1,13 @@
+D:\a_src\python\sw_agent\sw_addin\agent_addin\bin\Debug\agent_addin.dll
+D:\a_src\python\sw_agent\sw_addin\agent_addin\bin\Debug\agent_addin.pdb
+D:\a_src\python\sw_agent\sw_addin\agent_addin\bin\Debug\SolidWorks.Interop.sldworks.dll
+D:\a_src\python\sw_agent\sw_addin\agent_addin\bin\Debug\SolidWorks.Interop.swconst.dll
+D:\a_src\python\sw_agent\sw_addin\agent_addin\bin\Debug\SolidWorks.Interop.swpublished.dll
+D:\a_src\python\sw_agent\sw_addin\agent_addin\obj\x64\Debug\agent_addin.csproj.AssemblyReference.cache
+D:\a_src\python\sw_agent\sw_addin\agent_addin\obj\x64\Debug\agent_addin.csproj.CoreCompileInputs.cache
+D:\a_src\python\sw_agent\sw_addin\agent_addin\obj\x64\Debug\agent_ad.E09BF3A8.Up2Date
+D:\a_src\python\sw_agent\sw_addin\agent_addin\obj\x64\Debug\agent_addin.dll
+D:\a_src\python\sw_agent\sw_addin\agent_addin\obj\x64\Debug\agent_addin.pdb
+D:\a_src\python\sw_agent\sw_addin\agent_addin\bin\Debug\SolidWorks.Interop.swcommands.dll
+D:\a_src\python\sw_agent\sw_addin\agent_addin\obj\x64\Debug\agent_addin.AgentTaskPaneControl.resources
+D:\a_src\python\sw_agent\sw_addin\agent_addin\obj\x64\Debug\agent_addin.csproj.GenerateResource.cache

@@ -1,0 +1,59 @@
+{
+  "request_type": "part",
+  "part_context": {
+    "name": "Battery_Asbestos_Pad",
+    "summary": "设计一个用于电池包的圆形石棉垫片，主体为圆柱体，半径50mm，厚度10mm。默认为实心无孔结构，边缘直角，无倒角圆角。",
+    "key_requirements": [
+      "主体形状：圆柱体",
+      "半径：50 mm",
+      "厚度：10 mm",
+      "特征：实心，无中心孔，无边缘倒角/圆角",
+      "建模方式：在XY平面绘制半径50mm的圆，沿Z轴拉伸10mm"
+    ],
+    "assumptions": [
+      "单位：mm",
+      "主草图面：XY平面",
+      "拉伸方向：Z轴正向",
+      "默认无孔、无倒角、无圆角",
+      "材料属性未在几何建模中体现，仅关注几何形状"
+    ],
+    "requested_outputs": [
+      ".SLDPRT",
+      "Python Code"
+    ],
+    "interfaces": []
+  },
+  "part": {
+    "part_id": "Battery_Asbestos_Pad",
+    "name": "Battery_Asbestos_Pad",
+    "function": "设计一个用于电池包的圆形石棉垫片，主体为圆柱体，半径50mm，厚度10mm。默认为实心无孔结构，边缘直角，无倒角圆角。",
+    "shape": "根据需求分析结果由建模智能体细化",
+    "key_dimensions": [
+      "主体形状：圆柱体",
+      "半径：50 mm",
+      "厚度：10 mm",
+      "特征：实心，无中心孔，无边缘倒角/圆角",
+      "建模方式：在XY平面绘制半径50mm的圆，沿Z轴拉伸10mm"
+    ],
+    "material_or_notes": "单位：mm; 主草图面：XY平面; 拉伸方向：Z轴正向; 默认无孔、无倒角、无圆角; 材料属性未在几何建模中体现，仅关注几何形状",
+    "interfaces": {
+      "faces": [],
+      "axes": [],
+      "points": []
+    },
+    "standalone_modeling_instructions": [
+      "主体形状：圆柱体",
+      "半径：50 mm",
+      "厚度：10 mm",
+      "特征：实心，无中心孔，无边缘倒角/圆角",
+      "建模方式：在XY平面绘制半径50mm的圆，沿Z轴拉伸10mm"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Asbestos_Pad-20260424_163711\\part",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Asbestos_Pad-20260424_163711\\part\\Battery_Asbestos_Pad_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Asbestos_Pad-20260424_163711\\part\\Battery_Asbestos_Pad.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Asbestos_Pad-20260424_163711\\logs\\Battery_Asbestos_Pad_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Asbestos_Pad-20260424_163711\\json\\Battery_Asbestos_Pad_spec.json"
+    }
+  }
+}

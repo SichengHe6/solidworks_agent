@@ -1,0 +1,307 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "Standard_Office_Table_Assembly",
+    "summary": "设计一个包含桌面、4根圆形桌腿和8个L型角码的办公桌装配体。桌面为矩形板，边缘R5圆角；桌腿为圆柱体，通过角码连接；使用L型角码将桌腿固定在桌面底部四角内侧。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "桌面几何中心",
+      "x_direction": "沿桌面长边方向 (1200mm)",
+      "y_direction": "沿桌面短边方向 (600mm)",
+      "z_direction": "垂直向上，指向桌面顶面"
+    },
+    "design_rules": [
+      "所有尺寸单位默认为毫米(mm)，建模时需转换为米(m)",
+      "桌面底面为Z=0平面（局部坐标系），全局Z轴向上",
+      "桌腿位于桌面四角内侧，距离边缘建议预留20mm间隙",
+      "角码对称分布在每根桌腿的两侧，确保稳定性",
+      "安装孔直径统一为6mm，用于M5或M6螺丝固定"
+    ],
+    "parts": [
+      {
+        "part_id": "desktop_main",
+        "name": "Desktop Panel",
+        "function": "提供工作表面并作为主要支撑基准",
+        "shape": "矩形平板，长1200mm，宽600mm，厚25mm。四个边角进行R5mm圆角处理。",
+        "key_dimensions": [
+          "Length: 1200 mm",
+          "Width: 600 mm",
+          "Thickness: 25 mm",
+          "Corner Radius: 5 mm"
+        ],
+        "material_or_notes": "木材/板材，表面光滑",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "bottom_face",
+              "purpose": "与角码水平臂贴合的安装基准面",
+              "normal_direction_relation": "normal -Z (向下)"
+            },
+            {
+              "name": "top_face",
+              "purpose": "工作表面",
+              "normal_direction_relation": "normal +Z (向上)"
+            }
+          ],
+          "axes": [
+            {
+              "name": "mount_hole_axis_fl_xp_yp",
+              "purpose": "右前角安装孔轴线",
+              "direction_relation": "along local Z, located at X=+580, Y=+280 relative to center"
+            },
+            {
+              "name": "mount_hole_axis_fl_xp_ym",
+              "purpose": "右后角安装孔轴线",
+              "direction_relation": "along local Z, located at X=+580, Y=-280 relative to center"
+            },
+            {
+              "name": "mount_hole_axis_bl_xm_yp",
+              "purpose": "左前角安装孔轴线",
+              "direction_relation": "along local Z, located at X=-580, Y=+280 relative to center"
+            },
+            {
+              "name": "mount_hole_axis_bl_xm_ym",
+              "purpose": "左后角安装孔轴线",
+              "direction_relation": "along local Z, located at X=-580, Y=-280 relative to center"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "作为装配基准件(GROUND)，固定不动",
+          "底部四个角各分布2个安装孔位，共8个孔位对应8个角码"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\desktop_main",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\desktop_main\\desktop_main_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\desktop_main\\desktop_main.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\logs\\desktop_main_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\json\\desktop_main_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制1200x600矩形，中心在原点",
+          "对四个角进行R5圆角",
+          "向-Z方向拉伸25mm形成实体",
+          "在底面(Z=-25)创建草图，定位8个直径6mm的通孔圆心：X=±580, Y=±280",
+          "执行切除拉伸生成通孔"
+        ]
+      },
+      {
+        "part_id": "leg_cylindrical",
+        "name": "Table Leg",
+        "function": "支撑桌面，传递载荷至地面",
+        "shape": "圆柱体，直径40mm，高度725mm。顶部侧面有用于安装角码的平面或参考特征。",
+        "key_dimensions": [
+          "Diameter: 40 mm",
+          "Height: 725 mm"
+        ],
+        "material_or_notes": "金属或硬木，表面需平整以贴合角码",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "side_face_mount_1",
+              "purpose": "与角码垂直臂贴合的安装面1",
+              "normal_direction_relation": "normal +X (假设局部X指向外侧)"
+            },
+            {
+              "name": "side_face_mount_2",
+              "purpose": "与角码垂直臂贴合的安装面2",
+              "normal_direction_relation": "normal -X (假设局部X指向外侧，此面为对面)"
+            },
+            {
+              "name": "top_face",
+              "purpose": "顶端面，接近桌面但不接触，由角码悬吊或支撑",
+              "normal_direction_relation": "normal +Z"
+            },
+            {
+              "name": "bottom_face",
+              "purpose": "接地面",
+              "normal_direction_relation": "normal -Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "central_axis",
+              "purpose": "桌腿中心轴线，用于定位",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "mount_hole_axis_1",
+              "purpose": "侧面安装孔1轴线",
+              "direction_relation": "along local X, offset from top by 50mm"
+            },
+            {
+              "name": "mount_hole_axis_2",
+              "purpose": "侧面安装孔2轴线",
+              "direction_relation": "along local -X, offset from top by 50mm"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "共4根，分别位于桌面四角下方",
+          "每根腿需要2个角码固定，因此侧面需有两个安装面或一个宽平面配合两个角码",
+          "假设桌腿顶部切平或具有足够平面区域供角码贴合"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\leg_cylindrical",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\leg_cylindrical\\leg_cylindrical_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\leg_cylindrical\\leg_cylindrical.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\logs\\leg_cylindrical_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\json\\leg_cylindrical_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制直径40mm的圆，中心在原点",
+          "向+Z方向拉伸725mm",
+          "在顶部侧面(Z=725附近)创建参考平面或直接利用圆柱面切平面概念",
+          "为了简化建模且符合角码安装，建议在距顶端50mm处，沿X轴方向钻两个直径6mm的通孔（贯穿圆柱）",
+          "或者，如果角码是夹持式，则无需钻孔，仅需保证侧面平整。根据需求'安装孔同心'，此处按钻孔处理：在YZ平面画孔草图，拉伸切除贯穿。"
+        ]
+      },
+      {
+        "part_id": "bracket_l_shape",
+        "name": "L-Bracket",
+        "function": "连接桌面与桌腿，提供刚性固定",
+        "shape": "L型角码，两臂长50mm，宽50mm，厚3mm。每个臂上有一个直径6mm的安装孔。",
+        "key_dimensions": [
+          "Arm Length: 50 mm",
+          "Arm Width: 50 mm",
+          "Thickness: 3 mm",
+          "Hole Diameter: 6 mm"
+        ],
+        "material_or_notes": "金属角码，镀锌或不锈钢",
+        "interfaces": {
+          "faces": [
+            {
+              "name": "horizontal_bottom_face",
+              "purpose": "贴合桌面底面",
+              "normal_direction_relation": "normal -Z (当水平放置时)"
+            },
+            {
+              "name": "vertical_inner_face",
+              "purpose": "贴合桌腿侧面",
+              "normal_direction_relation": "normal +X (当垂直臂面向桌腿时)"
+            }
+          ],
+          "axes": [
+            {
+              "name": "hole_axis_horizontal",
+              "purpose": "水平臂上的安装孔轴线",
+              "direction_relation": "along local Z, centered on horizontal arm"
+            },
+            {
+              "name": "hole_axis_vertical",
+              "purpose": "垂直臂上的安装孔轴线",
+              "direction_relation": "along local X, centered on vertical arm"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "共8个，每根桌腿配2个",
+          "水平臂孔与桌面孔同心，垂直臂孔与桌腿孔同心",
+          "角码内角应朝向桌腿与桌面的夹角内部"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\bracket_l_shape",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\bracket_l_shape\\bracket_l_shape_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\bracket_l_shape\\bracket_l_shape.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\logs\\bracket_l_shape_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\json\\bracket_l_shape_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在前视基准面(XZ)绘制L型轮廓：水平段50x3，垂直段50x3，内角相连",
+          "向Y方向拉伸50mm形成实体",
+          "在水平臂中心(25, 25相对角点)创建直径6mm通孔，方向沿厚度方向(Z)",
+          "在垂直臂中心(25, 25相对角点)创建直径6mm通孔，方向沿宽度方向(Y)或根据实际安装调整。注意：通常L角码孔是垂直于臂面的。",
+          "修正：水平臂孔沿Z轴，垂直臂孔沿X轴（假设L开口朝向+X,+Z）。"
+        ]
+      }
+    ],
+    "assembly_sequence": [
+      "Insert desktop_main and Fix it to GROUND",
+      "Insert 4 instances of leg_cylindrical",
+      "Insert 8 instances of bracket_l_shape",
+      "Mate leg_cylindrical_1 central_axis to desktop position (X=580, Y=280) roughly",
+      "Mate bracket_l_shape_1 horizontal_bottom_face to desktop_main bottom_face",
+      "Mate bracket_l_shape_1 hole_axis_horizontal to desktop_main mount_hole_axis_fl_xp_yp",
+      "Mate bracket_l_shape_1 vertical_inner_face to leg_cylindrical_1 side_face_mount_1",
+      "Mate bracket_l_shape_1 hole_axis_vertical to leg_cylindrical_1 mount_hole_axis_1",
+      "Repeat for remaining legs and brackets with appropriate coordinate transformations"
+    ],
+    "constraints": [
+      {
+        "source_part_id": "desktop_main",
+        "source_interface": "bottom_face",
+        "target_part_id": "GROUND",
+        "target_interface": "XY_Plane",
+        "relation": "coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "Fix desktop bottom to global XY plane for reference"
+      },
+      {
+        "source_part_id": "leg_cylindrical_1",
+        "source_interface": "central_axis",
+        "target_part_id": "desktop_main",
+        "target_interface": "mount_hole_axis_fl_xp_yp",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Position first leg under front-right corner area. Note: Leg axis is concentric with the imaginary vertical line through the mounting zone."
+      },
+      {
+        "source_part_id": "bracket_l_shape_1",
+        "source_interface": "horizontal_bottom_face",
+        "target_part_id": "desktop_main",
+        "target_interface": "bottom_face",
+        "relation": "coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "Bracket sits on bottom of desktop"
+      },
+      {
+        "source_part_id": "bracket_l_shape_1",
+        "source_interface": "hole_axis_horizontal",
+        "target_part_id": "desktop_main",
+        "target_interface": "mount_hole_axis_fl_xp_yp",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Align bracket hole with desktop hole"
+      },
+      {
+        "source_part_id": "bracket_l_shape_1",
+        "source_interface": "vertical_inner_face",
+        "target_part_id": "leg_cylindrical_1",
+        "target_interface": "side_face_mount_1",
+        "relation": "coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "Bracket vertical arm touches leg side"
+      },
+      {
+        "source_part_id": "bracket_l_shape_1",
+        "source_interface": "hole_axis_vertical",
+        "target_part_id": "leg_cylindrical_1",
+        "target_interface": "mount_hole_axis_1",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Align bracket vertical hole with leg hole"
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\assembly\\Standard_Office_Table_Assembly.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\logs\\assembly.log"
+    }
+  }
+}

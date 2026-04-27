@@ -1,0 +1,20 @@
+----------------------------------------
+Python 成功接收到的新零件名称: screw_m3
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 16:03:59 - 接收到参数，尝试创建并激活文档: screw_m3
+[DEBUG] 16:03:59 - 尝试连接 SolidWorks...
+[DEBUG] 16:03:59 - 成功连接到已运行的实例。
+
+开始建模零件: screw_m3
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+主体拉伸完成
+✅ 成功创建基准轴 [axis_shank]
+创建参考轴: axis_shank
+创建参考平面: face_head_bottom (位于顶部)
+正在保存零件到: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\screw_m3\screw_m3.SLDPRT ...
+零件已保存至: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\screw_m3\screw_m3.SLDPRT
+零件成功保存至: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\screw_m3\screw_m3.SLDPRT

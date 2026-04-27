@@ -1,0 +1,978 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "ConferenceTable_Assembly",
+    "summary": "生成一个标准矩形会议桌装配体，包含桌面、4条方形管桌腿、2根横梁及8个简化螺丝。桌面尺寸2400x1200x25mm，总高750mm。桌腿位于四角内侧，横梁连接左右桌腿中部。所有连接通过同心和重合配合实现，螺丝忽略螺纹细节。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "桌面几何中心",
+      "x_direction": "沿桌面长边方向 (2400mm)",
+      "y_direction": "沿桌面短边方向 (1200mm)",
+      "z_direction": "垂直向上，指向桌面顶面"
+    },
+    "design_rules": [
+      "单位统一为毫米(mm)，建模时需转换为米(m)",
+      "所有零件基于XY平面草图拉伸或旋转生成",
+      "装配基准以桌面为中心，Z轴向上",
+      "重复零件必须复用Part定义，通过Instance区分位置"
+    ],
+    "parts": [
+      {
+        "part_id": "table_top",
+        "name": "会议桌桌面",
+        "function": "提供工作表面，支撑桌腿",
+        "shape": "矩形板，长2400mm，宽1200mm，厚25mm，四角R10圆角",
+        "key_dimensions": [
+          "Length: 2400 mm",
+          "Width: 1200 mm",
+          "Thickness: 25 mm",
+          "Corner Radius: 10 mm"
+        ],
+        "material_or_notes": "木质或复合材料，表面平整",
+        "quantity": 1,
+        "instance_ids": [
+          "inst_table_top_1"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_bottom",
+              "purpose": "与桌腿顶面贴合",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "face_top",
+              "purpose": "工作表面",
+              "normal_direction_relation": "normal +Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_leg_mount_fl",
+              "purpose": "左前桌腿安装孔轴线",
+              "direction_relation": "along local Z, located at X=-1150, Y=550 relative to center"
+            },
+            {
+              "name": "axis_leg_mount_fr",
+              "purpose": "右前桌腿安装孔轴线",
+              "direction_relation": "along local Z, located at X=1150, Y=550 relative to center"
+            },
+            {
+              "name": "axis_leg_mount_bl",
+              "purpose": "左后桌腿安装孔轴线",
+              "direction_relation": "along local Z, located at X=-1150, Y=-550 relative to center"
+            },
+            {
+              "name": "axis_leg_mount_br",
+              "purpose": "右后桌腿安装孔轴线",
+              "direction_relation": "along local Z, located at X=1150, Y=-550 relative to center"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "作为装配基准件，固定不动",
+          "桌腿顶面需与此零件底面重合",
+          "桌腿轴线需与此零件对应安装孔轴线同心"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_top",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_top\\table_top_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_top\\table_top.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\logs\\table_top_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\json\\table_top_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制2400x1200矩形，四角倒圆角R10",
+          "向+Z方向拉伸25mm",
+          "在底面(Z=0)创建四个直径略大于M6的安装通孔(假设孔径8mm)，位置距边缘50mm"
+        ]
+      },
+      {
+        "part_id": "table_leg",
+        "name": "方形管桌腿",
+        "function": "支撑桌面，连接横梁",
+        "shape": "空心方管，外截面50x50mm，壁厚3mm，高度725mm",
+        "key_dimensions": [
+          "Outer Width: 50 mm",
+          "Outer Height: 50 mm",
+          "Wall Thickness: 3 mm",
+          "Total Height: 725 mm"
+        ],
+        "material_or_notes": "金属方管，黑色喷涂",
+        "quantity": 4,
+        "instance_ids": [
+          "inst_leg_fl",
+          "inst_leg_fr",
+          "inst_leg_bl",
+          "inst_leg_br"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_top",
+              "purpose": "与桌面底面贴合",
+              "normal_direction_relation": "normal +Z (local)"
+            },
+            {
+              "name": "face_bottom",
+              "purpose": "接触地面",
+              "normal_direction_relation": "normal -Z (local)"
+            },
+            {
+              "name": "face_side_inner_x",
+              "purpose": "面向桌子中心的侧面(X方向)",
+              "normal_direction_relation": "normal towards center X"
+            },
+            {
+              "name": "face_side_inner_y",
+              "purpose": "面向桌子中心的侧面(Y方向)",
+              "normal_direction_relation": "normal towards center Y"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_main",
+              "purpose": "桌腿中心轴线，用于与桌面安装孔同心",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_beam_mount",
+              "purpose": "侧面横梁安装孔轴线",
+              "direction_relation": "perpendicular to axis_main, located at mid-height (Z=362.5), facing inward"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "顶面与桌面底面重合",
+          "主轴线与桌面安装孔轴线同心",
+          "侧面安装孔轴线与横梁端面孔轴线同心"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_leg",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_leg\\table_leg_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_leg\\table_leg.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\logs\\table_leg_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\json\\table_leg_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制50x50正方形，向内偏移3mm生成内轮廓",
+          "向+Z方向拉伸725mm",
+          "在侧面中心高度(Z=362.5)处创建直径8mm的通孔，轴线水平指向管内中心"
+        ]
+      },
+      {
+        "part_id": "cross_beam",
+        "name": "连接横梁",
+        "function": "连接左右桌腿，增加稳定性",
+        "shape": "空心方管，外截面40x40mm，壁厚2mm，长度1100mm",
+        "key_dimensions": [
+          "Outer Width: 40 mm",
+          "Outer Height: 40 mm",
+          "Wall Thickness: 2 mm",
+          "Length: 1100 mm"
+        ],
+        "material_or_notes": "金属方管，黑色喷涂",
+        "quantity": 2,
+        "instance_ids": [
+          "inst_beam_front",
+          "inst_beam_back"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_end_left",
+              "purpose": "与左侧桌腿侧面贴合",
+              "normal_direction_relation": "normal -X (local, assuming beam along X)"
+            },
+            {
+              "name": "face_end_right",
+              "purpose": "与右侧桌腿侧面贴合",
+              "normal_direction_relation": "normal +X (local, assuming beam along X)"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_main",
+              "purpose": "横梁中心轴线",
+              "direction_relation": "along local X"
+            },
+            {
+              "name": "axis_mount_left",
+              "purpose": "左端安装孔轴线",
+              "direction_relation": "along local X, at left end face center"
+            },
+            {
+              "name": "axis_mount_right",
+              "purpose": "右端安装孔轴线",
+              "direction_relation": "along local X, at right end face center"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "端面与桌腿侧面重合",
+          "端面孔轴线与桌腿侧面安装孔轴线同心"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\cross_beam",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\cross_beam\\cross_beam_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\cross_beam\\cross_beam.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\logs\\cross_beam_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\json\\cross_beam_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在YZ平面绘制40x40正方形，向内偏移2mm生成内轮廓",
+          "向+X方向拉伸1100mm",
+          "在两端面中心创建直径8mm的通孔，轴线沿X方向"
+        ]
+      },
+      {
+        "part_id": "screw_m6",
+        "name": "M6简化螺钉",
+        "function": "紧固连接",
+        "shape": "圆柱头螺钉，头部直径10mm，高4mm；杆部直径6mm，长20mm",
+        "key_dimensions": [
+          "Head Diameter: 10 mm",
+          "Head Height: 4 mm",
+          "Shank Diameter: 6 mm",
+          "Shank Length: 20 mm"
+        ],
+        "material_or_notes": "钢制，镀锌",
+        "quantity": 8,
+        "instance_ids": [
+          "inst_screw_fl_top",
+          "inst_screw_fr_top",
+          "inst_screw_bl_top",
+          "inst_screw_br_top",
+          "inst_screw_fl_beam",
+          "inst_screw_fr_beam",
+          "inst_screw_bl_beam",
+          "inst_screw_br_beam"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_head_bottom",
+              "purpose": "与被连接件表面贴合",
+              "normal_direction_relation": "normal -Z (local)"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_shank",
+              "purpose": "螺钉中心轴线，用于同心配合",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "轴线与安装孔轴线同心",
+          "头部底面与被连接件外表面重合"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\screw_m6",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\screw_m6\\screw_m6_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\screw_m6\\screw_m6.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\logs\\screw_m6_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\json\\screw_m6_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制直径10mm圆，拉伸4mm形成头部",
+          "在头部顶面绘制直径6mm圆，拉伸20mm形成杆部",
+          "无需螺纹特征"
+        ]
+      }
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_table_top_1",
+        "part_id": "table_top",
+        "name": "桌面实例",
+        "instance_role": "基准件",
+        "placement_notes": "位于全局原点，Z=0为底面，Z=25为顶面",
+        "interface_usage": {
+          "faces": [
+            "face_bottom"
+          ],
+          "axes": [
+            "axis_leg_mount_fl",
+            "axis_leg_mount_fr",
+            "axis_leg_mount_bl",
+            "axis_leg_mount_br"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_fl",
+        "part_id": "table_leg",
+        "name": "左前桌腿",
+        "instance_role": "支撑",
+        "placement_notes": "位于桌面左前角内侧，X负Y正区域",
+        "interface_usage": {
+          "faces": [
+            "face_top",
+            "face_side_inner_x",
+            "face_side_inner_y"
+          ],
+          "axes": [
+            "axis_main",
+            "axis_beam_mount"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_fr",
+        "part_id": "table_leg",
+        "name": "右前桌腿",
+        "instance_role": "支撑",
+        "placement_notes": "位于桌面右前角内侧，X正Y正区域",
+        "interface_usage": {
+          "faces": [
+            "face_top",
+            "face_side_inner_x",
+            "face_side_inner_y"
+          ],
+          "axes": [
+            "axis_main",
+            "axis_beam_mount"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_bl",
+        "part_id": "table_leg",
+        "name": "左后桌腿",
+        "instance_role": "支撑",
+        "placement_notes": "位于桌面左后角内侧，X负Y负区域",
+        "interface_usage": {
+          "faces": [
+            "face_top",
+            "face_side_inner_x",
+            "face_side_inner_y"
+          ],
+          "axes": [
+            "axis_main",
+            "axis_beam_mount"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_br",
+        "part_id": "table_leg",
+        "name": "右后桌腿",
+        "instance_role": "支撑",
+        "placement_notes": "位于桌面右后角内侧，X正Y负区域",
+        "interface_usage": {
+          "faces": [
+            "face_top",
+            "face_side_inner_x",
+            "face_side_inner_y"
+          ],
+          "axes": [
+            "axis_main",
+            "axis_beam_mount"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_beam_front",
+        "part_id": "cross_beam",
+        "name": "前横梁",
+        "instance_role": "连接件",
+        "placement_notes": "连接左前和右前桌腿，位于Y正侧",
+        "interface_usage": {
+          "faces": [
+            "face_end_left",
+            "face_end_right"
+          ],
+          "axes": [
+            "axis_mount_left",
+            "axis_mount_right"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_beam_back",
+        "part_id": "cross_beam",
+        "name": "后横梁",
+        "instance_role": "连接件",
+        "placement_notes": "连接左后和右后桌腿，位于Y负侧",
+        "interface_usage": {
+          "faces": [
+            "face_end_left",
+            "face_end_right"
+          ],
+          "axes": [
+            "axis_mount_left",
+            "axis_mount_right"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_fl_top",
+        "part_id": "screw_m6",
+        "name": "左前桌腿顶部螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定左前桌腿与桌面",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_fr_top",
+        "part_id": "screw_m6",
+        "name": "右前桌腿顶部螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定右前桌腿与桌面",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_bl_top",
+        "part_id": "screw_m6",
+        "name": "左后桌腿顶部螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定左后桌腿与桌面",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_br_top",
+        "part_id": "screw_m6",
+        "name": "右后桌腿顶部螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定右后桌腿与桌面",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_fl_beam",
+        "part_id": "screw_m6",
+        "name": "左前桌腿横梁螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定左前桌腿与前横梁",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_fr_beam",
+        "part_id": "screw_m6",
+        "name": "右前桌腿横梁螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定右前桌腿与前横梁",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_bl_beam",
+        "part_id": "screw_m6",
+        "name": "左后桌腿横梁螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定左后桌腿与后横梁",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_br_beam",
+        "part_id": "screw_m6",
+        "name": "右后桌腿横梁螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定右后桌腿与后横梁",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "inst_table_top_1",
+      "inst_leg_fl",
+      "inst_leg_fr",
+      "inst_leg_bl",
+      "inst_leg_br",
+      "inst_beam_front",
+      "inst_beam_back",
+      "inst_screw_fl_top",
+      "inst_screw_fr_top",
+      "inst_screw_bl_top",
+      "inst_screw_br_top",
+      "inst_screw_fl_beam",
+      "inst_screw_fr_beam",
+      "inst_screw_bl_beam",
+      "inst_screw_br_beam"
+    ],
+    "constraints": [
+      {
+        "source_instance_id": "inst_table_top_1",
+        "source_part_id": "table_top",
+        "source_interface": "GROUND",
+        "target_instance_id": "GROUND",
+        "target_part_id": "GROUND",
+        "target_interface": "GROUND",
+        "relation": "fix",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "固定桌面作为基准"
+      },
+      {
+        "source_instance_id": "inst_leg_fl",
+        "source_part_id": "table_leg",
+        "source_interface": "face_top",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "face_bottom",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "左前桌腿顶面贴合桌面底面"
+      },
+      {
+        "source_instance_id": "inst_leg_fl",
+        "source_part_id": "table_leg",
+        "source_interface": "axis_main",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "axis_leg_mount_fl",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "左前桌腿轴线与桌面安装孔同心"
+      },
+      {
+        "source_instance_id": "inst_leg_fr",
+        "source_part_id": "table_leg",
+        "source_interface": "face_top",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "face_bottom",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "右前桌腿顶面贴合桌面底面"
+      },
+      {
+        "source_instance_id": "inst_leg_fr",
+        "source_part_id": "table_leg",
+        "source_interface": "axis_main",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "axis_leg_mount_fr",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "右前桌腿轴线与桌面安装孔同心"
+      },
+      {
+        "source_instance_id": "inst_leg_bl",
+        "source_part_id": "table_leg",
+        "source_interface": "face_top",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "face_bottom",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "左后桌腿顶面贴合桌面底面"
+      },
+      {
+        "source_instance_id": "inst_leg_bl",
+        "source_part_id": "table_leg",
+        "source_interface": "axis_main",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "axis_leg_mount_bl",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "左后桌腿轴线与桌面安装孔同心"
+      },
+      {
+        "source_instance_id": "inst_leg_br",
+        "source_part_id": "table_leg",
+        "source_interface": "face_top",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "face_bottom",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "右后桌腿顶面贴合桌面底面"
+      },
+      {
+        "source_instance_id": "inst_leg_br",
+        "source_part_id": "table_leg",
+        "source_interface": "axis_main",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "axis_leg_mount_br",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "右后桌腿轴线与桌面安装孔同心"
+      },
+      {
+        "source_instance_id": "inst_beam_front",
+        "source_part_id": "cross_beam",
+        "source_interface": "face_end_left",
+        "target_instance_id": "inst_leg_fl",
+        "target_part_id": "table_leg",
+        "target_interface": "face_side_inner_x",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "前横梁左端贴合左前桌腿内侧"
+      },
+      {
+        "source_instance_id": "inst_beam_front",
+        "source_part_id": "cross_beam",
+        "source_interface": "axis_mount_left",
+        "target_instance_id": "inst_leg_fl",
+        "target_part_id": "table_leg",
+        "target_interface": "axis_beam_mount",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "前横梁左端孔与左前桌腿侧孔同心"
+      },
+      {
+        "source_instance_id": "inst_beam_front",
+        "source_part_id": "cross_beam",
+        "source_interface": "face_end_right",
+        "target_instance_id": "inst_leg_fr",
+        "target_part_id": "table_leg",
+        "target_interface": "face_side_inner_x",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "前横梁右端贴合右前桌腿内侧"
+      },
+      {
+        "source_instance_id": "inst_beam_front",
+        "source_part_id": "cross_beam",
+        "source_interface": "axis_mount_right",
+        "target_instance_id": "inst_leg_fr",
+        "target_part_id": "table_leg",
+        "target_interface": "axis_beam_mount",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "前横梁右端孔与右前桌腿侧孔同心"
+      },
+      {
+        "source_instance_id": "inst_beam_back",
+        "source_part_id": "cross_beam",
+        "source_interface": "face_end_left",
+        "target_instance_id": "inst_leg_bl",
+        "target_part_id": "table_leg",
+        "target_interface": "face_side_inner_x",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "后横梁左端贴合左后桌腿内侧"
+      },
+      {
+        "source_instance_id": "inst_beam_back",
+        "source_part_id": "cross_beam",
+        "source_interface": "axis_mount_left",
+        "target_instance_id": "inst_leg_bl",
+        "target_part_id": "table_leg",
+        "target_interface": "axis_beam_mount",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "后横梁左端孔与左后桌腿侧孔同心"
+      },
+      {
+        "source_instance_id": "inst_beam_back",
+        "source_part_id": "cross_beam",
+        "source_interface": "face_end_right",
+        "target_instance_id": "inst_leg_br",
+        "target_part_id": "table_leg",
+        "target_interface": "face_side_inner_x",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "后横梁右端贴合右后桌腿内侧"
+      },
+      {
+        "source_instance_id": "inst_beam_back",
+        "source_part_id": "cross_beam",
+        "source_interface": "axis_mount_right",
+        "target_instance_id": "inst_leg_br",
+        "target_part_id": "table_leg",
+        "target_interface": "axis_beam_mount",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "后横梁右端孔与右后桌腿侧孔同心"
+      },
+      {
+        "source_instance_id": "inst_screw_fl_top",
+        "source_part_id": "screw_m6",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "axis_leg_mount_fl",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "左前顶部螺丝同心"
+      },
+      {
+        "source_instance_id": "inst_screw_fl_top",
+        "source_part_id": "screw_m6",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "face_top",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "左前顶部螺丝头贴合桌面顶面"
+      },
+      {
+        "source_instance_id": "inst_screw_fr_top",
+        "source_part_id": "screw_m6",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "axis_leg_mount_fr",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "右前顶部螺丝同心"
+      },
+      {
+        "source_instance_id": "inst_screw_fr_top",
+        "source_part_id": "screw_m6",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "face_top",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "右前顶部螺丝头贴合桌面顶面"
+      },
+      {
+        "source_instance_id": "inst_screw_bl_top",
+        "source_part_id": "screw_m6",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "axis_leg_mount_bl",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "左后顶部螺丝同心"
+      },
+      {
+        "source_instance_id": "inst_screw_bl_top",
+        "source_part_id": "screw_m6",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "face_top",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "左后顶部螺丝头贴合桌面顶面"
+      },
+      {
+        "source_instance_id": "inst_screw_br_top",
+        "source_part_id": "screw_m6",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "axis_leg_mount_br",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "右后顶部螺丝同心"
+      },
+      {
+        "source_instance_id": "inst_screw_br_top",
+        "source_part_id": "screw_m6",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_table_top_1",
+        "target_part_id": "table_top",
+        "target_interface": "face_top",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "右后顶部螺丝头贴合桌面顶面"
+      },
+      {
+        "source_instance_id": "inst_screw_fl_beam",
+        "source_part_id": "screw_m6",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_leg_fl",
+        "target_part_id": "table_leg",
+        "target_interface": "axis_beam_mount",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "左前横梁螺丝同心"
+      },
+      {
+        "source_instance_id": "inst_screw_fl_beam",
+        "source_part_id": "screw_m6",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_beam_front",
+        "target_part_id": "cross_beam",
+        "target_interface": "face_end_left",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "左前横梁螺丝头贴合横梁端面"
+      },
+      {
+        "source_instance_id": "inst_screw_fr_beam",
+        "source_part_id": "screw_m6",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_leg_fr",
+        "target_part_id": "table_leg",
+        "target_interface": "axis_beam_mount",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "右前横梁螺丝同心"
+      },
+      {
+        "source_instance_id": "inst_screw_fr_beam",
+        "source_part_id": "screw_m6",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_beam_front",
+        "target_part_id": "cross_beam",
+        "target_interface": "face_end_right",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "右前横梁螺丝头贴合横梁端面"
+      },
+      {
+        "source_instance_id": "inst_screw_bl_beam",
+        "source_part_id": "screw_m6",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_leg_bl",
+        "target_part_id": "table_leg",
+        "target_interface": "axis_beam_mount",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "左后横梁螺丝同心"
+      },
+      {
+        "source_instance_id": "inst_screw_bl_beam",
+        "source_part_id": "screw_m6",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_beam_back",
+        "target_part_id": "cross_beam",
+        "target_interface": "face_end_left",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "左后横梁螺丝头贴合横梁端面"
+      },
+      {
+        "source_instance_id": "inst_screw_br_beam",
+        "source_part_id": "screw_m6",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_leg_br",
+        "target_part_id": "table_leg",
+        "target_interface": "axis_beam_mount",
+        "relation": "axi_coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "右后横梁螺丝同心"
+      },
+      {
+        "source_instance_id": "inst_screw_br_beam",
+        "source_part_id": "screw_m6",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_beam_back",
+        "target_part_id": "cross_beam",
+        "target_interface": "face_end_right",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "右后横梁螺丝头贴合横梁端面"
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\assembly\\ConferenceTable_Assembly.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\logs\\assembly.log"
+    }
+  }
+}

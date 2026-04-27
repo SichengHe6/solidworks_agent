@@ -1,0 +1,149 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Standard_Rectangular_Desk",
+    "summary": "由1个矩形桌面和4个圆柱形桌腿组成的标准办公桌装配体。桌面尺寸1200x600x25mm，桌腿直径40mm高725mm，桌腿位于桌面四角内侧50mm处，通过面重合和轴同心配合组装。",
+    "global_coordinate_system": {
+      "origin": "桌面几何中心",
+      "x_direction": "沿桌面长边方向 (1200mm)",
+      "y_direction": "沿桌面短边方向 (600mm)",
+      "z_direction": "垂直向上，指向桌面顶面"
+    },
+    "design_rules": [
+      "所有尺寸单位默认为毫米(mm)，建模时需转换为米(m)",
+      "桌腿与桌面仅通过几何配合连接，无紧固件",
+      "桌腿轴线距离桌面边缘均为50mm",
+      "桌面底面为Z= -12.5mm平面 (假设桌面厚度25mm，中心在Z=0)"
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_leg_fl",
+        "part_id": "cylindrical_leg",
+        "name": "Front Left Leg",
+        "instance_role": "左前支撑腿",
+        "placement_notes": "位于桌面左前角内侧50mm处。X = -600 + 50 = -550mm, Y = 300 - 50 = 250mm",
+        "interface_usage": {
+          "faces": [
+            "face_top"
+          ],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_fr",
+        "part_id": "cylindrical_leg",
+        "name": "Front Right Leg",
+        "instance_role": "右前支撑腿",
+        "placement_notes": "位于桌面右前角内侧50mm处。X = 600 - 50 = 550mm, Y = 300 - 50 = 250mm",
+        "interface_usage": {
+          "faces": [
+            "face_top"
+          ],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_bl",
+        "part_id": "cylindrical_leg",
+        "name": "Back Left Leg",
+        "instance_role": "左后支撑腿",
+        "placement_notes": "位于桌面左后角内侧50mm处。X = -600 + 50 = -550mm, Y = -300 + 50 = -250mm",
+        "interface_usage": {
+          "faces": [
+            "face_top"
+          ],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_br",
+        "part_id": "cylindrical_leg",
+        "name": "Back Right Leg",
+        "instance_role": "右后支撑腿",
+        "placement_notes": "位于桌面右后角内侧50mm处。X = 600 - 50 = 550mm, Y = -300 + 50 = -250mm",
+        "interface_usage": {
+          "faces": [
+            "face_top"
+          ],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Insert and fix inst_desktop_main",
+      "Insert inst_leg_fl and constrain to desktop",
+      "Insert inst_leg_fr and constrain to desktop",
+      "Insert inst_leg_bl and constrain to desktop",
+      "Insert inst_leg_br and constrain to desktop"
+    ]
+  },
+  "part": {
+    "part_id": "cylindrical_leg",
+    "name": "Cylindrical Leg",
+    "function": "支撑桌面",
+    "shape": "圆柱体，直径40mm，高度725mm",
+    "key_dimensions": [
+      "Diameter: 40 mm",
+      "Height: 725 mm"
+    ],
+    "material_or_notes": "金属或塑料，默认直角边缘",
+    "quantity": 4,
+    "instance_ids": [
+      "inst_leg_fl",
+      "inst_leg_fr",
+      "inst_leg_bl",
+      "inst_leg_br"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "face_top",
+          "purpose": "与桌面底面贴合",
+          "normal_direction_relation": "normal +Z (沿局部轴向向上)"
+        },
+        {
+          "name": "face_bottom",
+          "purpose": "接触地面",
+          "normal_direction_relation": "normal -Z (沿局部轴向向下)"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_center",
+          "purpose": "定位轴线，用于同心配合或位置定义",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "4个实例几何完全相同",
+      "通过顶端面与桌面底面重合确定高度",
+      "通过轴线位置确定水平坐标"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\parts\\cylindrical_leg",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\parts\\cylindrical_leg\\cylindrical_leg_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\parts\\cylindrical_leg\\cylindrical_leg.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\logs\\cylindrical_leg_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\json\\cylindrical_leg_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在XY平面绘制直径40mm的圆",
+      "向+Z方向拉伸725mm",
+      "确保顶面和底面平整"
+    ]
+  }
+}

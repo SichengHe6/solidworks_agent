@@ -1,0 +1,200 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Battery_Pack_2P4S_Assembly",
+    "summary": "基于18650电芯(2并4串)的电池包装配体，包含下壳体、上壳体、独立电池支架及8节电芯模型。",
+    "global_coordinate_system": {
+      "origin": "Bottom_Case geometric center at bottom face",
+      "x_direction": "Along length (140mm)",
+      "y_direction": "Along width (75mm)",
+      "z_direction": "Upwards along height (70mm)"
+    },
+    "design_rules": [
+      "All external sharp edges must have R2 fillets.",
+      "Wall thickness for plastic parts is 2.5mm.",
+      "Units are in mm, convert to meters for modeling code.",
+      "M3 screws are simplified as cylinders for assembly constraints."
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_cell_1",
+        "part_id": "cell_18650",
+        "name": "Cell 1",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 1, Col 1 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_2",
+        "part_id": "cell_18650",
+        "name": "Cell 2",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 1, Col 2 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_3",
+        "part_id": "cell_18650",
+        "name": "Cell 3",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 1, Col 3 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_4",
+        "part_id": "cell_18650",
+        "name": "Cell 4",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 1, Col 4 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_5",
+        "part_id": "cell_18650",
+        "name": "Cell 5",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 2, Col 1 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_6",
+        "part_id": "cell_18650",
+        "name": "Cell 6",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 2, Col 2 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_7",
+        "part_id": "cell_18650",
+        "name": "Cell 7",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 2, Col 3 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_8",
+        "part_id": "cell_18650",
+        "name": "Cell 8",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 2, Col 4 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Fix inst_bottom_case to GROUND",
+      "Mate inst_cell_holder to inst_bottom_case",
+      "Insert inst_cell_1 to inst_cell_8 into inst_cell_holder",
+      "Mate inst_top_case to inst_bottom_case",
+      "Insert inst_screw_1 to inst_screw_4"
+    ]
+  },
+  "part": {
+    "part_id": "cell_18650",
+    "name": "18650 Battery Cell",
+    "function": "Energy storage unit.",
+    "shape": "Cylinder with flat ends.",
+    "key_dimensions": [
+      "Diameter: 18mm",
+      "Height: 65mm"
+    ],
+    "material_or_notes": "Standard 18650 Li-ion",
+    "quantity": 8,
+    "instance_ids": [
+      "inst_cell_1",
+      "inst_cell_2",
+      "inst_cell_3",
+      "inst_cell_4",
+      "inst_cell_5",
+      "inst_cell_6",
+      "inst_cell_7",
+      "inst_cell_8"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "face_bottom_neg",
+          "purpose": "Negative terminal end",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "face_top_pos",
+          "purpose": "Positive terminal end",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_center",
+          "purpose": "Central longitudinal axis",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Inserted into Cell Holder holes.",
+      "Axis concentric with Holder axes."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_18650",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_18650\\cell_18650_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_18650\\cell_18650.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\cell_18650_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\cell_18650_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Sketch circle dia 18mm on XY plane.",
+      "Extrude up 65mm.",
+      "Apply small chamfer or fillet to edges if required by standard, otherwise keep sharp for simplicity."
+    ]
+  }
+}

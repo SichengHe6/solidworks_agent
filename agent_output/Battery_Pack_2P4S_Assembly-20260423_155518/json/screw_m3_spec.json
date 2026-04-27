@@ -1,0 +1,141 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Battery_Pack_2P4S_Assembly",
+    "summary": "基于18650电芯(2并4串)的电池包装配体，包含下壳体、上壳体、独立电池支架及8节电芯模型。",
+    "global_coordinate_system": {
+      "origin": "Bottom_Case geometric center at bottom face",
+      "x_direction": "Along length (140mm)",
+      "y_direction": "Along width (75mm)",
+      "z_direction": "Upwards along height (70mm)"
+    },
+    "design_rules": [
+      "All external sharp edges must have R2 fillets.",
+      "Wall thickness for plastic parts is 2.5mm.",
+      "Units are in mm, convert to meters for modeling code.",
+      "M3 screws are simplified as cylinders for assembly constraints."
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_screw_1",
+        "part_id": "screw_m3",
+        "name": "Screw 1",
+        "instance_role": "Fastener",
+        "placement_notes": "Corner 1",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_2",
+        "part_id": "screw_m3",
+        "name": "Screw 2",
+        "instance_role": "Fastener",
+        "placement_notes": "Corner 2",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_3",
+        "part_id": "screw_m3",
+        "name": "Screw 3",
+        "instance_role": "Fastener",
+        "placement_notes": "Corner 3",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_4",
+        "part_id": "screw_m3",
+        "name": "Screw 4",
+        "instance_role": "Fastener",
+        "placement_notes": "Corner 4",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Fix inst_bottom_case to GROUND",
+      "Mate inst_cell_holder to inst_bottom_case",
+      "Insert inst_cell_1 to inst_cell_8 into inst_cell_holder",
+      "Mate inst_top_case to inst_bottom_case",
+      "Insert inst_screw_1 to inst_screw_4"
+    ]
+  },
+  "part": {
+    "part_id": "screw_m3",
+    "name": "M3 Screw",
+    "function": "Fastener connecting Top and Bottom cases.",
+    "shape": "Simplified cylinder representing screw shank.",
+    "key_dimensions": [
+      "Diameter: 3mm",
+      "Length: 6mm"
+    ],
+    "material_or_notes": "Steel",
+    "quantity": 4,
+    "instance_ids": [
+      "inst_screw_1",
+      "inst_screw_2",
+      "inst_screw_3",
+      "inst_screw_4"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "face_head_bottom",
+          "purpose": "Contact face with Top Case",
+          "normal_direction_relation": "normal -Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_shank",
+          "purpose": "Central axis for concentric constraint",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Passes through Top Case holes into Bottom Case posts."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\screw_m3",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\screw_m3\\screw_m3_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\screw_m3\\screw_m3.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\screw_m3_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\screw_m3_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Sketch circle dia 3mm on XY plane.",
+      "Extrude up 6mm."
+    ]
+  }
+}

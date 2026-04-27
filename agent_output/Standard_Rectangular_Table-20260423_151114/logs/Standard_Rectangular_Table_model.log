@@ -1,0 +1,37 @@
+----------------------------------------
+Python 成功接收到的新零件名称: Standard_Rectangular_Table
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 15:11:52 - 接收到参数，尝试创建并激活文档: Standard_Rectangular_Table
+[DEBUG] 15:11:52 - 尝试连接 SolidWorks...
+[DEBUG] 15:11:52 - 成功连接到已运行的实例。
+
+开始建模: Standard_Rectangular_Table
+步骤 1: 创建桌面主体
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+桌面主体创建完成
+步骤 2: 创建桌腿
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+桌腿创建完成
+步骤 3: 桌面顶面边缘倒角
+正在选中 4 条边以进行倒角...
+
+--- 开始动态旋转扫描选择 (0.6, 0, 0.025) ---
+
+--- 开始动态旋转扫描选择 (-0.6, 0, 0.025) ---
+
+--- 开始动态旋转扫描选择 (0, 0.3, 0.025) ---
+
+--- 开始动态旋转扫描选择 (0, -0.3, 0.025) ---
+倒角成功 (D=0.002m, A=45.0°)
+桌面边缘倒角完成
+保存零件至: D:\a_src\python\sw_agent\agent_output\Standard_Rectangular_Table-20260423_151114\part\Standard_Rectangular_Table.SLDPRT
+正在保存零件到: D:\a_src\python\sw_agent\agent_output\Standard_Rectangular_Table-20260423_151114\part\Standard_Rectangular_Table.SLDPRT ...
+零件已保存至: D:\a_src\python\sw_agent\agent_output\Standard_Rectangular_Table-20260423_151114\part\Standard_Rectangular_Table.SLDPRT
+建模与保存成功。

@@ -1,0 +1,63 @@
+{
+  "request_type": "part",
+  "name": "简易矩形桌",
+  "summary": "创建一个一体成型的简易矩形桌子零件，包含长方形桌面和四条位于角落的方柱形桌腿，所有外露边缘带有R2圆角。",
+  "key_requirements": [
+    "桌面尺寸：1200mm x 600mm x 25mm",
+    "桌腿尺寸：40mm x 40mm 截面，高度750mm",
+    "桌腿位置：距离桌面四边各50mm",
+    "特征：所有外露锐边添加 R2mm 圆角",
+    "建模方式：基于XY平面草图拉伸生成主体，合并实体"
+  ],
+  "assumptions": [
+    "单位默认为 mm",
+    "主草图面为 XY 平面",
+    "无倒角，无壳化",
+    "交付物包含 .SLDPRT 文件和 Python 代码"
+  ],
+  "requested_outputs": [
+    ".SLDPRT",
+    "Python Code"
+  ],
+  "interfaces": [],
+  "workspace": {
+    "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\简易矩形桌-20260423_152443",
+    "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\简易矩形桌-20260423_152443\\part",
+    "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\简易矩形桌-20260423_152443\\json",
+    "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\简易矩形桌-20260423_152443\\logs",
+    "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\简易矩形桌-20260423_152443\\json\\part_request.json"
+  },
+  "part": {
+    "part_id": "简易矩形桌",
+    "name": "简易矩形桌",
+    "function": "创建一个一体成型的简易矩形桌子零件，包含长方形桌面和四条位于角落的方柱形桌腿，所有外露边缘带有R2圆角。",
+    "shape": "根据需求分析结果由建模智能体细化",
+    "key_dimensions": [
+      "桌面尺寸：1200mm x 600mm x 25mm",
+      "桌腿尺寸：40mm x 40mm 截面，高度750mm",
+      "桌腿位置：距离桌面四边各50mm",
+      "特征：所有外露锐边添加 R2mm 圆角",
+      "建模方式：基于XY平面草图拉伸生成主体，合并实体"
+    ],
+    "material_or_notes": "单位默认为 mm; 主草图面为 XY 平面; 无倒角，无壳化; 交付物包含 .SLDPRT 文件和 Python 代码",
+    "interfaces": {
+      "faces": [],
+      "axes": [],
+      "points": []
+    },
+    "standalone_modeling_instructions": [
+      "桌面尺寸：1200mm x 600mm x 25mm",
+      "桌腿尺寸：40mm x 40mm 截面，高度750mm",
+      "桌腿位置：距离桌面四边各50mm",
+      "特征：所有外露锐边添加 R2mm 圆角",
+      "建模方式：基于XY平面草图拉伸生成主体，合并实体"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\简易矩形桌-20260423_152443\\part",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\简易矩形桌-20260423_152443\\part\\简易矩形桌_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\简易矩形桌-20260423_152443\\part\\简易矩形桌.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\简易矩形桌-20260423_152443\\logs\\简易矩形桌_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\简易矩形桌-20260423_152443\\json\\简易矩形桌_spec.json"
+    }
+  }
+}

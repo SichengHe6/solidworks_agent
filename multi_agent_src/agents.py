@@ -173,7 +173,8 @@ class AssemblyPlanningAgent(BaseAgent):
             "你是装配规划智能体，负责把已经确认的装配需求转成严格的结构化 JSON。"
             "你的输入可能是自然语言、半结构化文本、对话摘要或 JSON；即使输入不是 JSON，你也必须正常理解并完成规划。"
             "你必须只输出 JSON，不要输出解释。\n"
-            "输出目标：给出完整装配规划，其中每个零件都能单独拿到自己的 JSON 子对象后独立建模。\n"
+            "输出目标：给出完整装配规划，其中每个唯一几何零件都能单独拿到自己的 JSON 子对象后独立建模；"
+            "如果装配体里有多个相同零件，必须优先复用同一个零件定义，通过实例层表达重复出现和不同装配接口使用方式。\n"
             "JSON 顶层结构必须是：\n"
             '{'
             '"request_type":"assembly",'
@@ -191,6 +192,8 @@ class AssemblyPlanningAgent(BaseAgent):
             '"shape":"形状描述",'
             '"key_dimensions":["关键尺寸"],'
             '"material_or_notes":"材料或工艺备注",'
+            '"quantity":1,'
+            '"instance_ids":["使用该零件模型的实例 id"],'
             '"interfaces":{'
             '"faces":[{"name":"","purpose":"","normal_direction_relation":""}],'
             '"axes":[{"name":"","purpose":"","direction_relation":""}],'
@@ -201,11 +204,23 @@ class AssemblyPlanningAgent(BaseAgent):
             '"standalone_modeling_instructions":["该零件单独建模必须满足的要求"]'
             '}'
             '],'
+            '"instances":['
+            '{'
+            '"instance_id":"snake_case_instance_id",'
+            '"part_id":"引用 parts 中的 part_id",'
+            '"name":"实例名称",'
+            '"instance_role":"该实例在装配中的角色",'
+            '"placement_notes":"该实例相对装配体或其他零件的位置/用途说明",'
+            '"interface_usage":{"faces":["本实例实际使用的面接口"],"axes":["本实例实际使用的轴接口"],"points":["本实例实际使用的点接口"]}'
+            '}'
+            '],'
             '"assembly_sequence":["装配顺序"],'
             '"constraints":['
             '{'
+            '"source_instance_id":"",'
             '"source_part_id":"",'
             '"source_interface":"",'
+            '"target_instance_id":"GROUND 或其他 instance_id",'
             '"target_part_id":"GROUND 或其他 part_id",'
             '"target_interface":"",'
             '"relation":"coincident/concentric/parallel/distance/fix",'
@@ -218,12 +233,14 @@ class AssemblyPlanningAgent(BaseAgent):
             '}'
             '}\n'
             "要求：\n"
-            "1. `parts` 中必须拆出所有必要零件。\n"
-            "2. 接口命名必须明确、稳定，便于后续建模和装配代码直接引用。\n"
-            "3. `direction_relation` 或 `normal_direction_relation` 必须说明接口方向与零件局部方向/装配全局方向的关系。\n"
-            "4. 如果尺寸不全，可给出合理工程假设并写入对应字段。\n"
-            "5. `workspace` 与 `assembly_output` 会由外部提供，你必须保留并复用传入路径。\n"
-            "6. 输出前必须自行检查 JSON 是否可被严格解析，字段是否完整、括号和引号是否闭合；如果你发现不合法，必须先在内部修正，再输出最终 JSON。\n"
+            "1. `parts` 只保留唯一几何零件；相同外形、相同建模方式的重复件不得重复建模，必须合并为一个 `part`，再用 `instances` 表达多个装配实例。\n"
+            "2. 如果多个实例几何相同但对外装配接口用途不同，仍然优先复用同一个 `part`；在该 `part` 中提供这些实例需要的接口并在 `instances[].interface_usage` 中说明各实例分别实际使用哪些接口。\n"
+            "3. 接口命名必须明确、稳定，便于后续建模和装配代码直接引用。\n"
+            "4. `direction_relation` 或 `normal_direction_relation` 必须说明接口方向与零件局部方向/装配全局方向的关系。\n"
+            "5. `constraints` 必须按实例引用，确保重复零件在装配时可以区分到具体实例。\n"
+            "6. 如果尺寸不全，可给出合理工程假设并写入对应字段。\n"
+            "7. `workspace` 与 `assembly_output` 会由外部提供，你必须保留并复用传入路径。\n"
+            "8. 输出前必须自行检查 JSON 是否可被严格解析，字段是否完整、括号和引号是否闭合；如果你发现不合法，必须先在内部修正，再输出最终 JSON。\n"
             f"参考知识库：\n{kb}"
         )
         super().__init__(system_prompt=system_prompt, temperature=0.1)
@@ -239,8 +256,9 @@ class PartModelingAgent(BaseAgent):
             "要求：\n"
             "1. 只输出 Python 代码，使用 ```python 代码块``` 包裹。\n"
             "2. 代码必须保存到输入 JSON 指定的目标文件位置；如果工作区已固定，允许使用相对路径、路径变量或等价拼接方式，不要求硬编码完整绝对路径。\n"
-            "3. 必须在代码中体现接口名称，便于后续装配引用。\n"
-            "4. 优先写清晰、稳定、可重试的代码；必要时打印关键步骤日志。\n"
+            "3. 如果该零件被多个实例复用，你仍然只生成一次通用零件模型，不要按实例重复建模。\n"
+            "4. 必须在代码中体现接口名称，且要覆盖该零件被所有实例复用时需要的接口，便于后续装配引用。\n"
+            "5. 优先写清晰、稳定、可重试的代码；必要时打印关键步骤日志。\n"
             f"参考知识库：\n{kb}"
         )
         super().__init__(system_prompt=system_prompt, temperature=0.2)
@@ -274,9 +292,11 @@ class AssemblyAgent(BaseAgent):
             "你的任务是生成可执行的 Python 装配代码，并保存到指定的装配输出路径。"
             "要求：\n"
             "1. 只输出 Python 代码，使用 ```python 代码块``` 包裹。\n"
-            "2. 必须严格使用规划中的零件文件、装配顺序和配合关系。\n"
-            "3. 保存装配时只要最终落到规定工作区下的目标位置即可，允许使用相对路径、变量或路径拼接，不要求硬编码完整绝对路径。\n"
-            "4. 对关键装配步骤打印简短日志，便于失败时回退重试。\n"
+            "2. 必须严格使用规划中的零件文件、实例列表、装配顺序和配合关系。\n"
+            "3. 对于重复零件，必须复用同一个零件文件并在装配中利用add_component插入多个实例，不要假设每个实例对应一个独立零件文件。\n"
+            "4. 约束和组件缓存应优先以 `instance_id -> comp_name` 建立映射，再结合 `part_id -> model_file` 解析零件来源。\n"
+            "5. 保存装配时只要最终落到规定工作区下的目标位置即可，允许使用相对路径、变量或路径拼接，不要求硬编码完整绝对路径。\n"
+            "6. 对关键装配步骤打印简短日志，便于失败时回退重试。\n"
             f"参考知识库：\n{kb}"
         )
         super().__init__(system_prompt=system_prompt, temperature=0.2)

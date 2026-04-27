@@ -1,0 +1,918 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "Battery_Pack_2P4S_Assembly",
+    "summary": "基于18650电芯(2并4串)的电池包装配体，包含下壳体、上壳体、独立电池支架及8节电芯模型。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "Bottom_Case geometric center at bottom face",
+      "x_direction": "Along length (140mm)",
+      "y_direction": "Along width (75mm)",
+      "z_direction": "Upwards along height (70mm)"
+    },
+    "design_rules": [
+      "All external sharp edges must have R2 fillets.",
+      "Wall thickness for plastic parts is 2.5mm.",
+      "Units are in mm, convert to meters for modeling code.",
+      "M3 screws are simplified as cylinders for assembly constraints."
+    ],
+    "parts": [
+      {
+        "part_id": "bottom_case",
+        "name": "Bottom Case",
+        "function": "Main structural base holding cells and providing mounting points.",
+        "shape": "Rectangular box with open top, internal ribs, semi-circular cell slots on inner bottom, and M3 screw posts on side walls. Bottom has 4 M4 mounting holes.",
+        "key_dimensions": [
+          "L: 140mm",
+          "W: 75mm",
+          "H: 35mm (approx half of total height)",
+          "Wall Thickness: 2.5mm",
+          "Screw Post Diameter: 6mm",
+          "Mounting Hole Diameter: 4.5mm"
+        ],
+        "material_or_notes": "ABS Plastic",
+        "quantity": 1,
+        "instance_ids": [
+          "inst_bottom_case"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_bottom_outer",
+              "purpose": "Mounting reference to ground or chassis",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "face_top_inner",
+              "purpose": "Mating surface for Top Case",
+              "normal_direction_relation": "normal +Z"
+            },
+            {
+              "name": "face_inner_bottom",
+              "purpose": "Support surface for Holder",
+              "normal_direction_relation": "normal +Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_screw_post_1",
+              "purpose": "Alignment axis for Top Case screw hole 1",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_screw_post_2",
+              "purpose": "Alignment axis for Top Case screw hole 2",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_screw_post_3",
+              "purpose": "Alignment axis for Top Case screw hole 3",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_screw_post_4",
+              "purpose": "Alignment axis for Top Case screw hole 4",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "Fixed to global origin.",
+          "Provides primary mating surfaces for Holder and Top Case."
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\bottom_case",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\bottom_case\\bottom_case_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\bottom_case\\bottom_case.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\bottom_case_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\bottom_case_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "Create base sketch on XY plane centered at origin, rectangle 140x75.",
+          "Extrude up 35mm.",
+          "Shell inward by 2.5mm, keeping bottom face.",
+          "Add internal ribs and semi-circular slots for cells on the inner bottom face.",
+          "Add 4 cylindrical bosses (screw posts) on side walls or corners, height matching wall top.",
+          "Cut 4 M4 through-holes on the outer bottom face at corners.",
+          "Apply R2 fillet to all external vertical edges."
+        ]
+      },
+      {
+        "part_id": "top_case",
+        "name": "Top Case",
+        "function": "Cover for the battery pack, securing cells and providing wire exit.",
+        "shape": "Rectangular plate with raised rim to fit into bottom case, central cutout for wires, and 4 through-holes for M3 screws.",
+        "key_dimensions": [
+          "L: 140mm",
+          "W: 75mm",
+          "H: 35mm (approx half of total height)",
+          "Wall Thickness: 2.5mm",
+          "Wire Window: 20x10mm centered",
+          "Screw Hole Diameter: 3.2mm"
+        ],
+        "material_or_notes": "ABS Plastic",
+        "quantity": 1,
+        "instance_ids": [
+          "inst_top_case"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_bottom_mating",
+              "purpose": "Mates with Bottom Case top inner face",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "face_top_outer",
+              "purpose": "External top surface",
+              "normal_direction_relation": "normal +Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_screw_hole_1",
+              "purpose": "Concentric with Bottom Case screw post 1",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_screw_hole_2",
+              "purpose": "Concentric with Bottom Case screw post 2",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_screw_hole_3",
+              "purpose": "Concentric with Bottom Case screw post 3",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_screw_hole_4",
+              "purpose": "Concentric with Bottom Case screw post 4",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "Mates with Bottom Case via face coincidence and screw axis concentricity."
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\top_case",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\top_case\\top_case_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\top_case\\top_case.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\top_case_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\top_case_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "Create base sketch on XY plane, rectangle 140x75.",
+          "Extrude up 35mm.",
+          "Shell inward by 2.5mm, keeping top face.",
+          "Cut a 20x10mm rectangular window on the top face, centered.",
+          "Drill 4 through-holes (3.2mm) corresponding to screw post positions.",
+          "Apply R2 fillet to all external vertical edges."
+        ]
+      },
+      {
+        "part_id": "cell_holder",
+        "name": "Cell Holder",
+        "function": "Structural frame to hold 8x 18650 cells in 2x4 arrangement.",
+        "shape": "Rectangular frame with 8 circular holes arranged in 2 rows and 4 columns. Outer dimensions fit inside Bottom Case.",
+        "key_dimensions": [
+          "L: 135mm (fits inside 140mm case)",
+          "W: 70mm (fits inside 75mm case)",
+          "H: 65mm (matches cell height)",
+          "Hole Diameter: 18.2mm (clearance for 18mm cell)",
+          "Pitch X: 32mm",
+          "Pitch Y: 32mm"
+        ],
+        "material_or_notes": "ABS Plastic or Nylon",
+        "quantity": 1,
+        "instance_ids": [
+          "inst_cell_holder"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_bottom_support",
+              "purpose": "Rests on Bottom Case inner bottom",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "face_top_open",
+              "purpose": "Top opening for cell insertion",
+              "normal_direction_relation": "normal +Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_cell_1_1",
+              "purpose": "Center axis for Cell 1 (Row 1, Col 1)",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_cell_1_2",
+              "purpose": "Center axis for Cell 2 (Row 1, Col 2)",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_cell_1_3",
+              "purpose": "Center axis for Cell 3 (Row 1, Col 3)",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_cell_1_4",
+              "purpose": "Center axis for Cell 4 (Row 1, Col 4)",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_cell_2_1",
+              "purpose": "Center axis for Cell 5 (Row 2, Col 1)",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_cell_2_2",
+              "purpose": "Center axis for Cell 6 (Row 2, Col 2)",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_cell_2_3",
+              "purpose": "Center axis for Cell 7 (Row 2, Col 3)",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "axis_cell_2_4",
+              "purpose": "Center axis for Cell 8 (Row 2, Col 4)",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "Inserted into Bottom Case.",
+          "Cells are inserted into this holder."
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_holder",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_holder\\cell_holder_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_holder\\cell_holder.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\cell_holder_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\cell_holder_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "Create base sketch on XY plane, rectangle 135x70.",
+          "Extrude up 65mm.",
+          "Pattern 8 circles (dia 18.2mm) in 2x4 grid.",
+          "Cut through holes.",
+          "Ensure outer walls are thick enough for structural integrity (e.g., 3mm)."
+        ]
+      },
+      {
+        "part_id": "cell_18650",
+        "name": "18650 Battery Cell",
+        "function": "Energy storage unit.",
+        "shape": "Cylinder with flat ends.",
+        "key_dimensions": [
+          "Diameter: 18mm",
+          "Height: 65mm"
+        ],
+        "material_or_notes": "Standard 18650 Li-ion",
+        "quantity": 8,
+        "instance_ids": [
+          "inst_cell_1",
+          "inst_cell_2",
+          "inst_cell_3",
+          "inst_cell_4",
+          "inst_cell_5",
+          "inst_cell_6",
+          "inst_cell_7",
+          "inst_cell_8"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_bottom_neg",
+              "purpose": "Negative terminal end",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "face_top_pos",
+              "purpose": "Positive terminal end",
+              "normal_direction_relation": "normal +Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_center",
+              "purpose": "Central longitudinal axis",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "Inserted into Cell Holder holes.",
+          "Axis concentric with Holder axes."
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_18650",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_18650\\cell_18650_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_18650\\cell_18650.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\cell_18650_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\cell_18650_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "Sketch circle dia 18mm on XY plane.",
+          "Extrude up 65mm.",
+          "Apply small chamfer or fillet to edges if required by standard, otherwise keep sharp for simplicity."
+        ]
+      },
+      {
+        "part_id": "screw_m3",
+        "name": "M3 Screw",
+        "function": "Fastener connecting Top and Bottom cases.",
+        "shape": "Simplified cylinder representing screw shank.",
+        "key_dimensions": [
+          "Diameter: 3mm",
+          "Length: 6mm"
+        ],
+        "material_or_notes": "Steel",
+        "quantity": 4,
+        "instance_ids": [
+          "inst_screw_1",
+          "inst_screw_2",
+          "inst_screw_3",
+          "inst_screw_4"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_head_bottom",
+              "purpose": "Contact face with Top Case",
+              "normal_direction_relation": "normal -Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_shank",
+              "purpose": "Central axis for concentric constraint",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "Passes through Top Case holes into Bottom Case posts."
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\screw_m3",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\screw_m3\\screw_m3_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\screw_m3\\screw_m3.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\screw_m3_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\screw_m3_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "Sketch circle dia 3mm on XY plane.",
+          "Extrude up 6mm."
+        ]
+      }
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_bottom_case",
+        "part_id": "bottom_case",
+        "name": "Bottom Case Instance",
+        "instance_role": "Base Structure",
+        "placement_notes": "Fixed at global origin.",
+        "interface_usage": {
+          "faces": [
+            "face_bottom_outer",
+            "face_top_inner",
+            "face_inner_bottom"
+          ],
+          "axes": [
+            "axis_screw_post_1",
+            "axis_screw_post_2",
+            "axis_screw_post_3",
+            "axis_screw_post_4"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_top_case",
+        "part_id": "top_case",
+        "name": "Top Case Instance",
+        "instance_role": "Cover",
+        "placement_notes": "Placed on top of Bottom Case.",
+        "interface_usage": {
+          "faces": [
+            "face_bottom_mating"
+          ],
+          "axes": [
+            "axis_screw_hole_1",
+            "axis_screw_hole_2",
+            "axis_screw_hole_3",
+            "axis_screw_hole_4"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_holder",
+        "part_id": "cell_holder",
+        "name": "Cell Holder Instance",
+        "instance_role": "Cell Retainer",
+        "placement_notes": "Inside Bottom Case, resting on inner bottom.",
+        "interface_usage": {
+          "faces": [
+            "face_bottom_support"
+          ],
+          "axes": [
+            "axis_cell_1_1",
+            "axis_cell_1_2",
+            "axis_cell_1_3",
+            "axis_cell_1_4",
+            "axis_cell_2_1",
+            "axis_cell_2_2",
+            "axis_cell_2_3",
+            "axis_cell_2_4"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_1",
+        "part_id": "cell_18650",
+        "name": "Cell 1",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 1, Col 1 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_2",
+        "part_id": "cell_18650",
+        "name": "Cell 2",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 1, Col 2 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_3",
+        "part_id": "cell_18650",
+        "name": "Cell 3",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 1, Col 3 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_4",
+        "part_id": "cell_18650",
+        "name": "Cell 4",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 1, Col 4 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_5",
+        "part_id": "cell_18650",
+        "name": "Cell 5",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 2, Col 1 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_6",
+        "part_id": "cell_18650",
+        "name": "Cell 6",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 2, Col 2 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_7",
+        "part_id": "cell_18650",
+        "name": "Cell 7",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 2, Col 3 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_cell_8",
+        "part_id": "cell_18650",
+        "name": "Cell 8",
+        "instance_role": "Battery Cell",
+        "placement_notes": "Row 2, Col 4 in Holder",
+        "interface_usage": {
+          "faces": [],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_1",
+        "part_id": "screw_m3",
+        "name": "Screw 1",
+        "instance_role": "Fastener",
+        "placement_notes": "Corner 1",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_2",
+        "part_id": "screw_m3",
+        "name": "Screw 2",
+        "instance_role": "Fastener",
+        "placement_notes": "Corner 2",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_3",
+        "part_id": "screw_m3",
+        "name": "Screw 3",
+        "instance_role": "Fastener",
+        "placement_notes": "Corner 3",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_4",
+        "part_id": "screw_m3",
+        "name": "Screw 4",
+        "instance_role": "Fastener",
+        "placement_notes": "Corner 4",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Fix inst_bottom_case to GROUND",
+      "Mate inst_cell_holder to inst_bottom_case",
+      "Insert inst_cell_1 to inst_cell_8 into inst_cell_holder",
+      "Mate inst_top_case to inst_bottom_case",
+      "Insert inst_screw_1 to inst_screw_4"
+    ],
+    "constraints": [
+      {
+        "source_instance_id": "inst_bottom_case",
+        "source_part_id": "bottom_case",
+        "source_interface": "face_bottom_outer",
+        "target_instance_id": "GROUND",
+        "target_part_id": "GROUND",
+        "target_interface": "XY_PLANE",
+        "relation": "coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "Fix bottom case to global origin plane"
+      },
+      {
+        "source_instance_id": "inst_cell_holder",
+        "source_part_id": "cell_holder",
+        "source_interface": "face_bottom_support",
+        "target_instance_id": "inst_bottom_case",
+        "target_part_id": "bottom_case",
+        "target_interface": "face_inner_bottom",
+        "relation": "coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "Holder rests on bottom case inner floor"
+      },
+      {
+        "source_instance_id": "inst_cell_1",
+        "source_part_id": "cell_18650",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_cell_holder",
+        "target_part_id": "cell_holder",
+        "target_interface": "axis_cell_1_1",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Cell 1 concentric with holder hole 1"
+      },
+      {
+        "source_instance_id": "inst_cell_2",
+        "source_part_id": "cell_18650",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_cell_holder",
+        "target_part_id": "cell_holder",
+        "target_interface": "axis_cell_1_2",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Cell 2 concentric with holder hole 2"
+      },
+      {
+        "source_instance_id": "inst_cell_3",
+        "source_part_id": "cell_18650",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_cell_holder",
+        "target_part_id": "cell_holder",
+        "target_interface": "axis_cell_1_3",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Cell 3 concentric with holder hole 3"
+      },
+      {
+        "source_instance_id": "inst_cell_4",
+        "source_part_id": "cell_18650",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_cell_holder",
+        "target_part_id": "cell_holder",
+        "target_interface": "axis_cell_1_4",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Cell 4 concentric with holder hole 4"
+      },
+      {
+        "source_instance_id": "inst_cell_5",
+        "source_part_id": "cell_18650",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_cell_holder",
+        "target_part_id": "cell_holder",
+        "target_interface": "axis_cell_2_1",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Cell 5 concentric with holder hole 5"
+      },
+      {
+        "source_instance_id": "inst_cell_6",
+        "source_part_id": "cell_18650",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_cell_holder",
+        "target_part_id": "cell_holder",
+        "target_interface": "axis_cell_2_2",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Cell 6 concentric with holder hole 6"
+      },
+      {
+        "source_instance_id": "inst_cell_7",
+        "source_part_id": "cell_18650",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_cell_holder",
+        "target_part_id": "cell_holder",
+        "target_interface": "axis_cell_2_3",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Cell 7 concentric with holder hole 7"
+      },
+      {
+        "source_instance_id": "inst_cell_8",
+        "source_part_id": "cell_18650",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_cell_holder",
+        "target_part_id": "cell_holder",
+        "target_interface": "axis_cell_2_4",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Cell 8 concentric with holder hole 8"
+      },
+      {
+        "source_instance_id": "inst_top_case",
+        "source_part_id": "top_case",
+        "source_interface": "face_bottom_mating",
+        "target_instance_id": "inst_bottom_case",
+        "target_part_id": "bottom_case",
+        "target_interface": "face_top_inner",
+        "relation": "coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "Top case mates with bottom case"
+      },
+      {
+        "source_instance_id": "inst_top_case",
+        "source_part_id": "top_case",
+        "source_interface": "axis_screw_hole_1",
+        "target_instance_id": "inst_bottom_case",
+        "target_part_id": "bottom_case",
+        "target_interface": "axis_screw_post_1",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Align screw hole 1"
+      },
+      {
+        "source_instance_id": "inst_top_case",
+        "source_part_id": "top_case",
+        "source_interface": "axis_screw_hole_2",
+        "target_instance_id": "inst_bottom_case",
+        "target_part_id": "bottom_case",
+        "target_interface": "axis_screw_post_2",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Align screw hole 2"
+      },
+      {
+        "source_instance_id": "inst_top_case",
+        "source_part_id": "top_case",
+        "source_interface": "axis_screw_hole_3",
+        "target_instance_id": "inst_bottom_case",
+        "target_part_id": "bottom_case",
+        "target_interface": "axis_screw_post_3",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Align screw hole 3"
+      },
+      {
+        "source_instance_id": "inst_top_case",
+        "source_part_id": "top_case",
+        "source_interface": "axis_screw_hole_4",
+        "target_instance_id": "inst_bottom_case",
+        "target_part_id": "bottom_case",
+        "target_interface": "axis_screw_post_4",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Align screw hole 4"
+      },
+      {
+        "source_instance_id": "inst_screw_1",
+        "source_part_id": "screw_m3",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_bottom_case",
+        "target_part_id": "bottom_case",
+        "target_interface": "axis_screw_post_1",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Screw 1 concentric with post 1"
+      },
+      {
+        "source_instance_id": "inst_screw_1",
+        "source_part_id": "screw_m3",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_top_case",
+        "target_part_id": "top_case",
+        "target_interface": "face_top_outer",
+        "relation": "distance",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Screw head sits on top case surface"
+      },
+      {
+        "source_instance_id": "inst_screw_2",
+        "source_part_id": "screw_m3",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_bottom_case",
+        "target_part_id": "bottom_case",
+        "target_interface": "axis_screw_post_2",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Screw 2 concentric with post 2"
+      },
+      {
+        "source_instance_id": "inst_screw_2",
+        "source_part_id": "screw_m3",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_top_case",
+        "target_part_id": "top_case",
+        "target_interface": "face_top_outer",
+        "relation": "distance",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Screw head sits on top case surface"
+      },
+      {
+        "source_instance_id": "inst_screw_3",
+        "source_part_id": "screw_m3",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_bottom_case",
+        "target_part_id": "bottom_case",
+        "target_interface": "axis_screw_post_3",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Screw 3 concentric with post 3"
+      },
+      {
+        "source_instance_id": "inst_screw_3",
+        "source_part_id": "screw_m3",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_top_case",
+        "target_part_id": "top_case",
+        "target_interface": "face_top_outer",
+        "relation": "distance",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Screw head sits on top case surface"
+      },
+      {
+        "source_instance_id": "inst_screw_4",
+        "source_part_id": "screw_m3",
+        "source_interface": "axis_shank",
+        "target_instance_id": "inst_bottom_case",
+        "target_part_id": "bottom_case",
+        "target_interface": "axis_screw_post_4",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Screw 4 concentric with post 4"
+      },
+      {
+        "source_instance_id": "inst_screw_4",
+        "source_part_id": "screw_m3",
+        "source_interface": "face_head_bottom",
+        "target_instance_id": "inst_top_case",
+        "target_part_id": "top_case",
+        "target_interface": "face_top_outer",
+        "relation": "distance",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Screw head sits on top case surface"
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\assembly\\Battery_Pack_2P4S_Assembly.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\assembly.log"
+    }
+  }
+}

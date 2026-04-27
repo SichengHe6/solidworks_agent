@@ -1,0 +1,66 @@
+{
+  "request_type": "part",
+  "part_context": {
+    "name": "Simple_Rectangular_Desk_Part",
+    "summary": "生成一个单零件矩形桌子模型。主体为1200x600x25mm的桌面，底部连接4根40x40x750mm的方柱桌腿。整体为一个多实体零件或单一布尔合并实体。边缘添加R3mm圆角。",
+    "key_requirements": [
+      "桌面尺寸：长1200mm，宽600mm，厚25mm",
+      "桌腿数量：4根",
+      "桌腿截面：40x40mm正方形",
+      "桌腿高度：750mm（从地面到桌面底面）",
+      "桌腿位置：位于桌面四角内侧，距离边缘适当偏移（默认居中于角部区域或距边20mm）",
+      "特征：所有外露锐边添加R3mm圆角",
+      "建模方式：基于XY平面草图拉伸桌面，再在桌面底面绘制桌腿草图并向下拉伸"
+    ],
+    "assumptions": [
+      "单位默认为mm",
+      "主草图面为XY平面",
+      "桌腿与桌面完全融合为一个实体（布尔合并）",
+      "桌腿中心距桌面边缘默认偏移20mm以保证结构合理性",
+      "无额外孔洞、槽口或复杂曲面",
+      "交付物包含Python建模代码和/或SLDPRT文件（根据后续指令确定，此处暂定为两者皆需或仅代码，视系统默认而定，通常优先代码）"
+    ],
+    "requested_outputs": [
+      "Python modeling code",
+      "SolidWorks part file (.SLDPRT)"
+    ],
+    "interfaces": []
+  },
+  "part": {
+    "part_id": "Simple_Rectangular_Desk_Part",
+    "name": "Simple_Rectangular_Desk_Part",
+    "function": "生成一个单零件矩形桌子模型。主体为1200x600x25mm的桌面，底部连接4根40x40x750mm的方柱桌腿。整体为一个多实体零件或单一布尔合并实体。边缘添加R3mm圆角。",
+    "shape": "根据需求分析结果由建模智能体细化",
+    "key_dimensions": [
+      "桌面尺寸：长1200mm，宽600mm，厚25mm",
+      "桌腿数量：4根",
+      "桌腿截面：40x40mm正方形",
+      "桌腿高度：750mm（从地面到桌面底面）",
+      "桌腿位置：位于桌面四角内侧，距离边缘适当偏移（默认居中于角部区域或距边20mm）",
+      "特征：所有外露锐边添加R3mm圆角",
+      "建模方式：基于XY平面草图拉伸桌面，再在桌面底面绘制桌腿草图并向下拉伸"
+    ],
+    "material_or_notes": "单位默认为mm; 主草图面为XY平面; 桌腿与桌面完全融合为一个实体（布尔合并）; 桌腿中心距桌面边缘默认偏移20mm以保证结构合理性; 无额外孔洞、槽口或复杂曲面; 交付物包含Python建模代码和/或SLDPRT文件（根据后续指令确定，此处暂定为两者皆需或仅代码，视系统默认而定，通常优先代码）",
+    "interfaces": {
+      "faces": [],
+      "axes": [],
+      "points": []
+    },
+    "standalone_modeling_instructions": [
+      "桌面尺寸：长1200mm，宽600mm，厚25mm",
+      "桌腿数量：4根",
+      "桌腿截面：40x40mm正方形",
+      "桌腿高度：750mm（从地面到桌面底面）",
+      "桌腿位置：位于桌面四角内侧，距离边缘适当偏移（默认居中于角部区域或距边20mm）",
+      "特征：所有外露锐边添加R3mm圆角",
+      "建模方式：基于XY平面草图拉伸桌面，再在桌面底面绘制桌腿草图并向下拉伸"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Simple_Rectangular_Desk_Part-20260423_154007\\part",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Simple_Rectangular_Desk_Part-20260423_154007\\part\\Simple_Rectangular_Desk_Part_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Simple_Rectangular_Desk_Part-20260423_154007\\part\\Simple_Rectangular_Desk_Part.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Simple_Rectangular_Desk_Part-20260423_154007\\logs\\Simple_Rectangular_Desk_Part_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Simple_Rectangular_Desk_Part-20260423_154007\\json\\Simple_Rectangular_Desk_Part_spec.json"
+    }
+  }
+}

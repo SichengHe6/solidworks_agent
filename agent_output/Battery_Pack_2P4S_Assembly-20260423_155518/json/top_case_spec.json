@@ -1,0 +1,121 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Battery_Pack_2P4S_Assembly",
+    "summary": "基于18650电芯(2并4串)的电池包装配体，包含下壳体、上壳体、独立电池支架及8节电芯模型。",
+    "global_coordinate_system": {
+      "origin": "Bottom_Case geometric center at bottom face",
+      "x_direction": "Along length (140mm)",
+      "y_direction": "Along width (75mm)",
+      "z_direction": "Upwards along height (70mm)"
+    },
+    "design_rules": [
+      "All external sharp edges must have R2 fillets.",
+      "Wall thickness for plastic parts is 2.5mm.",
+      "Units are in mm, convert to meters for modeling code.",
+      "M3 screws are simplified as cylinders for assembly constraints."
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_top_case",
+        "part_id": "top_case",
+        "name": "Top Case Instance",
+        "instance_role": "Cover",
+        "placement_notes": "Placed on top of Bottom Case.",
+        "interface_usage": {
+          "faces": [
+            "face_bottom_mating"
+          ],
+          "axes": [
+            "axis_screw_hole_1",
+            "axis_screw_hole_2",
+            "axis_screw_hole_3",
+            "axis_screw_hole_4"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Fix inst_bottom_case to GROUND",
+      "Mate inst_cell_holder to inst_bottom_case",
+      "Insert inst_cell_1 to inst_cell_8 into inst_cell_holder",
+      "Mate inst_top_case to inst_bottom_case",
+      "Insert inst_screw_1 to inst_screw_4"
+    ]
+  },
+  "part": {
+    "part_id": "top_case",
+    "name": "Top Case",
+    "function": "Cover for the battery pack, securing cells and providing wire exit.",
+    "shape": "Rectangular plate with raised rim to fit into bottom case, central cutout for wires, and 4 through-holes for M3 screws.",
+    "key_dimensions": [
+      "L: 140mm",
+      "W: 75mm",
+      "H: 35mm (approx half of total height)",
+      "Wall Thickness: 2.5mm",
+      "Wire Window: 20x10mm centered",
+      "Screw Hole Diameter: 3.2mm"
+    ],
+    "material_or_notes": "ABS Plastic",
+    "quantity": 1,
+    "instance_ids": [
+      "inst_top_case"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "face_bottom_mating",
+          "purpose": "Mates with Bottom Case top inner face",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "face_top_outer",
+          "purpose": "External top surface",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_screw_hole_1",
+          "purpose": "Concentric with Bottom Case screw post 1",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_screw_hole_2",
+          "purpose": "Concentric with Bottom Case screw post 2",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_screw_hole_3",
+          "purpose": "Concentric with Bottom Case screw post 3",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_screw_hole_4",
+          "purpose": "Concentric with Bottom Case screw post 4",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Mates with Bottom Case via face coincidence and screw axis concentricity."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\top_case",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\top_case\\top_case_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\top_case\\top_case.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\top_case_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\top_case_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Create base sketch on XY plane, rectangle 140x75.",
+      "Extrude up 35mm.",
+      "Shell inward by 2.5mm, keeping top face.",
+      "Cut a 20x10mm rectangular window on the top face, centered.",
+      "Drill 4 through-holes (3.2mm) corresponding to screw post positions.",
+      "Apply R2 fillet to all external vertical edges."
+    ]
+  }
+}

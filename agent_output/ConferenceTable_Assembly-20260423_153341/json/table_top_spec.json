@@ -1,0 +1,128 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "ConferenceTable_Assembly",
+    "summary": "生成一个标准矩形会议桌装配体，包含桌面、4条方形管桌腿、2根横梁及8个简化螺丝。桌面尺寸2400x1200x25mm，总高750mm。桌腿位于四角内侧，横梁连接左右桌腿中部。所有连接通过同心和重合配合实现，螺丝忽略螺纹细节。",
+    "global_coordinate_system": {
+      "origin": "桌面几何中心",
+      "x_direction": "沿桌面长边方向 (2400mm)",
+      "y_direction": "沿桌面短边方向 (1200mm)",
+      "z_direction": "垂直向上，指向桌面顶面"
+    },
+    "design_rules": [
+      "单位统一为毫米(mm)，建模时需转换为米(m)",
+      "所有零件基于XY平面草图拉伸或旋转生成",
+      "装配基准以桌面为中心，Z轴向上",
+      "重复零件必须复用Part定义，通过Instance区分位置"
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_table_top_1",
+        "part_id": "table_top",
+        "name": "桌面实例",
+        "instance_role": "基准件",
+        "placement_notes": "位于全局原点，Z=0为底面，Z=25为顶面",
+        "interface_usage": {
+          "faces": [
+            "face_bottom"
+          ],
+          "axes": [
+            "axis_leg_mount_fl",
+            "axis_leg_mount_fr",
+            "axis_leg_mount_bl",
+            "axis_leg_mount_br"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "inst_table_top_1",
+      "inst_leg_fl",
+      "inst_leg_fr",
+      "inst_leg_bl",
+      "inst_leg_br",
+      "inst_beam_front",
+      "inst_beam_back",
+      "inst_screw_fl_top",
+      "inst_screw_fr_top",
+      "inst_screw_bl_top",
+      "inst_screw_br_top",
+      "inst_screw_fl_beam",
+      "inst_screw_fr_beam",
+      "inst_screw_bl_beam",
+      "inst_screw_br_beam"
+    ]
+  },
+  "part": {
+    "part_id": "table_top",
+    "name": "会议桌桌面",
+    "function": "提供工作表面，支撑桌腿",
+    "shape": "矩形板，长2400mm，宽1200mm，厚25mm，四角R10圆角",
+    "key_dimensions": [
+      "Length: 2400 mm",
+      "Width: 1200 mm",
+      "Thickness: 25 mm",
+      "Corner Radius: 10 mm"
+    ],
+    "material_or_notes": "木质或复合材料，表面平整",
+    "quantity": 1,
+    "instance_ids": [
+      "inst_table_top_1"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "face_bottom",
+          "purpose": "与桌腿顶面贴合",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "face_top",
+          "purpose": "工作表面",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_leg_mount_fl",
+          "purpose": "左前桌腿安装孔轴线",
+          "direction_relation": "along local Z, located at X=-1150, Y=550 relative to center"
+        },
+        {
+          "name": "axis_leg_mount_fr",
+          "purpose": "右前桌腿安装孔轴线",
+          "direction_relation": "along local Z, located at X=1150, Y=550 relative to center"
+        },
+        {
+          "name": "axis_leg_mount_bl",
+          "purpose": "左后桌腿安装孔轴线",
+          "direction_relation": "along local Z, located at X=-1150, Y=-550 relative to center"
+        },
+        {
+          "name": "axis_leg_mount_br",
+          "purpose": "右后桌腿安装孔轴线",
+          "direction_relation": "along local Z, located at X=1150, Y=-550 relative to center"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "作为装配基准件，固定不动",
+      "桌腿顶面需与此零件底面重合",
+      "桌腿轴线需与此零件对应安装孔轴线同心"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_top",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_top\\table_top_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_top\\table_top.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\logs\\table_top_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\json\\table_top_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在XY平面绘制2400x1200矩形，四角倒圆角R10",
+      "向+Z方向拉伸25mm",
+      "在底面(Z=0)创建四个直径略大于M6的安装通孔(假设孔径8mm)，位置距边缘50mm"
+    ]
+  }
+}

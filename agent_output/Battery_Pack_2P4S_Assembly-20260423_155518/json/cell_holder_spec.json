@@ -1,0 +1,145 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Battery_Pack_2P4S_Assembly",
+    "summary": "基于18650电芯(2并4串)的电池包装配体，包含下壳体、上壳体、独立电池支架及8节电芯模型。",
+    "global_coordinate_system": {
+      "origin": "Bottom_Case geometric center at bottom face",
+      "x_direction": "Along length (140mm)",
+      "y_direction": "Along width (75mm)",
+      "z_direction": "Upwards along height (70mm)"
+    },
+    "design_rules": [
+      "All external sharp edges must have R2 fillets.",
+      "Wall thickness for plastic parts is 2.5mm.",
+      "Units are in mm, convert to meters for modeling code.",
+      "M3 screws are simplified as cylinders for assembly constraints."
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_cell_holder",
+        "part_id": "cell_holder",
+        "name": "Cell Holder Instance",
+        "instance_role": "Cell Retainer",
+        "placement_notes": "Inside Bottom Case, resting on inner bottom.",
+        "interface_usage": {
+          "faces": [
+            "face_bottom_support"
+          ],
+          "axes": [
+            "axis_cell_1_1",
+            "axis_cell_1_2",
+            "axis_cell_1_3",
+            "axis_cell_1_4",
+            "axis_cell_2_1",
+            "axis_cell_2_2",
+            "axis_cell_2_3",
+            "axis_cell_2_4"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Fix inst_bottom_case to GROUND",
+      "Mate inst_cell_holder to inst_bottom_case",
+      "Insert inst_cell_1 to inst_cell_8 into inst_cell_holder",
+      "Mate inst_top_case to inst_bottom_case",
+      "Insert inst_screw_1 to inst_screw_4"
+    ]
+  },
+  "part": {
+    "part_id": "cell_holder",
+    "name": "Cell Holder",
+    "function": "Structural frame to hold 8x 18650 cells in 2x4 arrangement.",
+    "shape": "Rectangular frame with 8 circular holes arranged in 2 rows and 4 columns. Outer dimensions fit inside Bottom Case.",
+    "key_dimensions": [
+      "L: 135mm (fits inside 140mm case)",
+      "W: 70mm (fits inside 75mm case)",
+      "H: 65mm (matches cell height)",
+      "Hole Diameter: 18.2mm (clearance for 18mm cell)",
+      "Pitch X: 32mm",
+      "Pitch Y: 32mm"
+    ],
+    "material_or_notes": "ABS Plastic or Nylon",
+    "quantity": 1,
+    "instance_ids": [
+      "inst_cell_holder"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "face_bottom_support",
+          "purpose": "Rests on Bottom Case inner bottom",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "face_top_open",
+          "purpose": "Top opening for cell insertion",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_cell_1_1",
+          "purpose": "Center axis for Cell 1 (Row 1, Col 1)",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_cell_1_2",
+          "purpose": "Center axis for Cell 2 (Row 1, Col 2)",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_cell_1_3",
+          "purpose": "Center axis for Cell 3 (Row 1, Col 3)",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_cell_1_4",
+          "purpose": "Center axis for Cell 4 (Row 1, Col 4)",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_cell_2_1",
+          "purpose": "Center axis for Cell 5 (Row 2, Col 1)",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_cell_2_2",
+          "purpose": "Center axis for Cell 6 (Row 2, Col 2)",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_cell_2_3",
+          "purpose": "Center axis for Cell 7 (Row 2, Col 3)",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_cell_2_4",
+          "purpose": "Center axis for Cell 8 (Row 2, Col 4)",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Inserted into Bottom Case.",
+      "Cells are inserted into this holder."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_holder",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_holder\\cell_holder_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\cell_holder\\cell_holder.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\cell_holder_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\cell_holder_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Create base sketch on XY plane, rectangle 135x70.",
+      "Extrude up 65mm.",
+      "Pattern 8 circles (dia 18.2mm) in 2x4 grid.",
+      "Cut through holes.",
+      "Ensure outer walls are thick enough for structural integrity (e.g., 3mm)."
+    ]
+  }
+}

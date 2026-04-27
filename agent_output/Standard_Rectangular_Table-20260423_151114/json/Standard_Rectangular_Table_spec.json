@@ -1,0 +1,57 @@
+{
+  "request_type": "part",
+  "part_context": {
+    "name": "Standard_Rectangular_Table",
+    "summary": "生成一个整体式矩形桌子零件。桌面尺寸1200x600x25mm，四角各有一根直径30mm、高725mm的圆柱桌腿，桌腿中心距桌面边缘50mm。桌面边缘做C2倒角。",
+    "key_requirements": [
+      "桌面: 长方体, L=1200mm, W=600mm, H=25mm",
+      "桌腿: 4个圆柱, D=30mm, H=725mm",
+      "桌腿定位: 中心距桌面长边50mm, 距短边50mm",
+      "特征: 桌面顶面边缘倒角 C2 (2x45deg)",
+      "单位: mm"
+    ],
+    "assumptions": [
+      "主草图面为 XY 平面",
+      "桌腿与桌面底部完全融合（无间隙）",
+      "材料默认为普通结构钢或木材（不影响几何建模）",
+      "未指定圆角，仅执行指定的倒角"
+    ],
+    "requested_outputs": [
+      "python_code"
+    ],
+    "interfaces": []
+  },
+  "part": {
+    "part_id": "Standard_Rectangular_Table",
+    "name": "Standard_Rectangular_Table",
+    "function": "生成一个整体式矩形桌子零件。桌面尺寸1200x600x25mm，四角各有一根直径30mm、高725mm的圆柱桌腿，桌腿中心距桌面边缘50mm。桌面边缘做C2倒角。",
+    "shape": "根据需求分析结果由建模智能体细化",
+    "key_dimensions": [
+      "桌面: 长方体, L=1200mm, W=600mm, H=25mm",
+      "桌腿: 4个圆柱, D=30mm, H=725mm",
+      "桌腿定位: 中心距桌面长边50mm, 距短边50mm",
+      "特征: 桌面顶面边缘倒角 C2 (2x45deg)",
+      "单位: mm"
+    ],
+    "material_or_notes": "主草图面为 XY 平面; 桌腿与桌面底部完全融合（无间隙）; 材料默认为普通结构钢或木材（不影响几何建模）; 未指定圆角，仅执行指定的倒角",
+    "interfaces": {
+      "faces": [],
+      "axes": [],
+      "points": []
+    },
+    "standalone_modeling_instructions": [
+      "桌面: 长方体, L=1200mm, W=600mm, H=25mm",
+      "桌腿: 4个圆柱, D=30mm, H=725mm",
+      "桌腿定位: 中心距桌面长边50mm, 距短边50mm",
+      "特征: 桌面顶面边缘倒角 C2 (2x45deg)",
+      "单位: mm"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Table-20260423_151114\\part",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Table-20260423_151114\\part\\Standard_Rectangular_Table_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Table-20260423_151114\\part\\Standard_Rectangular_Table.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Table-20260423_151114\\logs\\Standard_Rectangular_Table_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Table-20260423_151114\\json\\Standard_Rectangular_Table_spec.json"
+    }
+  }
+}

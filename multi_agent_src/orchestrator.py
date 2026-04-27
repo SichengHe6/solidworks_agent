@@ -333,8 +333,10 @@ class MultiAgentOrchestrator:
             "要求：\n"
             "1. 输入即使不是标准 JSON 语义，也要正常分析并完成规划。\n"
             "2. 输出必须是一个可直接被 json.loads 解析的 JSON 对象。\n"
-            "3. 不要输出解释、标题、注释、Markdown 代码块或额外文本。\n"
-            "4. 输出前请自行检查 JSON 合法性和字段完整性。\n"
+            "3. 如果装配中存在多个相同零件，`parts` 中只保留唯一零件定义，通过 `instances` 表达多个实例；不要把重复件展开成多个重复 part。\n"
+            "4. 相同几何但接口用途不同的实例，仍然优先复用同一个 part，并在实例层写清接口使用方式。\n"
+            "5. 不要输出解释、标题、注释、Markdown 代码块或额外文本。\n"
+            "6. 输出前请自行检查 JSON 合法性和字段完整性。\n"
         )
 
     def build_assembly_plan_retry_prompt(
@@ -374,6 +376,7 @@ class MultiAgentOrchestrator:
             "global_coordinate_system",
             "design_rules",
             "parts",
+            "instances",
             "assembly_sequence",
             "constraints",
             "assembly_output",
@@ -383,6 +386,7 @@ class MultiAgentOrchestrator:
                 issues.append(f"`assembly.{field}` 缺失。")
 
         parts = assembly.get("parts")
+        part_ids: set[str] = set()
         if not isinstance(parts, list) or not parts:
             issues.append("`assembly.parts` 必须是非空数组。")
         else:
@@ -393,6 +397,8 @@ class MultiAgentOrchestrator:
                 "shape",
                 "key_dimensions",
                 "material_or_notes",
+                "quantity",
+                "instance_ids",
                 "interfaces",
                 "assembly_relation_notes",
                 "workspace",
@@ -407,6 +413,12 @@ class MultiAgentOrchestrator:
                     if field not in part:
                         issues.append(f"`assembly.parts[{index}].{field}` 缺失。")
 
+                part_id = part.get("part_id")
+                if isinstance(part_id, str) and part_id:
+                    if part_id in part_ids:
+                        issues.append(f"`assembly.parts[{index}].part_id` 重复：{part_id}")
+                    part_ids.add(part_id)
+
                 interfaces = part.get("interfaces", {})
                 if not isinstance(interfaces, dict):
                     issues.append(f"`assembly.parts[{index}].interfaces` 必须是对象。")
@@ -417,9 +429,102 @@ class MultiAgentOrchestrator:
                         elif not isinstance(interfaces.get(key), list):
                             issues.append(f"`assembly.parts[{index}].interfaces.{key}` 必须是数组。")
 
+                if "quantity" in part and not isinstance(part.get("quantity"), int):
+                    issues.append(f"`assembly.parts[{index}].quantity` 必须是整数。")
+
+                if "instance_ids" in part and not isinstance(part.get("instance_ids"), list):
+                    issues.append(f"`assembly.parts[{index}].instance_ids` 必须是数组。")
+
+        instances = assembly.get("instances")
+        instance_ids: set[str] = set()
+        instances_by_part: dict[str, list[str]] = {}
+        if not isinstance(instances, list) or not instances:
+            issues.append("`assembly.instances` 必须是非空数组。")
+        else:
+            required_instance_fields = [
+                "instance_id",
+                "part_id",
+                "name",
+                "instance_role",
+                "placement_notes",
+                "interface_usage",
+            ]
+            for index, instance in enumerate(instances, start=1):
+                if not isinstance(instance, dict):
+                    issues.append(f"`assembly.instances[{index}]` 必须是对象。")
+                    continue
+
+                for field in required_instance_fields:
+                    if field not in instance:
+                        issues.append(f"`assembly.instances[{index}].{field}` 缺失。")
+
+                instance_id = instance.get("instance_id")
+                if isinstance(instance_id, str) and instance_id:
+                    if instance_id in instance_ids:
+                        issues.append(f"`assembly.instances[{index}].instance_id` 重复：{instance_id}")
+                    instance_ids.add(instance_id)
+
+                part_id = instance.get("part_id")
+                if isinstance(part_id, str) and part_id:
+                    if part_ids and part_id not in part_ids:
+                        issues.append(f"`assembly.instances[{index}].part_id` 未在 `assembly.parts` 中定义：{part_id}")
+                    if isinstance(instance_id, str) and instance_id:
+                        instances_by_part.setdefault(part_id, []).append(instance_id)
+
+                interface_usage = instance.get("interface_usage", {})
+                if not isinstance(interface_usage, dict):
+                    issues.append(f"`assembly.instances[{index}].interface_usage` 必须是对象。")
+                else:
+                    for key in ("faces", "axes", "points"):
+                        if key not in interface_usage:
+                            issues.append(f"`assembly.instances[{index}].interface_usage.{key}` 缺失。")
+                        elif not isinstance(interface_usage.get(key), list):
+                            issues.append(f"`assembly.instances[{index}].interface_usage.{key}` 必须是数组。")
+
+            for index, part in enumerate(parts or [], start=1):
+                part_id = part.get("part_id")
+                declared_instance_ids = part.get("instance_ids", [])
+                if isinstance(part_id, str) and isinstance(declared_instance_ids, list):
+                    actual_instance_ids = instances_by_part.get(part_id, [])
+                    if set(declared_instance_ids) != set(actual_instance_ids):
+                        issues.append(
+                            f"`assembly.parts[{index}].instance_ids` 与 `assembly.instances` 中引用该 part 的实例不一致。"
+                        )
+                    quantity = part.get("quantity")
+                    if isinstance(quantity, int) and quantity != len(actual_instance_ids):
+                        issues.append(
+                            f"`assembly.parts[{index}].quantity` 应等于该 part 对应的实例数量 {len(actual_instance_ids)}。"
+                        )
+
         constraints = assembly.get("constraints")
         if constraints is not None and not isinstance(constraints, list):
             issues.append("`assembly.constraints` 必须是数组。")
+        elif isinstance(constraints, list):
+            required_constraint_fields = [
+                "source_instance_id",
+                "source_part_id",
+                "source_interface",
+                "target_instance_id",
+                "target_part_id",
+                "target_interface",
+                "relation",
+                "alignment",
+                "offset_mm",
+                "notes",
+            ]
+            for index, constraint in enumerate(constraints, start=1):
+                if not isinstance(constraint, dict):
+                    issues.append(f"`assembly.constraints[{index}]` 必须是对象。")
+                    continue
+                for field in required_constraint_fields:
+                    if field not in constraint:
+                        issues.append(f"`assembly.constraints[{index}].{field}` 缺失。")
+                source_instance_id = constraint.get("source_instance_id")
+                if source_instance_id not in instance_ids:
+                    issues.append(f"`assembly.constraints[{index}].source_instance_id` 未在 `assembly.instances` 中定义。")
+                target_instance_id = constraint.get("target_instance_id")
+                if target_instance_id != "GROUND" and target_instance_id not in instance_ids:
+                    issues.append(f"`assembly.constraints[{index}].target_instance_id` 未在 `assembly.instances` 中定义。")
 
         sequence = assembly.get("assembly_sequence")
         if sequence is not None and not isinstance(sequence, list):
@@ -449,6 +554,7 @@ class MultiAgentOrchestrator:
         assembly.setdefault("summary", "")
         assembly.setdefault("global_coordinate_system", {})
         assembly.setdefault("design_rules", [])
+        assembly.setdefault("instances", [])
         assembly.setdefault("assembly_sequence", [])
         assembly.setdefault("constraints", [])
         assembly["assembly_output"] = {
@@ -458,6 +564,25 @@ class MultiAgentOrchestrator:
         }
 
         part_specs = assembly.get("parts", [])
+        existing_instances = assembly.get("instances", [])
+        instance_map: dict[str, list[dict[str, Any]]] = {}
+        for instance in existing_instances:
+            if not isinstance(instance, dict):
+                continue
+            instance_id = slugify(instance.get("instance_id") or instance.get("name", "instance"), "instance")
+            part_id = slugify(instance.get("part_id", "part"), "part")
+            instance["instance_id"] = instance_id
+            instance["part_id"] = part_id
+            interface_usage = instance.get("interface_usage")
+            if not isinstance(interface_usage, dict):
+                interface_usage = {}
+            instance["interface_usage"] = {
+                "faces": list(interface_usage.get("faces", []) or []),
+                "axes": list(interface_usage.get("axes", []) or []),
+                "points": list(interface_usage.get("points", []) or []),
+            }
+            instance_map.setdefault(part_id, []).append(instance)
+
         for part in part_specs:
             part_id = slugify(part.get("part_id") or part.get("name", "part"), "part")
             part_name = part.get("name", part_id)
@@ -473,6 +598,28 @@ class MultiAgentOrchestrator:
             }
             part["part_id"] = part_id
             part["name"] = part_name
+            part_instances = instance_map.get(part_id, [])
+            fallback_instance_ids = part.get("instance_ids", [])
+            if not isinstance(fallback_instance_ids, list):
+                fallback_instance_ids = []
+            normalized_instance_ids = [
+                slugify(instance_id, f"{part_id}_instance") for instance_id in fallback_instance_ids if instance_id
+            ]
+            if not part_instances and normalized_instance_ids:
+                part_instances = [
+                    {
+                        "instance_id": instance_id,
+                        "part_id": part_id,
+                        "name": instance_id,
+                        "instance_role": f"{part_name} 实例",
+                        "placement_notes": "",
+                        "interface_usage": {"faces": [], "axes": [], "points": []},
+                    }
+                    for instance_id in normalized_instance_ids
+                ]
+                instance_map[part_id] = part_instances
+            part["quantity"] = int(part.get("quantity") or max(len(part_instances), 1))
+            part["instance_ids"] = [instance["instance_id"] for instance in part_instances] or normalized_instance_ids or [part_id]
             part["workspace"] = part_workspace
             part["interfaces"] = part.get("interfaces", {"faces": [], "axes": [], "points": []})
             part["standalone_modeling_instructions"] = part.get("standalone_modeling_instructions", [])
@@ -485,11 +632,28 @@ class MultiAgentOrchestrator:
                         "summary": assembly.get("summary", ""),
                         "global_coordinate_system": assembly.get("global_coordinate_system", {}),
                         "design_rules": assembly.get("design_rules", []),
+                        "instances": part_instances,
                         "assembly_sequence": assembly.get("assembly_sequence", []),
                     },
                     "part": part,
                 },
             )
+
+        if not assembly["instances"]:
+            synthesized_instances: list[dict[str, Any]] = []
+            for part in part_specs:
+                for instance_id in part.get("instance_ids", []) or []:
+                    synthesized_instances.append(
+                        {
+                            "instance_id": instance_id,
+                            "part_id": part["part_id"],
+                            "name": instance_id,
+                            "instance_role": f"{part['name']} 实例",
+                            "placement_notes": "",
+                            "interface_usage": {"faces": [], "axes": [], "points": []},
+                        }
+                    )
+            assembly["instances"] = synthesized_instances
 
         return plan
 
@@ -603,7 +767,7 @@ class MultiAgentOrchestrator:
         retry_feedback: str | None,
     ) -> str:
         payload = {
-            "task": "请为下面的零件生成完整可执行 Python 建模代码。",
+            "task": "请为下面的零件生成完整可执行 Python 建模代码；如果该零件会被多个实例复用，也只建模一次通用零件模板。",
             "full_plan_summary": full_plan,
             "part_spec": part_spec,
         }
@@ -660,7 +824,7 @@ class MultiAgentOrchestrator:
         retry_feedback: str | None,
     ) -> str:
         payload = {
-            "task": "请根据装配规划和已完成的零件输出，生成完整可执行 Python 装配代码。",
+            "task": "请根据装配规划和已完成的零件输出，生成完整可执行 Python 装配代码；对于重复件要复用同一个零件文件并按 instance_id 插入多个组件实例。",
             "assembly_plan": plan,
             "part_results": part_results,
         }

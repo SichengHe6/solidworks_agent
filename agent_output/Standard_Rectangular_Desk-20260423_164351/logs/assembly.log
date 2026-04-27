@@ -1,0 +1,36 @@
+[LOG] Starting assembly: Standard_Rectangular_Desk
+----------------------------------------
+Python 成功接收到的新装配名称: 
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 16:55:59 - 接收到参数，尝试创建并激活文档: Standard_Rectangular_Desk
+[DEBUG] 16:55:59 - 尝试连接 SolidWorks...
+[DEBUG] 16:55:59 - 成功连接到已运行的实例。
+
+[LOG] Assembly document created and activated.
+成功导入组件: desktop_panel-3
+[LOG] Inserted desktop panel: desktop_panel-3
+成功导入组件: cylindrical_leg-9
+[LOG] Inserted leg inst_leg_fl: cylindrical_leg-9 at (-0.55, 0.25, -0.7375)
+成功导入组件: cylindrical_leg-10
+[LOG] Inserted leg inst_leg_fr: cylindrical_leg-10 at (0.55, 0.25, -0.7375)
+成功导入组件: cylindrical_leg-11
+[LOG] Inserted leg inst_leg_bl: cylindrical_leg-11 at (-0.55, -0.25, -0.7375)
+成功导入组件: cylindrical_leg-12
+[LOG] Inserted leg inst_leg_br: cylindrical_leg-12 at (0.55, -0.25, -0.7375)
+[LOG] Constraining Front Left (inst_leg_fl)...
+✅ 平面配合 face_top-face_bottom 完成 (cylindrical_leg-9 <-> desktop_panel-3)
+[LOG] Mate applied successfully: desktop_panel-3 & face_top
+[LOG] Constraining Front Right (inst_leg_fr)...
+✅ 平面配合 face_top-face_bottom 完成 (cylindrical_leg-10 <-> desktop_panel-3)
+[LOG] Mate applied successfully: desktop_panel-3 & face_top
+[LOG] Constraining Back Left (inst_leg_bl)...
+✅ 平面配合 face_top-face_bottom 完成 (cylindrical_leg-11 <-> desktop_panel-3)
+[LOG] Mate applied successfully: desktop_panel-3 & face_top
+[LOG] Constraining Back Right (inst_leg_br)...
+✅ 平面配合 face_top-face_bottom 完成 (cylindrical_leg-12 <-> desktop_panel-3)
+[LOG] Mate applied successfully: desktop_panel-3 & face_top
+Assembly save failed, code: True
+[LOG] Assembly saved to: D:\a_src\python\sw_agent\agent_output\Standard_Rectangular_Desk-20260423_164351\assembly\Standard_Rectangular_Desk.SLDASM
+[LOG] Assembly process completed.

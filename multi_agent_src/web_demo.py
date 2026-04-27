@@ -120,10 +120,21 @@ class DemoHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         parsed = urlparse(self.path)
-        if parsed.path != "/api/chat":
+        if parsed.path not in {"/api/chat", "/api/chat-sse"}:
             self.send_error(HTTPStatus.NOT_FOUND, "Not Found")
             return
 
+        user_message, session_id, session = self.parse_chat_request()
+        if user_message is None or session_id is None or session is None:
+            return
+
+        if parsed.path == "/api/chat-sse":
+            self.stream_sse_events(session_id, session, user_message)
+            return
+
+        self.stream_jsonl_events(session_id, session, user_message)
+
+    def parse_chat_request(self) -> tuple[str | None, str | None, DemoConversationSession | None]:
         length = int(self.headers.get("Content-Length", "0"))
         raw_body = self.rfile.read(length).decode("utf-8") if length else "{}"
 
@@ -131,15 +142,17 @@ class DemoHandler(BaseHTTPRequestHandler):
             payload = json.loads(raw_body)
         except json.JSONDecodeError:
             self.send_json({"error": "Request body must be valid JSON."}, status=HTTPStatus.BAD_REQUEST)
-            return
+            return None, None, None
 
         user_message = str(payload.get("message", "")).strip()
         if not user_message:
             self.send_json({"error": "Message cannot be empty."}, status=HTTPStatus.BAD_REQUEST)
-            return
+            return None, None, None
 
         session_id, session = get_or_create_session(self.headers.get("X-Session-Id"))
+        return user_message, session_id, session
 
+    def stream_jsonl_events(self, session_id: str, session: DemoConversationSession, user_message: str) -> None:
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", "text/plain; charset=utf-8")
         self.send_header("Cache-Control", "no-cache")
@@ -164,6 +177,32 @@ class DemoHandler(BaseHTTPRequestHandler):
                 self.wfile.flush()
             except BrokenPipeError:
                 pass
+
+    def stream_sse_events(self, session_id: str, session: DemoConversationSession, user_message: str) -> None:
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Connection", "close")
+        self.send_header("X-Session-Id", session_id)
+        self.end_headers()
+        self.close_connection = True
+
+        try:
+            for event in session.iter_turn_events(user_message):
+                self.write_sse_event("message", event)
+
+            self.write_sse_event("message", {"type": "done"})
+        except Exception as exc:
+            try:
+                self.write_sse_event("message", {"type": "error", "error": str(exc)})
+            except BrokenPipeError:
+                pass
+
+    def write_sse_event(self, event_name: str, payload: dict) -> None:
+        body = json.dumps(payload, ensure_ascii=False)
+        message = f"event: {event_name}\ndata: {body}\n\n"
+        self.wfile.write(message.encode("utf-8"))
+        self.wfile.flush()
 
     def serve_file(self, filename: str, content_type: str):
         path = WEB_ROOT / filename

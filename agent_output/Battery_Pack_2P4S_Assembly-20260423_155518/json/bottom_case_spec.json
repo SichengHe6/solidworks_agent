@@ -1,0 +1,130 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Battery_Pack_2P4S_Assembly",
+    "summary": "基于18650电芯(2并4串)的电池包装配体，包含下壳体、上壳体、独立电池支架及8节电芯模型。",
+    "global_coordinate_system": {
+      "origin": "Bottom_Case geometric center at bottom face",
+      "x_direction": "Along length (140mm)",
+      "y_direction": "Along width (75mm)",
+      "z_direction": "Upwards along height (70mm)"
+    },
+    "design_rules": [
+      "All external sharp edges must have R2 fillets.",
+      "Wall thickness for plastic parts is 2.5mm.",
+      "Units are in mm, convert to meters for modeling code.",
+      "M3 screws are simplified as cylinders for assembly constraints."
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_bottom_case",
+        "part_id": "bottom_case",
+        "name": "Bottom Case Instance",
+        "instance_role": "Base Structure",
+        "placement_notes": "Fixed at global origin.",
+        "interface_usage": {
+          "faces": [
+            "face_bottom_outer",
+            "face_top_inner",
+            "face_inner_bottom"
+          ],
+          "axes": [
+            "axis_screw_post_1",
+            "axis_screw_post_2",
+            "axis_screw_post_3",
+            "axis_screw_post_4"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Fix inst_bottom_case to GROUND",
+      "Mate inst_cell_holder to inst_bottom_case",
+      "Insert inst_cell_1 to inst_cell_8 into inst_cell_holder",
+      "Mate inst_top_case to inst_bottom_case",
+      "Insert inst_screw_1 to inst_screw_4"
+    ]
+  },
+  "part": {
+    "part_id": "bottom_case",
+    "name": "Bottom Case",
+    "function": "Main structural base holding cells and providing mounting points.",
+    "shape": "Rectangular box with open top, internal ribs, semi-circular cell slots on inner bottom, and M3 screw posts on side walls. Bottom has 4 M4 mounting holes.",
+    "key_dimensions": [
+      "L: 140mm",
+      "W: 75mm",
+      "H: 35mm (approx half of total height)",
+      "Wall Thickness: 2.5mm",
+      "Screw Post Diameter: 6mm",
+      "Mounting Hole Diameter: 4.5mm"
+    ],
+    "material_or_notes": "ABS Plastic",
+    "quantity": 1,
+    "instance_ids": [
+      "inst_bottom_case"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "face_bottom_outer",
+          "purpose": "Mounting reference to ground or chassis",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "face_top_inner",
+          "purpose": "Mating surface for Top Case",
+          "normal_direction_relation": "normal +Z"
+        },
+        {
+          "name": "face_inner_bottom",
+          "purpose": "Support surface for Holder",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_screw_post_1",
+          "purpose": "Alignment axis for Top Case screw hole 1",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_screw_post_2",
+          "purpose": "Alignment axis for Top Case screw hole 2",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_screw_post_3",
+          "purpose": "Alignment axis for Top Case screw hole 3",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_screw_post_4",
+          "purpose": "Alignment axis for Top Case screw hole 4",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "Fixed to global origin.",
+      "Provides primary mating surfaces for Holder and Top Case."
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\bottom_case",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\bottom_case\\bottom_case_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\parts\\bottom_case\\bottom_case.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\logs\\bottom_case_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Battery_Pack_2P4S_Assembly-20260423_155518\\json\\bottom_case_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "Create base sketch on XY plane centered at origin, rectangle 140x75.",
+      "Extrude up 35mm.",
+      "Shell inward by 2.5mm, keeping bottom face.",
+      "Add internal ribs and semi-circular slots for cells on the inner bottom face.",
+      "Add 4 cylindrical bosses (screw posts) on side walls or corners, height matching wall top.",
+      "Cut 4 M4 through-holes on the outer bottom face at corners.",
+      "Apply R2 fillet to all external vertical edges."
+    ]
+  }
+}

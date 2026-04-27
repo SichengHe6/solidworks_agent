@@ -1,0 +1,122 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "iPhone17_5DOF_Stand_Assembly",
+    "summary": "一个适用于iPhone 17的5自由度手机支架装配体，由底座、主立柱、悬臂、夹持头组成，实现水平旋转、两级俯仰、左右倾斜及前后倾斜。",
+    "global_coordinate_system": {
+      "origin": "Base center bottom",
+      "x_direction": "Forward (towards user)",
+      "y_direction": "Left (relative to forward)",
+      "z_direction": "Up (vertical)"
+    },
+    "design_rules": [
+      "所有尺寸单位为mm，建模时需转换为m",
+      "活动关节仅定义几何配合接口，不包含物理阻尼或锁定特征",
+      "优先使用同心轴和平面重合进行装配约束",
+      "零件建模应基于标准基准面（XY, XZ, YZ）进行拉伸或旋转"
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_arm_01",
+        "part_id": "adjustable_arm",
+        "name": "Arm Instance",
+        "instance_role": "Linkage with Pitch2",
+        "placement_notes": "连接立柱顶部和夹持头，可绕Pitch1轴俯仰",
+        "interface_usage": {
+          "faces": [
+            "base_side_face",
+            "tip_ball_surface"
+          ],
+          "axes": [
+            "arm_pitch_axis",
+            "arm_longitudinal_axis"
+          ],
+          "points": [
+            "ball_center_point"
+          ]
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Insert inst_base_01 and Fix to Ground",
+      "Insert inst_column_01",
+      "Mate inst_column_01.bottom_flange_face to inst_base_01.top_mount_face (Coincident)",
+      "Mate inst_column_01.column_main_axis to inst_base_01.central_axis_z (Concentric)",
+      "Insert inst_arm_01",
+      "Mate inst_arm_01.base_side_face to inst_column_01.top_joint_side_left (Coincident/Parallel depending on design, assume side contact)",
+      "Mate inst_arm_01.arm_pitch_axis to inst_column_01.pitch1_axis (Concentric)",
+      "Insert inst_clamp_01",
+      "Mate inst_clamp_01.socket_center_point to inst_arm_01.ball_center_point (Coincident)",
+      "Mate inst_clamp_01.back_socket_inner_face to inst_arm_01.tip_ball_surface (Tangent/Coincident approximation for ball joint)"
+    ]
+  },
+  "part": {
+    "part_id": "adjustable_arm",
+    "name": "Adjustable Arm",
+    "function": "连接立柱与夹持头，提供第二级俯仰(Pitch2)及伸缩功能",
+    "shape": "L型或直杆型悬臂，一端有轴孔与立柱配合，另一端有球头或万向节结构与夹持头连接。",
+    "key_dimensions": [
+      "Length: 120mm",
+      "Width: 25mm",
+      "Thickness: 15mm",
+      "Base Hole Diameter: 8mm",
+      "Tip Ball Diameter: 20mm"
+    ],
+    "material_or_notes": "工程塑料",
+    "quantity": 1,
+    "instance_ids": [
+      "inst_arm_01"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "base_side_face",
+          "purpose": "与立柱叉耳侧面贴合",
+          "normal_direction_relation": "normal +/-X (depending on orientation)"
+        },
+        {
+          "name": "tip_ball_surface",
+          "purpose": "与夹持头背部球窝接触",
+          "normal_direction_relation": "radial from ball center"
+        }
+      ],
+      "axes": [
+        {
+          "name": "arm_pitch_axis",
+          "purpose": "与立柱Pitch1轴同心",
+          "direction_relation": "along local Y at base end"
+        },
+        {
+          "name": "arm_longitudinal_axis",
+          "purpose": "悬臂长度方向参考",
+          "direction_relation": "along local Z from base to tip"
+        }
+      ],
+      "points": [
+        {
+          "name": "ball_center_point",
+          "purpose": "球头中心，用于定位夹持头",
+          "location_hint": "At the tip of the arm"
+        }
+      ]
+    },
+    "assembly_relation_notes": [
+      "base_side_face与立柱top_joint_side贴合",
+      "arm_pitch_axis与立柱pitch1_axis同心",
+      "ball_center_point与夹持头背部球窝中心重合"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\adjustable_arm",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\adjustable_arm\\adjustable_arm_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\adjustable_arm\\adjustable_arm.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\logs\\adjustable_arm_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\json\\adjustable_arm_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在YZ平面绘制悬臂截面轮廓，沿X方向拉伸或扫描生成主体",
+      "在基部创建直径8mm的通孔，轴线沿Y方向",
+      "在顶端创建直径20mm的球体特征",
+      "确保arm_pitch_axis穿过基部孔中心"
+    ]
+  }
+}

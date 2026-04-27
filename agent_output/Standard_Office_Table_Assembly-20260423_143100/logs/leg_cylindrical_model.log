@@ -1,0 +1,7 @@
+Execution Failed with error:
+Traceback (most recent call last):
+  File "D:\a_src\python\sw_agent\agent_output\Standard_Office_Table_Assembly-20260423_143100\parts\leg_cylindrical\leg_cylindrical_model.py", line 153, in <module>
+    main()
+  File "D:\a_src\python\sw_agent\agent_output\Standard_Office_Table_Assembly-20260423_143100\parts\leg_cylindrical\leg_cylindrical_model.py", line 88, in main
+    raise Exception("Failed to cut hole 1")
+Exception: Failed to cut hole 1

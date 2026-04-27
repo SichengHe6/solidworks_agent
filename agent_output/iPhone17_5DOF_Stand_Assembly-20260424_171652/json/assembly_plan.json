@@ -1,0 +1,477 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "iPhone17_5DOF_Stand_Assembly",
+    "summary": "一个适用于iPhone 17的5自由度手机支架装配体，由底座、主立柱、悬臂、夹持头组成，实现水平旋转、两级俯仰、左右倾斜及前后倾斜。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "Base center bottom",
+      "x_direction": "Forward (towards user)",
+      "y_direction": "Left (relative to forward)",
+      "z_direction": "Up (vertical)"
+    },
+    "design_rules": [
+      "所有尺寸单位为mm，建模时需转换为m",
+      "活动关节仅定义几何配合接口，不包含物理阻尼或锁定特征",
+      "优先使用同心轴和平面重合进行装配约束",
+      "零件建模应基于标准基准面（XY, XZ, YZ）进行拉伸或旋转"
+    ],
+    "parts": [
+      {
+        "part_id": "base_plate",
+        "name": "Base Plate",
+        "function": "提供稳定支撑并作为水平旋转(Yaw)的基座",
+        "shape": "圆柱形底座，直径100mm，高度20mm。顶部中心有凸台用于安装立柱，底部平整。",
+        "key_dimensions": [
+          "Diameter: 100mm",
+          "Height: 20mm",
+          "Top Boss Diameter: 30mm",
+          "Top Boss Height: 10mm"
+        ],
+        "material_or_notes": "通用塑料或金属，底部可加防滑垫假设",
+        "quantity": 1,
+        "instance_ids": [
+          "inst_base_01"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "bottom_face",
+              "purpose": "放置于桌面，固定参考",
+              "normal_direction_relation": "normal -Z"
+            },
+            {
+              "name": "top_mount_face",
+              "purpose": "与立柱底部配合",
+              "normal_direction_relation": "normal +Z"
+            }
+          ],
+          "axes": [
+            {
+              "name": "central_axis_z",
+              "purpose": "立柱旋转中心轴",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "作为装配基准件(GROUND)，固定不动",
+          "通过central_axis_z与立柱实现同心配合"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\base_plate",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\base_plate\\base_plate_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\base_plate\\base_plate.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\logs\\base_plate_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\json\\base_plate_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制直径100mm圆，向上拉伸20mm生成主体",
+          "在顶面中心绘制直径30mm圆，向上拉伸10mm生成凸台",
+          "确保central_axis_z穿过圆心且垂直于底面"
+        ]
+      },
+      {
+        "part_id": "main_column",
+        "name": "Main Column",
+        "function": "连接底座与悬臂，提供第一级俯仰(Pitch1)调节",
+        "shape": "中空圆柱管状结构，底部有法兰盘与底座配合，顶部有球窝或U型叉耳结构用于连接悬臂。",
+        "key_dimensions": [
+          "Outer Diameter: 28mm",
+          "Inner Diameter: 20mm",
+          "Length: 150mm",
+          "Bottom Flange Thickness: 5mm",
+          "Top Joint Width: 30mm"
+        ],
+        "material_or_notes": "铝合金或高强度塑料",
+        "quantity": 1,
+        "instance_ids": [
+          "inst_column_01"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "bottom_flange_face",
+              "purpose": "与底座顶面贴合",
+              "normal_direction_relation": "normal -Z (local)"
+            },
+            {
+              "name": "top_joint_side_left",
+              "purpose": "悬臂铰接左侧面",
+              "normal_direction_relation": "normal -Y (local)"
+            },
+            {
+              "name": "top_joint_side_right",
+              "purpose": "悬臂铰接右侧面",
+              "normal_direction_relation": "normal +Y (local)"
+            }
+          ],
+          "axes": [
+            {
+              "name": "column_main_axis",
+              "purpose": "与底座同心旋转轴",
+              "direction_relation": "along local Z"
+            },
+            {
+              "name": "pitch1_axis",
+              "purpose": "悬臂俯仰旋转轴",
+              "direction_relation": "along local Y, passing through top joint center"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "底部法兰面与底座top_mount_face重合",
+          "column_main_axis与底座central_axis_z同心",
+          "顶部pitch1_axis用于连接悬臂"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\main_column",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\main_column\\main_column_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\main_column\\main_column.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\logs\\main_column_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\json\\main_column_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制外径28mm内径20mm圆环，向上拉伸150mm生成管体",
+          "在底部添加厚度5mm直径35mm的法兰盘",
+          "在顶部切除材料形成U型叉耳，宽度30mm，深度20mm",
+          "创建pitch1_axis参考轴，位于叉耳中心，沿Y方向"
+        ]
+      },
+      {
+        "part_id": "adjustable_arm",
+        "name": "Adjustable Arm",
+        "function": "连接立柱与夹持头，提供第二级俯仰(Pitch2)及伸缩功能",
+        "shape": "L型或直杆型悬臂，一端有轴孔与立柱配合，另一端有球头或万向节结构与夹持头连接。",
+        "key_dimensions": [
+          "Length: 120mm",
+          "Width: 25mm",
+          "Thickness: 15mm",
+          "Base Hole Diameter: 8mm",
+          "Tip Ball Diameter: 20mm"
+        ],
+        "material_or_notes": "工程塑料",
+        "quantity": 1,
+        "instance_ids": [
+          "inst_arm_01"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "base_side_face",
+              "purpose": "与立柱叉耳侧面贴合",
+              "normal_direction_relation": "normal +/-X (depending on orientation)"
+            },
+            {
+              "name": "tip_ball_surface",
+              "purpose": "与夹持头背部球窝接触",
+              "normal_direction_relation": "radial from ball center"
+            }
+          ],
+          "axes": [
+            {
+              "name": "arm_pitch_axis",
+              "purpose": "与立柱Pitch1轴同心",
+              "direction_relation": "along local Y at base end"
+            },
+            {
+              "name": "arm_longitudinal_axis",
+              "purpose": "悬臂长度方向参考",
+              "direction_relation": "along local Z from base to tip"
+            }
+          ],
+          "points": [
+            {
+              "name": "ball_center_point",
+              "purpose": "球头中心，用于定位夹持头",
+              "location_hint": "At the tip of the arm"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "base_side_face与立柱top_joint_side贴合",
+          "arm_pitch_axis与立柱pitch1_axis同心",
+          "ball_center_point与夹持头背部球窝中心重合"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\adjustable_arm",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\adjustable_arm\\adjustable_arm_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\adjustable_arm\\adjustable_arm.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\logs\\adjustable_arm_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\json\\adjustable_arm_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在YZ平面绘制悬臂截面轮廓，沿X方向拉伸或扫描生成主体",
+          "在基部创建直径8mm的通孔，轴线沿Y方向",
+          "在顶端创建直径20mm的球体特征",
+          "确保arm_pitch_axis穿过基部孔中心"
+        ]
+      },
+      {
+        "part_id": "phone_clamp",
+        "name": "Phone Clamp",
+        "function": "夹持手机，提供左右倾斜(Roll)和前后倾斜(Pitch3)调节",
+        "shape": "C型或框型夹持结构，背部有球窝与悬臂球头配合，内侧有软胶垫区域适配手机尺寸。",
+        "key_dimensions": [
+          "Inner Width: 80mm",
+          "Inner Depth: 10mm",
+          "Inner Height: 165mm",
+          "Back Socket Diameter: 20.5mm (clearance for 20mm ball)",
+          "Overall Width: 90mm"
+        ],
+        "material_or_notes": "ABS塑料，内侧贴硅胶垫",
+        "quantity": 1,
+        "instance_ids": [
+          "inst_clamp_01"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "inner_grip_face_back",
+              "purpose": "手机背面接触面",
+              "normal_direction_relation": "normal +Z (local, facing phone)"
+            },
+            {
+              "name": "inner_grip_face_front",
+              "purpose": "手机正面限位面",
+              "normal_direction_relation": "normal -Z (local)"
+            },
+            {
+              "name": "back_socket_inner_face",
+              "purpose": "与悬臂球头配合的球窝内表面",
+              "normal_direction_relation": "radial inward to socket center"
+            }
+          ],
+          "axes": [
+            {
+              "name": "clamp_roll_axis",
+              "purpose": "左右倾斜旋转轴",
+              "direction_relation": "along local X, passing through ball socket center"
+            },
+            {
+              "name": "clamp_pitch3_axis",
+              "purpose": "前后倾斜旋转轴",
+              "direction_relation": "along local Y, passing through ball socket center"
+            }
+          ],
+          "points": [
+            {
+              "name": "socket_center_point",
+              "purpose": "球窝中心，与悬臂球头中心重合",
+              "location_hint": "Center of the back spherical socket"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "socket_center_point与悬臂ball_center_point重合",
+          "通过球窝配合实现多自由度旋转，具体角度由用户手动调整，装配时默认对齐",
+          "inner_grip_face_back平行于全局XY平面初始状态"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\phone_clamp",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\phone_clamp\\phone_clamp_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\phone_clamp\\phone_clamp.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\logs\\phone_clamp_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\json\\phone_clamp_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制手机轮廓矩形(80x165mm)，向外偏移生成夹持框壁厚",
+          "拉伸生成深度10mm的槽",
+          "在背部中心创建直径20.5mm的半球形凹槽",
+          "确保socket_center_point位于凹槽球心"
+        ]
+      }
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_base_01",
+        "part_id": "base_plate",
+        "name": "Base Instance",
+        "instance_role": "Fixed Ground Base",
+        "placement_notes": "固定在原点，底面朝下",
+        "interface_usage": {
+          "faces": [
+            "bottom_face",
+            "top_mount_face"
+          ],
+          "axes": [
+            "central_axis_z"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_column_01",
+        "part_id": "main_column",
+        "name": "Column Instance",
+        "instance_role": "Vertical Support with Yaw/Pitch1",
+        "placement_notes": "安装在底座上，可绕Z轴旋转，顶部连接悬臂",
+        "interface_usage": {
+          "faces": [
+            "bottom_flange_face",
+            "top_joint_side_left",
+            "top_joint_side_right"
+          ],
+          "axes": [
+            "column_main_axis",
+            "pitch1_axis"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_arm_01",
+        "part_id": "adjustable_arm",
+        "name": "Arm Instance",
+        "instance_role": "Linkage with Pitch2",
+        "placement_notes": "连接立柱顶部和夹持头，可绕Pitch1轴俯仰",
+        "interface_usage": {
+          "faces": [
+            "base_side_face",
+            "tip_ball_surface"
+          ],
+          "axes": [
+            "arm_pitch_axis",
+            "arm_longitudinal_axis"
+          ],
+          "points": [
+            "ball_center_point"
+          ]
+        }
+      },
+      {
+        "instance_id": "inst_clamp_01",
+        "part_id": "phone_clamp",
+        "name": "Clamp Instance",
+        "instance_role": "Phone Holder with Roll/Pitch3",
+        "placement_notes": "连接悬臂顶端，可多自由度调节姿态",
+        "interface_usage": {
+          "faces": [
+            "inner_grip_face_back",
+            "inner_grip_face_front",
+            "back_socket_inner_face"
+          ],
+          "axes": [
+            "clamp_roll_axis",
+            "clamp_pitch3_axis"
+          ],
+          "points": [
+            "socket_center_point"
+          ]
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Insert inst_base_01 and Fix to Ground",
+      "Insert inst_column_01",
+      "Mate inst_column_01.bottom_flange_face to inst_base_01.top_mount_face (Coincident)",
+      "Mate inst_column_01.column_main_axis to inst_base_01.central_axis_z (Concentric)",
+      "Insert inst_arm_01",
+      "Mate inst_arm_01.base_side_face to inst_column_01.top_joint_side_left (Coincident/Parallel depending on design, assume side contact)",
+      "Mate inst_arm_01.arm_pitch_axis to inst_column_01.pitch1_axis (Concentric)",
+      "Insert inst_clamp_01",
+      "Mate inst_clamp_01.socket_center_point to inst_arm_01.ball_center_point (Coincident)",
+      "Mate inst_clamp_01.back_socket_inner_face to inst_arm_01.tip_ball_surface (Tangent/Coincident approximation for ball joint)"
+    ],
+    "constraints": [
+      {
+        "source_instance_id": "inst_base_01",
+        "source_part_id": "base_plate",
+        "source_interface": "bottom_face",
+        "target_instance_id": "GROUND",
+        "target_part_id": "GROUND",
+        "target_interface": "XY_Plane",
+        "relation": "coincident",
+        "alignment": "aligned",
+        "offset_mm": 0,
+        "notes": "Fix base to ground"
+      },
+      {
+        "source_instance_id": "inst_column_01",
+        "source_part_id": "main_column",
+        "source_interface": "bottom_flange_face",
+        "target_instance_id": "inst_base_01",
+        "target_part_id": "base_plate",
+        "target_interface": "top_mount_face",
+        "relation": "coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "Column sits on Base"
+      },
+      {
+        "source_instance_id": "inst_column_01",
+        "source_part_id": "main_column",
+        "source_interface": "column_main_axis",
+        "target_instance_id": "inst_base_01",
+        "target_part_id": "base_plate",
+        "target_interface": "central_axis_z",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Yaw rotation axis"
+      },
+      {
+        "source_instance_id": "inst_arm_01",
+        "source_part_id": "adjustable_arm",
+        "source_interface": "arm_pitch_axis",
+        "target_instance_id": "inst_column_01",
+        "target_part_id": "main_column",
+        "target_interface": "pitch1_axis",
+        "relation": "concentric",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Pitch1 rotation axis"
+      },
+      {
+        "source_instance_id": "inst_arm_01",
+        "source_part_id": "adjustable_arm",
+        "source_interface": "base_side_face",
+        "target_instance_id": "inst_column_01",
+        "target_part_id": "main_column",
+        "target_interface": "top_joint_side_left",
+        "relation": "coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "Align arm between column forks"
+      },
+      {
+        "source_instance_id": "inst_clamp_01",
+        "source_part_id": "phone_clamp",
+        "source_interface": "socket_center_point",
+        "target_instance_id": "inst_arm_01",
+        "target_part_id": "adjustable_arm",
+        "target_interface": "ball_center_point",
+        "relation": "coincident",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Ball joint center alignment"
+      },
+      {
+        "source_instance_id": "inst_clamp_01",
+        "source_part_id": "phone_clamp",
+        "source_interface": "back_socket_inner_face",
+        "target_instance_id": "inst_arm_01",
+        "target_part_id": "adjustable_arm",
+        "target_interface": "tip_ball_surface",
+        "relation": "coincident",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "Ball surface contact (approximated as coincident for modeling stability)"
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\assembly\\iPhone17_5DOF_Stand_Assembly.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\logs\\assembly.log"
+    }
+  }
+}

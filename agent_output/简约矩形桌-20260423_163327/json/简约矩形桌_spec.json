@@ -1,0 +1,61 @@
+{
+  "request_type": "part",
+  "part_context": {
+    "name": "简约矩形桌",
+    "summary": "一个由长方体桌面和四根圆柱形桌腿组成的单零件桌子模型。桌面尺寸为1200x600x25mm，桌腿直径40mm，高750mm，位于桌面底部四角内侧50mm处。所有外露锐边添加R2圆角。",
+    "key_requirements": [
+      "主体为单个零件(.SLDPRT)",
+      "桌面：长方体，长1200mm，宽600mm，厚25mm",
+      "桌腿：4根圆柱，直径40mm，高度750mm",
+      "位置关系：桌腿中心距离桌面边缘各50mm，对称分布",
+      "特征：所有外露锐边添加R2mm圆角",
+      "主草图面：XY平面"
+    ],
+    "assumptions": [
+      "单位默认为mm",
+      "桌腿为实心圆柱",
+      "无倒角，无壳化",
+      "交付物包含.SLDPRT文件和Python建模代码"
+    ],
+    "requested_outputs": [
+      ".SLDPRT文件",
+      "Python建模代码"
+    ],
+    "interfaces": []
+  },
+  "part": {
+    "part_id": "简约矩形桌",
+    "name": "简约矩形桌",
+    "function": "一个由长方体桌面和四根圆柱形桌腿组成的单零件桌子模型。桌面尺寸为1200x600x25mm，桌腿直径40mm，高750mm，位于桌面底部四角内侧50mm处。所有外露锐边添加R2圆角。",
+    "shape": "根据需求分析结果由建模智能体细化",
+    "key_dimensions": [
+      "主体为单个零件(.SLDPRT)",
+      "桌面：长方体，长1200mm，宽600mm，厚25mm",
+      "桌腿：4根圆柱，直径40mm，高度750mm",
+      "位置关系：桌腿中心距离桌面边缘各50mm，对称分布",
+      "特征：所有外露锐边添加R2mm圆角",
+      "主草图面：XY平面"
+    ],
+    "material_or_notes": "单位默认为mm; 桌腿为实心圆柱; 无倒角，无壳化; 交付物包含.SLDPRT文件和Python建模代码",
+    "interfaces": {
+      "faces": [],
+      "axes": [],
+      "points": []
+    },
+    "standalone_modeling_instructions": [
+      "主体为单个零件(.SLDPRT)",
+      "桌面：长方体，长1200mm，宽600mm，厚25mm",
+      "桌腿：4根圆柱，直径40mm，高度750mm",
+      "位置关系：桌腿中心距离桌面边缘各50mm，对称分布",
+      "特征：所有外露锐边添加R2mm圆角",
+      "主草图面：XY平面"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\简约矩形桌-20260423_163327\\part",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\简约矩形桌-20260423_163327\\part\\简约矩形桌_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\简约矩形桌-20260423_163327\\part\\简约矩形桌.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\简约矩形桌-20260423_163327\\logs\\简约矩形桌_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\简约矩形桌-20260423_163327\\json\\简约矩形桌_spec.json"
+    }
+  }
+}

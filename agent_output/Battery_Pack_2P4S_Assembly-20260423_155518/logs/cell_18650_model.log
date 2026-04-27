@@ -1,0 +1,23 @@
+----------------------------------------
+Python 成功接收到的新零件名称: cell_18650
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 16:02:27 - 接收到参数，尝试创建并激活文档: cell_18650
+[DEBUG] 16:02:27 - 尝试连接 SolidWorks...
+[DEBUG] 16:02:27 - 成功连接到已运行的实例。
+
+开始建模 18650 电池...
+已创建直径 18.0mm 的圆形草图
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+已拉伸高度 65.0mm
+创建装配接口...
+✅ 成功创建基准轴 [axis_center]
+已创建中心轴: axis_center
+已创建底部参考面: face_bottom_neg
+已创建顶部参考面: face_top_pos
+正在保存零件到: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\cell_18650\cell_18650.SLDPRT ...
+零件已保存至: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\cell_18650\cell_18650.SLDPRT
+零件已成功保存至: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\cell_18650\cell_18650.SLDPRT

@@ -1,0 +1,223 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "ConferenceTable_Assembly",
+    "summary": "生成一个标准矩形会议桌装配体，包含桌面、4条方形管桌腿、2根横梁及8个简化螺丝。桌面尺寸2400x1200x25mm，总高750mm。桌腿位于四角内侧，横梁连接左右桌腿中部。所有连接通过同心和重合配合实现，螺丝忽略螺纹细节。",
+    "global_coordinate_system": {
+      "origin": "桌面几何中心",
+      "x_direction": "沿桌面长边方向 (2400mm)",
+      "y_direction": "沿桌面短边方向 (1200mm)",
+      "z_direction": "垂直向上，指向桌面顶面"
+    },
+    "design_rules": [
+      "单位统一为毫米(mm)，建模时需转换为米(m)",
+      "所有零件基于XY平面草图拉伸或旋转生成",
+      "装配基准以桌面为中心，Z轴向上",
+      "重复零件必须复用Part定义，通过Instance区分位置"
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_screw_fl_top",
+        "part_id": "screw_m6",
+        "name": "左前桌腿顶部螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定左前桌腿与桌面",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_fr_top",
+        "part_id": "screw_m6",
+        "name": "右前桌腿顶部螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定右前桌腿与桌面",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_bl_top",
+        "part_id": "screw_m6",
+        "name": "左后桌腿顶部螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定左后桌腿与桌面",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_br_top",
+        "part_id": "screw_m6",
+        "name": "右后桌腿顶部螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定右后桌腿与桌面",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_fl_beam",
+        "part_id": "screw_m6",
+        "name": "左前桌腿横梁螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定左前桌腿与前横梁",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_fr_beam",
+        "part_id": "screw_m6",
+        "name": "右前桌腿横梁螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定右前桌腿与前横梁",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_bl_beam",
+        "part_id": "screw_m6",
+        "name": "左后桌腿横梁螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定左后桌腿与后横梁",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_screw_br_beam",
+        "part_id": "screw_m6",
+        "name": "右后桌腿横梁螺丝",
+        "instance_role": "紧固件",
+        "placement_notes": "固定右后桌腿与后横梁",
+        "interface_usage": {
+          "faces": [
+            "face_head_bottom"
+          ],
+          "axes": [
+            "axis_shank"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "inst_table_top_1",
+      "inst_leg_fl",
+      "inst_leg_fr",
+      "inst_leg_bl",
+      "inst_leg_br",
+      "inst_beam_front",
+      "inst_beam_back",
+      "inst_screw_fl_top",
+      "inst_screw_fr_top",
+      "inst_screw_bl_top",
+      "inst_screw_br_top",
+      "inst_screw_fl_beam",
+      "inst_screw_fr_beam",
+      "inst_screw_bl_beam",
+      "inst_screw_br_beam"
+    ]
+  },
+  "part": {
+    "part_id": "screw_m6",
+    "name": "M6简化螺钉",
+    "function": "紧固连接",
+    "shape": "圆柱头螺钉，头部直径10mm，高4mm；杆部直径6mm，长20mm",
+    "key_dimensions": [
+      "Head Diameter: 10 mm",
+      "Head Height: 4 mm",
+      "Shank Diameter: 6 mm",
+      "Shank Length: 20 mm"
+    ],
+    "material_or_notes": "钢制，镀锌",
+    "quantity": 8,
+    "instance_ids": [
+      "inst_screw_fl_top",
+      "inst_screw_fr_top",
+      "inst_screw_bl_top",
+      "inst_screw_br_top",
+      "inst_screw_fl_beam",
+      "inst_screw_fr_beam",
+      "inst_screw_bl_beam",
+      "inst_screw_br_beam"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "face_head_bottom",
+          "purpose": "与被连接件表面贴合",
+          "normal_direction_relation": "normal -Z (local)"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_shank",
+          "purpose": "螺钉中心轴线，用于同心配合",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "轴线与安装孔轴线同心",
+      "头部底面与被连接件外表面重合"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\screw_m6",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\screw_m6\\screw_m6_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\screw_m6\\screw_m6.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\logs\\screw_m6_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\json\\screw_m6_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在XY平面绘制直径10mm圆，拉伸4mm形成头部",
+      "在头部顶面绘制直径6mm圆，拉伸20mm形成杆部",
+      "无需螺纹特征"
+    ]
+  }
+}

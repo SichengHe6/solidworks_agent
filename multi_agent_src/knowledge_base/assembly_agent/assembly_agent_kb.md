@@ -43,11 +43,22 @@
 
 推荐标准流程：
 1. 创建装配文档
-2. 按 `assembly_sequence` 插入所有零件
-3. 记录每个零件插入后返回的 `comp_name`
+2. 先建立 `part_id -> model_file` 映射，再按 `assembly.instances` / `assembly_sequence` 插入所有实例
+3. 记录每个实例插入后返回的 `comp_name`
 4. 以基准件为起点（通常是 `GROUND` 对应零件）
 5. 按约束逐条施加平面配合 / 轴配合
 6. 保存装配
+
+### 重复零件的复用规则
+
+如果多个实例引用同一个 `part_id`：
+- 必须复用同一个零件文件路径
+- 通过多次 `add_component(...)` 插入得到多个组件实例
+- 用 `instance_id -> comp_name` 区分这些实例
+
+不要错误地假设：
+- 每个实例都对应一个独立 `.SLDPRT`
+- 约束里只出现 `part_id` 就足够区分重复件
 
 ## 5. 基准件处理原则
 
@@ -73,6 +84,11 @@
 - 使用 `mate_axes(...)`
 - 传入正确轴名称
 - `aligned` 要尽量匹配规划的方向要求
+
+当存在重复件时，约束解析应遵循：
+- 先根据 `source_instance_id` / `target_instance_id` 找到组件实例
+- 再根据 `source_interface` / `target_interface` 找到接口名称
+- `source_part_id` / `target_part_id` 只作为校验和辅助信息
 
 ## 7. 你要特别警惕的点
 
@@ -102,9 +118,9 @@
 
 推荐结构：
 1. 导入封装
-2. 读取装配规划和路径
+2. 读取装配规划、实例列表和路径
 3. 创建装配文档
-4. 插入零件并缓存 `part_id -> comp_name`
+4. 插入零件并缓存 `part_id -> model_file`、`instance_id -> comp_name`
 5. 按 sequence/constraints 执行配合
 6. 保存装配
 7. 对关键失败点做判空/异常处理
@@ -126,6 +142,7 @@
 
 一段好的装配代码应做到：
 - 所有零件都从给定路径成功导入
+- 对重复零件正确复用同一个模型文件并生成多个实例
 - 所有关键接口都按规划完成引用
 - 关键配合顺序清楚
 - 能保存到目标 `.SLDASM`

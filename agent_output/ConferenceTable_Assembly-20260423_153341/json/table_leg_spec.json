@@ -1,0 +1,188 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "ConferenceTable_Assembly",
+    "summary": "生成一个标准矩形会议桌装配体，包含桌面、4条方形管桌腿、2根横梁及8个简化螺丝。桌面尺寸2400x1200x25mm，总高750mm。桌腿位于四角内侧，横梁连接左右桌腿中部。所有连接通过同心和重合配合实现，螺丝忽略螺纹细节。",
+    "global_coordinate_system": {
+      "origin": "桌面几何中心",
+      "x_direction": "沿桌面长边方向 (2400mm)",
+      "y_direction": "沿桌面短边方向 (1200mm)",
+      "z_direction": "垂直向上，指向桌面顶面"
+    },
+    "design_rules": [
+      "单位统一为毫米(mm)，建模时需转换为米(m)",
+      "所有零件基于XY平面草图拉伸或旋转生成",
+      "装配基准以桌面为中心，Z轴向上",
+      "重复零件必须复用Part定义，通过Instance区分位置"
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_leg_fl",
+        "part_id": "table_leg",
+        "name": "左前桌腿",
+        "instance_role": "支撑",
+        "placement_notes": "位于桌面左前角内侧，X负Y正区域",
+        "interface_usage": {
+          "faces": [
+            "face_top",
+            "face_side_inner_x",
+            "face_side_inner_y"
+          ],
+          "axes": [
+            "axis_main",
+            "axis_beam_mount"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_fr",
+        "part_id": "table_leg",
+        "name": "右前桌腿",
+        "instance_role": "支撑",
+        "placement_notes": "位于桌面右前角内侧，X正Y正区域",
+        "interface_usage": {
+          "faces": [
+            "face_top",
+            "face_side_inner_x",
+            "face_side_inner_y"
+          ],
+          "axes": [
+            "axis_main",
+            "axis_beam_mount"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_bl",
+        "part_id": "table_leg",
+        "name": "左后桌腿",
+        "instance_role": "支撑",
+        "placement_notes": "位于桌面左后角内侧，X负Y负区域",
+        "interface_usage": {
+          "faces": [
+            "face_top",
+            "face_side_inner_x",
+            "face_side_inner_y"
+          ],
+          "axes": [
+            "axis_main",
+            "axis_beam_mount"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_br",
+        "part_id": "table_leg",
+        "name": "右后桌腿",
+        "instance_role": "支撑",
+        "placement_notes": "位于桌面右后角内侧，X正Y负区域",
+        "interface_usage": {
+          "faces": [
+            "face_top",
+            "face_side_inner_x",
+            "face_side_inner_y"
+          ],
+          "axes": [
+            "axis_main",
+            "axis_beam_mount"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "inst_table_top_1",
+      "inst_leg_fl",
+      "inst_leg_fr",
+      "inst_leg_bl",
+      "inst_leg_br",
+      "inst_beam_front",
+      "inst_beam_back",
+      "inst_screw_fl_top",
+      "inst_screw_fr_top",
+      "inst_screw_bl_top",
+      "inst_screw_br_top",
+      "inst_screw_fl_beam",
+      "inst_screw_fr_beam",
+      "inst_screw_bl_beam",
+      "inst_screw_br_beam"
+    ]
+  },
+  "part": {
+    "part_id": "table_leg",
+    "name": "方形管桌腿",
+    "function": "支撑桌面，连接横梁",
+    "shape": "空心方管，外截面50x50mm，壁厚3mm，高度725mm",
+    "key_dimensions": [
+      "Outer Width: 50 mm",
+      "Outer Height: 50 mm",
+      "Wall Thickness: 3 mm",
+      "Total Height: 725 mm"
+    ],
+    "material_or_notes": "金属方管，黑色喷涂",
+    "quantity": 4,
+    "instance_ids": [
+      "inst_leg_fl",
+      "inst_leg_fr",
+      "inst_leg_bl",
+      "inst_leg_br"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "face_top",
+          "purpose": "与桌面底面贴合",
+          "normal_direction_relation": "normal +Z (local)"
+        },
+        {
+          "name": "face_bottom",
+          "purpose": "接触地面",
+          "normal_direction_relation": "normal -Z (local)"
+        },
+        {
+          "name": "face_side_inner_x",
+          "purpose": "面向桌子中心的侧面(X方向)",
+          "normal_direction_relation": "normal towards center X"
+        },
+        {
+          "name": "face_side_inner_y",
+          "purpose": "面向桌子中心的侧面(Y方向)",
+          "normal_direction_relation": "normal towards center Y"
+        }
+      ],
+      "axes": [
+        {
+          "name": "axis_main",
+          "purpose": "桌腿中心轴线，用于与桌面安装孔同心",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "axis_beam_mount",
+          "purpose": "侧面横梁安装孔轴线",
+          "direction_relation": "perpendicular to axis_main, located at mid-height (Z=362.5), facing inward"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "顶面与桌面底面重合",
+      "主轴线与桌面安装孔轴线同心",
+      "侧面安装孔轴线与横梁端面孔轴线同心"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_leg",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_leg\\table_leg_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\parts\\table_leg\\table_leg.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\logs\\table_leg_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\ConferenceTable_Assembly-20260423_153341\\json\\table_leg_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在XY平面绘制50x50正方形，向内偏移3mm生成内轮廓",
+      "向+Z方向拉伸725mm",
+      "在侧面中心高度(Z=362.5)处创建直径8mm的通孔，轴线水平指向管内中心"
+    ]
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "request_type": "assembly",
+  "assembly": {
+    "name": "Standard_Rectangular_Desk",
+    "summary": "由1个矩形桌面和4个圆柱形桌腿组成的标准办公桌装配体。桌面尺寸1200x600x25mm，桌腿直径40mm高725mm，桌腿位于桌面四角内侧50mm处，通过面重合和轴同心配合组装。",
+    "workspace": {
+      "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351",
+      "parts_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\parts",
+      "assembly_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\assembly",
+      "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\json",
+      "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\logs",
+      "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\json\\assembly_plan.json"
+    },
+    "global_coordinate_system": {
+      "origin": "桌面几何中心",
+      "x_direction": "沿桌面长边方向 (1200mm)",
+      "y_direction": "沿桌面短边方向 (600mm)",
+      "z_direction": "垂直向上，指向桌面顶面"
+    },
+    "design_rules": [
+      "所有尺寸单位默认为毫米(mm)，建模时需转换为米(m)",
+      "桌腿与桌面仅通过几何配合连接，无紧固件",
+      "桌腿轴线距离桌面边缘均为50mm",
+      "桌面底面为Z= -12.5mm平面 (假设桌面厚度25mm，中心在Z=0)"
+    ],
+    "parts": [
+      {
+        "part_id": "desktop_panel",
+        "name": "Desktop Panel",
+        "function": "提供工作表面并支撑桌腿",
+        "shape": "长方体板件，长1200mm，宽600mm，厚25mm",
+        "key_dimensions": [
+          "Length: 1200 mm",
+          "Width: 600 mm",
+          "Thickness: 25 mm"
+        ],
+        "material_or_notes": "板材，默认直角边缘，无倒角",
+        "quantity": 1,
+        "instance_ids": [
+          "inst_desktop_main"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_bottom",
+              "purpose": "与桌腿顶端面贴合",
+              "normal_direction_relation": "normal -Z (向下)"
+            },
+            {
+              "name": "face_top",
+              "purpose": "工作表面",
+              "normal_direction_relation": "normal +Z (向上)"
+            }
+          ],
+          "axes": [],
+          "points": [
+            {
+              "name": "corner_fl_xp_yp",
+              "purpose": "右前角定位参考点 (X+, Y+)",
+              "location_hint": "Local X=600, Y=300, Z=-12.5"
+            },
+            {
+              "name": "corner_fl_xp_ym",
+              "purpose": "右后角定位参考点 (X+, Y-)",
+              "location_hint": "Local X=600, Y=-300, Z=-12.5"
+            },
+            {
+              "name": "corner_fl_xm_yp",
+              "purpose": "左前角定位参考点 (X-, Y+)",
+              "location_hint": "Local X=-600, Y=300, Z=-12.5"
+            },
+            {
+              "name": "corner_fl_xm_ym",
+              "purpose": "左后角定位参考点 (X-, Y-)",
+              "location_hint": "Local X=-600, Y=-300, Z=-12.5"
+            }
+          ]
+        },
+        "assembly_relation_notes": [
+          "作为基准件固定在全局坐标系原点附近",
+          "底面用于约束桌腿高度"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\parts\\desktop_panel",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\parts\\desktop_panel\\desktop_panel_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\parts\\desktop_panel\\desktop_panel.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\logs\\desktop_panel_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\json\\desktop_panel_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制中心矩形，长1200mm，宽600mm",
+          "向+Z方向拉伸25mm",
+          "确保底面(Z=-12.5)平整用于配合"
+        ]
+      },
+      {
+        "part_id": "cylindrical_leg",
+        "name": "Cylindrical Leg",
+        "function": "支撑桌面",
+        "shape": "圆柱体，直径40mm，高度725mm",
+        "key_dimensions": [
+          "Diameter: 40 mm",
+          "Height: 725 mm"
+        ],
+        "material_or_notes": "金属或塑料，默认直角边缘",
+        "quantity": 4,
+        "instance_ids": [
+          "inst_leg_fl",
+          "inst_leg_fr",
+          "inst_leg_bl",
+          "inst_leg_br"
+        ],
+        "interfaces": {
+          "faces": [
+            {
+              "name": "face_top",
+              "purpose": "与桌面底面贴合",
+              "normal_direction_relation": "normal +Z (沿局部轴向向上)"
+            },
+            {
+              "name": "face_bottom",
+              "purpose": "接触地面",
+              "normal_direction_relation": "normal -Z (沿局部轴向向下)"
+            }
+          ],
+          "axes": [
+            {
+              "name": "axis_center",
+              "purpose": "定位轴线，用于同心配合或位置定义",
+              "direction_relation": "along local Z"
+            }
+          ],
+          "points": []
+        },
+        "assembly_relation_notes": [
+          "4个实例几何完全相同",
+          "通过顶端面与桌面底面重合确定高度",
+          "通过轴线位置确定水平坐标"
+        ],
+        "workspace": {
+          "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\parts\\cylindrical_leg",
+          "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\parts\\cylindrical_leg\\cylindrical_leg_model.py",
+          "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\parts\\cylindrical_leg\\cylindrical_leg.SLDPRT",
+          "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\logs\\cylindrical_leg_model.log",
+          "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\json\\cylindrical_leg_spec.json"
+        },
+        "standalone_modeling_instructions": [
+          "在XY平面绘制直径40mm的圆",
+          "向+Z方向拉伸725mm",
+          "确保顶面和底面平整"
+        ]
+      }
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_desktop_main",
+        "part_id": "desktop_panel",
+        "name": "Main Desktop",
+        "instance_role": "基准件，提供主要工作面",
+        "placement_notes": "固定在装配体中心，底面Z=-12.5mm",
+        "interface_usage": {
+          "faces": [
+            "face_bottom"
+          ],
+          "axes": [],
+          "points": [
+            "corner_fl_xp_yp",
+            "corner_fl_xp_ym",
+            "corner_fl_xm_yp",
+            "corner_fl_xm_ym"
+          ]
+        }
+      },
+      {
+        "instance_id": "inst_leg_fl",
+        "part_id": "cylindrical_leg",
+        "name": "Front Left Leg",
+        "instance_role": "左前支撑腿",
+        "placement_notes": "位于桌面左前角内侧50mm处。X = -600 + 50 = -550mm, Y = 300 - 50 = 250mm",
+        "interface_usage": {
+          "faces": [
+            "face_top"
+          ],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_fr",
+        "part_id": "cylindrical_leg",
+        "name": "Front Right Leg",
+        "instance_role": "右前支撑腿",
+        "placement_notes": "位于桌面右前角内侧50mm处。X = 600 - 50 = 550mm, Y = 300 - 50 = 250mm",
+        "interface_usage": {
+          "faces": [
+            "face_top"
+          ],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_bl",
+        "part_id": "cylindrical_leg",
+        "name": "Back Left Leg",
+        "instance_role": "左后支撑腿",
+        "placement_notes": "位于桌面左后角内侧50mm处。X = -600 + 50 = -550mm, Y = -300 + 50 = -250mm",
+        "interface_usage": {
+          "faces": [
+            "face_top"
+          ],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "inst_leg_br",
+        "part_id": "cylindrical_leg",
+        "name": "Back Right Leg",
+        "instance_role": "右后支撑腿",
+        "placement_notes": "位于桌面右后角内侧50mm处。X = 600 - 50 = 550mm, Y = -300 + 50 = -250mm",
+        "interface_usage": {
+          "faces": [
+            "face_top"
+          ],
+          "axes": [
+            "axis_center"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Insert and fix inst_desktop_main",
+      "Insert inst_leg_fl and constrain to desktop",
+      "Insert inst_leg_fr and constrain to desktop",
+      "Insert inst_leg_bl and constrain to desktop",
+      "Insert inst_leg_br and constrain to desktop"
+    ],
+    "constraints": [
+      {
+        "source_instance_id": "inst_desktop_main",
+        "source_part_id": "desktop_panel",
+        "source_interface": "face_bottom",
+        "target_instance_id": "GROUND",
+        "target_part_id": "GROUND",
+        "target_interface": "XY_Plane_Offset_Z_minus_12.5",
+        "relation": "fix",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "固定桌面，使其底面位于Z=-12.5mm (假设全局原点在桌面中心)"
+      },
+      {
+        "source_instance_id": "inst_leg_fl",
+        "source_part_id": "cylindrical_leg",
+        "source_interface": "face_top",
+        "target_instance_id": "inst_desktop_main",
+        "target_part_id": "desktop_panel",
+        "target_interface": "face_bottom",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "左前腿顶面与桌面底面贴合"
+      },
+      {
+        "source_instance_id": "inst_leg_fl",
+        "source_part_id": "cylindrical_leg",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_desktop_main",
+        "target_part_id": "desktop_panel",
+        "target_interface": "point_ref_fl",
+        "relation": "distance",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "左前腿轴线定位：X=-550, Y=250。由于API限制，此处逻辑上需通过距离约束或虚拟点实现。在实际代码中，可能需先移动实例到近似位置再添加约束，或使用两个距离约束(X距中心550, Y距中心250)。这里简化为概念性约束，实际执行需分解为X/Y距离约束。"
+      },
+      {
+        "source_instance_id": "inst_leg_fr",
+        "source_part_id": "cylindrical_leg",
+        "source_interface": "face_top",
+        "target_instance_id": "inst_desktop_main",
+        "target_part_id": "desktop_panel",
+        "target_interface": "face_bottom",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "右前腿顶面与桌面底面贴合"
+      },
+      {
+        "source_instance_id": "inst_leg_fr",
+        "source_part_id": "cylindrical_leg",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_desktop_main",
+        "target_part_id": "desktop_panel",
+        "target_interface": "point_ref_fr",
+        "relation": "distance",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "右前腿轴线定位：X=550, Y=250"
+      },
+      {
+        "source_instance_id": "inst_leg_bl",
+        "source_part_id": "cylindrical_leg",
+        "source_interface": "face_top",
+        "target_instance_id": "inst_desktop_main",
+        "target_part_id": "desktop_panel",
+        "target_interface": "face_bottom",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "左后腿顶面与桌面底面贴合"
+      },
+      {
+        "source_instance_id": "inst_leg_bl",
+        "source_part_id": "cylindrical_leg",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_desktop_main",
+        "target_part_id": "desktop_panel",
+        "target_interface": "point_ref_bl",
+        "relation": "distance",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "左后腿轴线定位：X=-550, Y=-250"
+      },
+      {
+        "source_instance_id": "inst_leg_br",
+        "source_part_id": "cylindrical_leg",
+        "source_interface": "face_top",
+        "target_instance_id": "inst_desktop_main",
+        "target_part_id": "desktop_panel",
+        "target_interface": "face_bottom",
+        "relation": "face_coincident",
+        "alignment": "opposed",
+        "offset_mm": 0,
+        "notes": "右后腿顶面与桌面底面贴合"
+      },
+      {
+        "source_instance_id": "inst_leg_br",
+        "source_part_id": "cylindrical_leg",
+        "source_interface": "axis_center",
+        "target_instance_id": "inst_desktop_main",
+        "target_part_id": "desktop_panel",
+        "target_interface": "point_ref_br",
+        "relation": "distance",
+        "alignment": "na",
+        "offset_mm": 0,
+        "notes": "右后腿轴线定位：X=550, Y=-250"
+      }
+    ],
+    "assembly_output": {
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\assembly\\assembly_build.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\assembly\\Standard_Rectangular_Desk.SLDASM",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Rectangular_Desk-20260423_164351\\logs\\assembly.log"
+    }
+  }
+}

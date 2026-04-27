@@ -1,0 +1,103 @@
+[LOG] Creating assembly: Battery_Pack_2P4S_Assembly
+----------------------------------------
+Python 成功接收到的新装配名称: 
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 16:07:32 - 接收到参数，尝试创建并激活文档: Battery_Pack_2P4S_Assembly
+[DEBUG] 16:07:32 - 尝试连接 SolidWorks...
+[DEBUG] 16:07:32 - 成功连接到已运行的实例。
+
+[LOG] Inserting Bottom Case...
+成功导入组件: bottom_case-1
+[SUCCESS] Bottom Case inserted as: bottom_case-1
+[LOG] Inserting Cell Holder...
+成功导入组件: cell_holder-1
+[SUCCESS] Cell Holder inserted as: cell_holder-1
+[LOG] Inserting inst_cell_1...
+成功导入组件: cell_18650-1
+[SUCCESS] inst_cell_1 inserted as: cell_18650-1
+[LOG] Inserting inst_cell_2...
+成功导入组件: cell_18650-2
+[SUCCESS] inst_cell_2 inserted as: cell_18650-2
+[LOG] Inserting inst_cell_3...
+成功导入组件: cell_18650-3
+[SUCCESS] inst_cell_3 inserted as: cell_18650-3
+[LOG] Inserting inst_cell_4...
+成功导入组件: cell_18650-4
+[SUCCESS] inst_cell_4 inserted as: cell_18650-4
+[LOG] Inserting inst_cell_5...
+成功导入组件: cell_18650-5
+[SUCCESS] inst_cell_5 inserted as: cell_18650-5
+[LOG] Inserting inst_cell_6...
+成功导入组件: cell_18650-6
+[SUCCESS] inst_cell_6 inserted as: cell_18650-6
+[LOG] Inserting inst_cell_7...
+成功导入组件: cell_18650-7
+[SUCCESS] inst_cell_7 inserted as: cell_18650-7
+[LOG] Inserting inst_cell_8...
+成功导入组件: cell_18650-8
+[SUCCESS] inst_cell_8 inserted as: cell_18650-8
+[LOG] Inserting Top Case...
+成功导入组件: top_case-1
+[SUCCESS] Top Case inserted as: top_case-1
+[LOG] Inserting inst_screw_1...
+成功导入组件: screw_m3-1
+[SUCCESS] inst_screw_1 inserted as: screw_m3-1
+[LOG] Inserting inst_screw_2...
+成功导入组件: screw_m3-2
+[SUCCESS] inst_screw_2 inserted as: screw_m3-2
+[LOG] Inserting inst_screw_3...
+成功导入组件: screw_m3-3
+[SUCCESS] inst_screw_3 inserted as: screw_m3-3
+[LOG] Inserting inst_screw_4...
+成功导入组件: screw_m3-4
+[SUCCESS] inst_screw_4 inserted as: screw_m3-4
+[LOG] Bottom Case assumed fixed at origin.
+✅ 平面配合 face_bottom_support-face_inner_bottom 完成 (cell_holder-1 <-> bottom_case-1)
+[MATE] Face mate: cell_holder-1(face_bottom_support) <-> bottom_case-1(face_inner_bottom)
+✅ 轴配合完成 (axis_center <-> axis_cell_1_1)
+[MATE] Axis mate: cell_18650-1(axis_center) <-> cell_holder-1(axis_cell_1_1)
+✅ 轴配合完成 (axis_center <-> axis_cell_1_2)
+[MATE] Axis mate: cell_18650-2(axis_center) <-> cell_holder-1(axis_cell_1_2)
+✅ 轴配合完成 (axis_center <-> axis_cell_1_3)
+[MATE] Axis mate: cell_18650-3(axis_center) <-> cell_holder-1(axis_cell_1_3)
+✅ 轴配合完成 (axis_center <-> axis_cell_1_4)
+[MATE] Axis mate: cell_18650-4(axis_center) <-> cell_holder-1(axis_cell_1_4)
+✅ 轴配合完成 (axis_center <-> axis_cell_2_1)
+[MATE] Axis mate: cell_18650-5(axis_center) <-> cell_holder-1(axis_cell_2_1)
+✅ 轴配合完成 (axis_center <-> axis_cell_2_2)
+[MATE] Axis mate: cell_18650-6(axis_center) <-> cell_holder-1(axis_cell_2_2)
+✅ 轴配合完成 (axis_center <-> axis_cell_2_3)
+[MATE] Axis mate: cell_18650-7(axis_center) <-> cell_holder-1(axis_cell_2_3)
+✅ 轴配合完成 (axis_center <-> axis_cell_2_4)
+[MATE] Axis mate: cell_18650-8(axis_center) <-> cell_holder-1(axis_cell_2_4)
+✅ 平面配合 face_bottom_mating-face_top_inner 完成 (top_case-1 <-> bottom_case-1)
+[MATE] Face mate: top_case-1(face_bottom_mating) <-> bottom_case-1(face_top_inner)
+✅ 轴配合完成 (axis_screw_hole_1 <-> axis_screw_post_1)
+[MATE] Axis mate: top_case-1(axis_screw_hole_1) <-> bottom_case-1(axis_screw_post_1)
+✅ 轴配合完成 (axis_screw_hole_2 <-> axis_screw_post_2)
+[MATE] Axis mate: top_case-1(axis_screw_hole_2) <-> bottom_case-1(axis_screw_post_2)
+✅ 轴配合完成 (axis_screw_hole_3 <-> axis_screw_post_3)
+[MATE] Axis mate: top_case-1(axis_screw_hole_3) <-> bottom_case-1(axis_screw_post_3)
+✅ 轴配合完成 (axis_screw_hole_4 <-> axis_screw_post_4)
+[MATE] Axis mate: top_case-1(axis_screw_hole_4) <-> bottom_case-1(axis_screw_post_4)
+✅ 轴配合完成 (axis_shank <-> axis_screw_post_1)
+[MATE] Axis mate: screw_m3-1(axis_shank) <-> bottom_case-1(axis_screw_post_1)
+✅ 平面配合 face_head_bottom-face_top_outer 完成 (screw_m3-1 <-> top_case-1)
+[MATE] Face mate: screw_m3-1(face_head_bottom) <-> top_case-1(face_top_outer)
+✅ 轴配合完成 (axis_shank <-> axis_screw_post_2)
+[MATE] Axis mate: screw_m3-2(axis_shank) <-> bottom_case-1(axis_screw_post_2)
+✅ 平面配合 face_head_bottom-face_top_outer 完成 (screw_m3-2 <-> top_case-1)
+[MATE] Face mate: screw_m3-2(face_head_bottom) <-> top_case-1(face_top_outer)
+✅ 轴配合完成 (axis_shank <-> axis_screw_post_3)
+[MATE] Axis mate: screw_m3-3(axis_shank) <-> bottom_case-1(axis_screw_post_3)
+✅ 平面配合 face_head_bottom-face_top_outer 完成 (screw_m3-3 <-> top_case-1)
+[MATE] Face mate: screw_m3-3(face_head_bottom) <-> top_case-1(face_top_outer)
+✅ 轴配合完成 (axis_shank <-> axis_screw_post_4)
+[MATE] Axis mate: screw_m3-4(axis_shank) <-> bottom_case-1(axis_screw_post_4)
+✅ 平面配合 face_head_bottom-face_top_outer 完成 (screw_m3-4 <-> top_case-1)
+[MATE] Face mate: screw_m3-4(face_head_bottom) <-> top_case-1(face_top_outer)
+[LOG] Saving assembly to: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\assembly\Battery_Pack_2P4S_Assembly.SLDASM
+Assembly save failed, code: True
+[SUCCESS] Assembly saved successfully.

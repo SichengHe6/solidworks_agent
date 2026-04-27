@@ -1,0 +1,105 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "iPhone17_5DOF_Stand_Assembly",
+    "summary": "一个适用于iPhone 17的5自由度手机支架装配体，由底座、主立柱、悬臂、夹持头组成，实现水平旋转、两级俯仰、左右倾斜及前后倾斜。",
+    "global_coordinate_system": {
+      "origin": "Base center bottom",
+      "x_direction": "Forward (towards user)",
+      "y_direction": "Left (relative to forward)",
+      "z_direction": "Up (vertical)"
+    },
+    "design_rules": [
+      "所有尺寸单位为mm，建模时需转换为m",
+      "活动关节仅定义几何配合接口，不包含物理阻尼或锁定特征",
+      "优先使用同心轴和平面重合进行装配约束",
+      "零件建模应基于标准基准面（XY, XZ, YZ）进行拉伸或旋转"
+    ],
+    "instances": [
+      {
+        "instance_id": "inst_base_01",
+        "part_id": "base_plate",
+        "name": "Base Instance",
+        "instance_role": "Fixed Ground Base",
+        "placement_notes": "固定在原点，底面朝下",
+        "interface_usage": {
+          "faces": [
+            "bottom_face",
+            "top_mount_face"
+          ],
+          "axes": [
+            "central_axis_z"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "Insert inst_base_01 and Fix to Ground",
+      "Insert inst_column_01",
+      "Mate inst_column_01.bottom_flange_face to inst_base_01.top_mount_face (Coincident)",
+      "Mate inst_column_01.column_main_axis to inst_base_01.central_axis_z (Concentric)",
+      "Insert inst_arm_01",
+      "Mate inst_arm_01.base_side_face to inst_column_01.top_joint_side_left (Coincident/Parallel depending on design, assume side contact)",
+      "Mate inst_arm_01.arm_pitch_axis to inst_column_01.pitch1_axis (Concentric)",
+      "Insert inst_clamp_01",
+      "Mate inst_clamp_01.socket_center_point to inst_arm_01.ball_center_point (Coincident)",
+      "Mate inst_clamp_01.back_socket_inner_face to inst_arm_01.tip_ball_surface (Tangent/Coincident approximation for ball joint)"
+    ]
+  },
+  "part": {
+    "part_id": "base_plate",
+    "name": "Base Plate",
+    "function": "提供稳定支撑并作为水平旋转(Yaw)的基座",
+    "shape": "圆柱形底座，直径100mm，高度20mm。顶部中心有凸台用于安装立柱，底部平整。",
+    "key_dimensions": [
+      "Diameter: 100mm",
+      "Height: 20mm",
+      "Top Boss Diameter: 30mm",
+      "Top Boss Height: 10mm"
+    ],
+    "material_or_notes": "通用塑料或金属，底部可加防滑垫假设",
+    "quantity": 1,
+    "instance_ids": [
+      "inst_base_01"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "bottom_face",
+          "purpose": "放置于桌面，固定参考",
+          "normal_direction_relation": "normal -Z"
+        },
+        {
+          "name": "top_mount_face",
+          "purpose": "与立柱底部配合",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "central_axis_z",
+          "purpose": "立柱旋转中心轴",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "作为装配基准件(GROUND)，固定不动",
+      "通过central_axis_z与立柱实现同心配合"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\base_plate",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\base_plate\\base_plate_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\parts\\base_plate\\base_plate.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\logs\\base_plate_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\iPhone17_5DOF_Stand_Assembly-20260424_171652\\json\\base_plate_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在XY平面绘制直径100mm圆，向上拉伸20mm生成主体",
+      "在顶面中心绘制直径30mm圆，向上拉伸10mm生成凸台",
+      "确保central_axis_z穿过圆心且垂直于底面"
+    ]
+  }
+}

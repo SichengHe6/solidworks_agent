@@ -1,0 +1,51 @@
+----------------------------------------
+Python 成功接收到的新零件名称: Top Case
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 16:01:06 - 接收到参数，尝试创建并激活文档: Top Case
+[DEBUG] 16:01:06 - 尝试连接 SolidWorks...
+[DEBUG] 16:01:06 - 成功连接到已运行的实例。
+
+Starting modeling for Top Case...
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+Base body extruded.
+
+--- 开始动态旋转扫描选择 (0, 0, 0) ---
+壳化成功
+Shell operation completed. Top face kept, bottom opened.
+检测到当前有未退出的草图，正在自动退出以继续操作...
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除失败
+Wire window cut completed.
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除失败
+Screw holes drilled.
+正在尝试选中 4 条边...
+
+--- 开始动态旋转扫描选择 (0.07, 0.0375, 0.0175) ---
+
+--- 开始动态旋转扫描选择 (-0.07, 0.0375, 0.0175) ---
+
+--- 开始动态旋转扫描选择 (-0.07, -0.0375, 0.0175) ---
+[Debug] 动态扫描 1/12 ...
+[Debug] 动态扫描 2/12 ...
+[Success] 在第 2 次旋转后选中目标！
+
+--- 开始动态旋转扫描选择 (0.07, -0.0375, 0.0175) ---
+倒角成功，半径: 0.002
+External vertical edges filleted.
+✅ 成功创建基准轴 [axis_screw_hole_1]
+✅ 成功创建基准轴 [axis_screw_hole_2]
+✅ 成功创建基准轴 [axis_screw_hole_3]
+✅ 成功创建基准轴 [axis_screw_hole_4]
+Interfaces created.
+正在保存零件到: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\top_case\top_case.SLDPRT ...
+零件已保存至: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\top_case\top_case.SLDPRT
+Model saved successfully to D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\top_case\top_case.SLDPRT

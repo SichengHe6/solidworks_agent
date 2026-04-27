@@ -1,0 +1,35 @@
+----------------------------------------
+Python 成功接收到的新零件名称: Cell_Holder
+----------------------------------------
+
+[C# 调试日志]:
+[DEBUG] 16:01:56 - 接收到参数，尝试创建并激活文档: Cell_Holder
+[DEBUG] 16:01:56 - 尝试连接 SolidWorks...
+[DEBUG] 16:01:56 - 成功连接到已运行的实例。
+
+开始建模: Cell_Holder
+步骤 1: 创建主体基座
+矩形对象信息: (<COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>, <COMObject CreateCenterRectangle>)
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸成功
+主体基座创建完成
+步骤 2: 创建电池孔切除
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择成功，准备拉伸
+拉伸切除成功
+电池孔切除完成
+步骤 3: 创建装配接口
+✅ 成功创建基准轴 [axis_cell_1_1]
+✅ 成功创建基准轴 [axis_cell_1_2]
+✅ 成功创建基准轴 [axis_cell_1_3]
+✅ 成功创建基准轴 [axis_cell_1_4]
+✅ 成功创建基准轴 [axis_cell_2_1]
+✅ 成功创建基准轴 [axis_cell_2_2]
+✅ 成功创建基准轴 [axis_cell_2_3]
+✅ 成功创建基准轴 [axis_cell_2_4]
+所有装配接口创建完成
+正在保存至: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\cell_holder\cell_holder.SLDPRT
+正在保存零件到: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\cell_holder\cell_holder.SLDPRT ...
+零件已保存至: D:\a_src\python\sw_agent\agent_output\Battery_Pack_2P4S_Assembly-20260423_155518\parts\cell_holder\cell_holder.SLDPRT
+零件建模与保存成功。

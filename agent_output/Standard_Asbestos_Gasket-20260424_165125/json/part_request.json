@@ -1,0 +1,66 @@
+{
+  "request_type": "part",
+  "name": "Standard_Asbestos_Gasket",
+  "summary": "创建一个标准的圆形石棉垫片零件，外径100mm，内径50mm，厚度2mm，无螺栓孔，边缘直角。",
+  "key_requirements": [
+    "主体为环形圆柱体",
+    "外径: 100 mm",
+    "内径: 50 mm",
+    "厚度: 2 mm",
+    "无倒角/圆角",
+    "无螺栓孔"
+  ],
+  "assumptions": [
+    "单位默认为 mm",
+    "主草图面为 XY 平面",
+    "拉伸方向沿 Z 轴正向",
+    "材料属性暂不指定，仅几何建模"
+  ],
+  "requested_outputs": [
+    ".SLDPRT 文件",
+    "Python 建模代码"
+  ],
+  "interfaces": [],
+  "workspace": {
+    "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Asbestos_Gasket-20260424_165125",
+    "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Asbestos_Gasket-20260424_165125\\part",
+    "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Asbestos_Gasket-20260424_165125\\json",
+    "logs_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Asbestos_Gasket-20260424_165125\\logs",
+    "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Asbestos_Gasket-20260424_165125\\json\\part_request.json"
+  },
+  "part": {
+    "part_id": "Standard_Asbestos_Gasket",
+    "name": "Standard_Asbestos_Gasket",
+    "function": "创建一个标准的圆形石棉垫片零件，外径100mm，内径50mm，厚度2mm，无螺栓孔，边缘直角。",
+    "shape": "根据需求分析结果由建模智能体细化",
+    "key_dimensions": [
+      "主体为环形圆柱体",
+      "外径: 100 mm",
+      "内径: 50 mm",
+      "厚度: 2 mm",
+      "无倒角/圆角",
+      "无螺栓孔"
+    ],
+    "material_or_notes": "单位默认为 mm; 主草图面为 XY 平面; 拉伸方向沿 Z 轴正向; 材料属性暂不指定，仅几何建模",
+    "interfaces": {
+      "faces": [],
+      "axes": [],
+      "points": []
+    },
+    "standalone_modeling_instructions": [
+      "主体为环形圆柱体",
+      "外径: 100 mm",
+      "内径: 50 mm",
+      "厚度: 2 mm",
+      "无倒角/圆角",
+      "无螺栓孔"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Asbestos_Gasket-20260424_165125\\part",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Asbestos_Gasket-20260424_165125\\part\\Standard_Asbestos_Gasket_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Asbestos_Gasket-20260424_165125\\part\\Standard_Asbestos_Gasket.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Asbestos_Gasket-20260424_165125\\logs\\Standard_Asbestos_Gasket_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Asbestos_Gasket-20260424_165125\\json\\Standard_Asbestos_Gasket_spec.json"
+    }
+  }
+}

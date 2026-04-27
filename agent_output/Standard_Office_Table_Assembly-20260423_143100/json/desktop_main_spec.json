@@ -1,0 +1,99 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Standard_Office_Table_Assembly",
+    "summary": "设计一个包含桌面、4根圆形桌腿和8个L型角码的办公桌装配体。桌面为矩形板，边缘R5圆角；桌腿为圆柱体，通过角码连接；使用L型角码将桌腿固定在桌面底部四角内侧。",
+    "global_coordinate_system": {
+      "origin": "桌面几何中心",
+      "x_direction": "沿桌面长边方向 (1200mm)",
+      "y_direction": "沿桌面短边方向 (600mm)",
+      "z_direction": "垂直向上，指向桌面顶面"
+    },
+    "design_rules": [
+      "所有尺寸单位默认为毫米(mm)，建模时需转换为米(m)",
+      "桌面底面为Z=0平面（局部坐标系），全局Z轴向上",
+      "桌腿位于桌面四角内侧，距离边缘建议预留20mm间隙",
+      "角码对称分布在每根桌腿的两侧，确保稳定性",
+      "安装孔直径统一为6mm，用于M5或M6螺丝固定"
+    ],
+    "assembly_sequence": [
+      "Insert desktop_main and Fix it to GROUND",
+      "Insert 4 instances of leg_cylindrical",
+      "Insert 8 instances of bracket_l_shape",
+      "Mate leg_cylindrical_1 central_axis to desktop position (X=580, Y=280) roughly",
+      "Mate bracket_l_shape_1 horizontal_bottom_face to desktop_main bottom_face",
+      "Mate bracket_l_shape_1 hole_axis_horizontal to desktop_main mount_hole_axis_fl_xp_yp",
+      "Mate bracket_l_shape_1 vertical_inner_face to leg_cylindrical_1 side_face_mount_1",
+      "Mate bracket_l_shape_1 hole_axis_vertical to leg_cylindrical_1 mount_hole_axis_1",
+      "Repeat for remaining legs and brackets with appropriate coordinate transformations"
+    ]
+  },
+  "part": {
+    "part_id": "desktop_main",
+    "name": "Desktop Panel",
+    "function": "提供工作表面并作为主要支撑基准",
+    "shape": "矩形平板，长1200mm，宽600mm，厚25mm。四个边角进行R5mm圆角处理。",
+    "key_dimensions": [
+      "Length: 1200 mm",
+      "Width: 600 mm",
+      "Thickness: 25 mm",
+      "Corner Radius: 5 mm"
+    ],
+    "material_or_notes": "木材/板材，表面光滑",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "bottom_face",
+          "purpose": "与角码水平臂贴合的安装基准面",
+          "normal_direction_relation": "normal -Z (向下)"
+        },
+        {
+          "name": "top_face",
+          "purpose": "工作表面",
+          "normal_direction_relation": "normal +Z (向上)"
+        }
+      ],
+      "axes": [
+        {
+          "name": "mount_hole_axis_fl_xp_yp",
+          "purpose": "右前角安装孔轴线",
+          "direction_relation": "along local Z, located at X=+580, Y=+280 relative to center"
+        },
+        {
+          "name": "mount_hole_axis_fl_xp_ym",
+          "purpose": "右后角安装孔轴线",
+          "direction_relation": "along local Z, located at X=+580, Y=-280 relative to center"
+        },
+        {
+          "name": "mount_hole_axis_bl_xm_yp",
+          "purpose": "左前角安装孔轴线",
+          "direction_relation": "along local Z, located at X=-580, Y=+280 relative to center"
+        },
+        {
+          "name": "mount_hole_axis_bl_xm_ym",
+          "purpose": "左后角安装孔轴线",
+          "direction_relation": "along local Z, located at X=-580, Y=-280 relative to center"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "作为装配基准件(GROUND)，固定不动",
+      "底部四个角各分布2个安装孔位，共8个孔位对应8个角码"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\desktop_main",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\desktop_main\\desktop_main_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\parts\\desktop_main\\desktop_main.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\logs\\desktop_main_model.log",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Standard_Office_Table_Assembly-20260423_143100\\json\\desktop_main_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "在XY平面绘制1200x600矩形，中心在原点",
+      "对四个角进行R5圆角",
+      "向-Z方向拉伸25mm形成实体",
+      "在底面(Z=-25)创建草图，定位8个直径6mm的通孔圆心：X=±580, Y=±280",
+      "执行切除拉伸生成通孔"
+    ]
+  }
+}
