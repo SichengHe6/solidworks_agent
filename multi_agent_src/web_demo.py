@@ -33,10 +33,25 @@ class DemoConversationSession:
 
     def iter_turn_events(self, user_message: str):
         if self.stage == "requirement":
-            yield {"type": "message_start", "role": "agent", "agent_name": "RequirementAgent"}
+            if self.orchestrator.can_handle_followup_modification(user_message):
+                self.stage = "executing"
+                yield {
+                    "type": "status",
+                    "message": "检测到这是基于当前零件的小幅修改，将复用上一轮工作目录并直接进入零件修改智能体。",
+                }
+                yield from self._run_followup_modification(user_message)
+                self.stage = "requirement"
+                yield {
+                    "type": "status",
+                    "message": "本轮修改流程已完成，可以继续输入新需求或继续修改当前模型。",
+                }
+                return
+
+            message_id = uuid4().hex
+            yield {"type": "message_start", "role": "agent", "agent_name": "RequirementAgent", "message_id": message_id}
             for chunk in self.orchestrator.requirement_agent.stream_chat(user_message):
-                yield {"type": "delta", "content": chunk}
-            yield {"type": "message_end"}
+                yield {"type": "delta", "content": chunk, "message_id": message_id}
+            yield {"type": "message_end", "message_id": message_id}
 
             latest_reply = self.orchestrator.requirement_agent.history[-1]["content"]
             if "[CONFIRMED]" not in latest_reply:
@@ -53,7 +68,11 @@ class DemoConversationSession:
 
             self.stage = "executing"
             yield from self._run_pipeline(requirement_payload)
-            self.stage = "finished"
+            self.stage = "requirement"
+            yield {
+                "type": "status",
+                "message": "本轮自动流程已完成，可以继续输入新需求或补充修改内容，系统会重新判断需要调用的智能体。",
+            }
             return
 
         if self.stage == "executing":
@@ -64,9 +83,10 @@ class DemoConversationSession:
             return
 
         if self.stage == "finished":
+            self.stage = "requirement"
             yield {
                 "type": "status",
-                "message": "当前会话的自动流程已完成。如需重新开始，请刷新页面开启新会话。",
+                "message": "当前会话已回到需求判断阶段，请继续输入需求。",
             }
 
     def _run_pipeline(self, requirement_payload: dict):
@@ -75,6 +95,27 @@ class DemoConversationSession:
         def worker():
             try:
                 self.orchestrator.process_confirmed_requirement(requirement_payload)
+            except Exception as exc:
+                self.push_event({"type": "error", "error": str(exc)})
+            finally:
+                self.push_event(sentinel)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+        while True:
+            event = self.event_queue.get()
+            if event is sentinel or event.get("type") == "_pipeline_done":
+                break
+            yield event
+
+    def _run_followup_modification(self, user_message: str):
+        sentinel = {"type": "_pipeline_done"}
+
+        def worker():
+            try:
+                handled = self.orchestrator.process_followup_modification(user_message)
+                if not handled:
+                    self.push_event({"type": "status", "message": "未找到可复用的当前零件，将回到需求分析。"})
             except Exception as exc:
                 self.push_event({"type": "error", "error": str(exc)})
             finally:
