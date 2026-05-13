@@ -1,0 +1,5 @@
+{
+  "pass": false,
+  "failure_type": "code_implementation_error",
+  "feedback": "执行日志显示‘草图选择失败，无法拉伸’，且截图证实齿轮中心孔未生成。请在 extrude_cut 之前显式调用 sgear.select_object(sketch_bore) 以确保草图被选中，并检查模板中 XY 平面是否被其他几何体遮挡或名称不匹配。"
+}

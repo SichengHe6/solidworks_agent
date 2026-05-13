@@ -1,0 +1,64 @@
+===== Clear SolidWorks =====
+
+returncode=0
+STDOUT:
+[pysw] 已获得 SOLIDWORKS 跨进程任务锁: C:\Users\12617\AppData\Local\Temp\pysw_solidworks_task.lock
+[pysw] 当前进程开始执行 SW 任务前，自动关闭所有已打开文档
+已关闭当前 SOLIDWORKS 会话中的所有文档
+SolidWorks initialized with close_before_task=True
+[pysw] 已释放 SOLIDWORKS 跨进程任务锁
+STDERR:
+(empty)
+
+===== Execute Script =====
+
+returncode=1
+STDOUT:
+[pysw] 已获得 SOLIDWORKS 跨进程任务锁: C:\Users\12617\AppData\Local\Temp\pysw_solidworks_task.lock
+[pysw] 当前进程开始执行 SW 任务前，自动关闭所有已打开文档
+已关闭当前 SOLIDWORKS 会话中的所有文档
+正在从标准件物化太阳轮: D:\a_src\python\sw_agent\standard_swpart\gear\spur_gear.SLDPRT
+[Warn] 目标文件已存在，将覆盖: D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\code\sun_gear.SLDPRT
+----------------------------------------
+Python 成功复制标准零件到当前工作目录: D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\code\sun_gear.SLDPRT
+----------------------------------------
+正在设置齿轮主动参数: M=2, Z=18, B=10mm
+全局变量修改成功: M = 2
+全局变量修改成功: Z = 18
+全局变量修改成功: B = 10
+正在创建中心通孔: 直径 12mm
+创建草图成功: Sketch1
+[pysw] 已释放 SOLIDWORKS 跨进程任务锁
+STDERR:
+Traceback (most recent call last):
+  File "D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\code\latest_code.py", line 50, in <module>
+    sgear_doc.Extension.SelectByID2(sketch_name, "SKETCH", 0, 0, 0, False, 0, None, 0)
+  File "<COMObject <unknown>>", line 2, in SelectByID2
+pywintypes.com_error: (-2147352571, '类型不匹配。', None, 8)
+
+===== Capture Screenshots =====
+
+returncode=0
+STDOUT:
+[pysw] 已获得 SOLIDWORKS 跨进程任务锁: C:\Users\12617\AppData\Local\Temp\pysw_solidworks_task.lock
+SolidWorks initialized with close_before_task=False
+开始截取当前模型视图，输出目录: D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\execution\screenshots
+[OK] 已保存 front: D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\execution\screenshots\sun_gear_attempt_5_front.png
+[OK] 已保存 top: D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\execution\screenshots\sun_gear_attempt_5_top.png
+[OK] 已保存 right: D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\execution\screenshots\sun_gear_attempt_5_right.png
+[OK] 已保存 isometric: D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\execution\screenshots\sun_gear_attempt_5_isometric.png
+===== Screenshot Result =====
+front
+top
+right
+isometric
+[pysw] 已释放 SOLIDWORKS 跨进程任务锁
+STDERR:
+(empty)
+
+===== Screenshot Files =====
+
+D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\execution\screenshots\sun_gear_attempt_5_front.png
+D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\execution\screenshots\sun_gear_attempt_5_isometric.png
+D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\execution\screenshots\sun_gear_attempt_5_right.png
+D:\a_src\python\sw_agent\agent_output\planetary_gearbox-20260512_170510\parts\sun_gear\part_output\execution\screenshots\sun_gear_attempt_5_top.png

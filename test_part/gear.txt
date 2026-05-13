@@ -1,0 +1,25 @@
+"R_z"*cos(t) - "A"*cos("Z_p"*t) - "R_rp"*(cos(t) - "K"*cos("Z_p"*t))/sqrt("C1" - "C2"*cos("Z_b"*t))
+"R_z"*sin(t) - "A"*sin("Z_p"*t) - "R_rp"*(sin(t) - "K"*sin("Z_p"*t))/sqrt("C1" - "C2"*cos("Z_b"*t))
+
+1. spur_gear                 直齿圆柱齿轮
+2. timing_pulley             同步带轮
+3. sprocket                  链轮
+4. deep_groove_ball_bearing  深沟球轴承
+5. compression_spring        压缩弹簧
+6. cam_profile               凸轮
+7. impeller_simplified       简化叶轮
+8. splined_shaft_or_hub      花键轴/花键轮毂
+9. helical_groove_shaft      螺旋槽轴
+10. helical_gear_simplified  简化斜齿轮
+
+
+1. deep_groove_ball_bearing      深沟球轴承
+2. compression_spring            压缩弹簧
+3. cam_profile                   盘形凸轮
+4. impeller_simplified           简化叶轮
+5. splined_shaft_or_hub          花键轴 / 花键轮毂
+6. helical_groove_shaft          螺旋槽轴
+7. ball_screw_simplified         简化滚珠丝杠
+8. universal_joint_simplified    简化万向节
+9. linear_guide_block            直线导轨滑块
+10. flexible_coupling_simplified 简化弹性联轴器

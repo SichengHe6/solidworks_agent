@@ -1,0 +1,25 @@
+{
+  "reviews": [
+    {
+      "scope": "requirement",
+      "context": {
+        "request_type": "part"
+      },
+      "review": {
+        "pass": true,
+        "severity": "ok",
+        "feedback": "所有尺寸计算正确，零件几何合理，接口定义清晰。直接可建模。",
+        "comments_for_next_agent": [
+          "拉伸切除深度建议使用“完全贯穿”选项，确保通孔贯穿整个齿宽。",
+          "接口命名需准确：front_face 应为齿宽正侧端面，back_face 为对侧端面，bore_cylindrical_face 是孔内圆柱面，gear_mid_plane 为齿宽中间平面，shaft_axis 为齿轮旋转轴线（即孔轴线）。",
+          "默认坐标系建议 Z 轴为轴线，齿轮中面位于 Z=0，前端面 Z=+5，后端面 Z=-5。"
+        ]
+      },
+      "comments_for_next_agent": [
+        "拉伸切除深度建议使用“完全贯穿”选项，确保通孔贯穿整个齿宽。",
+        "接口命名需准确：front_face 应为齿宽正侧端面，back_face 为对侧端面，bore_cylindrical_face 是孔内圆柱面，gear_mid_plane 为齿宽中间平面，shaft_axis 为齿轮旋转轴线（即孔轴线）。",
+        "默认坐标系建议 Z 轴为轴线，齿轮中面位于 Z=0，前端面 Z=+5，后端面 Z=-5。"
+      ]
+    }
+  ]
+}

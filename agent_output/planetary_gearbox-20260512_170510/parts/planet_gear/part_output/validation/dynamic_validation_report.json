@@ -1,0 +1,5 @@
+{
+  "pass": false,
+  "failure_type": "code_implementation_error",
+  "feedback": "执行日志显示‘草图选择失败，无法拉伸’，且截图证实齿轮中心仍为实心，未成功切除直径10mm的通孔。请在执行extrude_cut前，确保显式选中草图对象，或在pysw封装函数中检查草图激活与选择逻辑。"
+}

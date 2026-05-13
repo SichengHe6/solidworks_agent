@@ -1,0 +1,5 @@
+{
+  "pass": true,
+  "failure_type": "unknown",
+  "feedback": "代码针对此前多次出现的“草图选择失败”问题进行了深度修复，增加了 ClearSelection2、显式退出草图模式以及通过 SelectByID2 重新选中草图的逻辑，这极大提高了特征生成的成功率。建模参数与装配接口均符合规划要求。"
+}

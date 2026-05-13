@@ -1,0 +1,66 @@
+{
+  "references": [
+    {
+      "id": "part_modeling_workflow",
+      "path": "references/part_modeling_workflow.md",
+      "tags": ["core", "part_modeling", "modeling_plan"]
+    },
+    {
+      "id": "solidworks_part_api_rules",
+      "path": "references/solidworks_part_api_rules.md",
+      "tags": ["core", "solidworks_api", "code_generation"]
+    },
+    {
+      "id": "static_validation_rules",
+      "path": "references/static_validation_rules.md",
+      "tags": ["validation", "static_check", "requirement_consistency"]
+    },
+    {
+      "id": "dynamic_execution_check_rules",
+      "path": "references/dynamic_execution_check_rules.md",
+      "tags": ["execution", "screenshot", "dynamic_check"]
+    },
+    {
+      "id": "repair_policy",
+      "path": "references/repair_policy.md",
+      "tags": ["repair", "failure", "local_edit"]
+    },
+    {
+      "id": "sidecar_schema",
+      "path": "references/sidecar_schema.md",
+      "tags": ["sidecar", "metadata", "interfaces"]
+    },
+    {
+      "id": "gear_standard_part_workflow",
+      "path": "references/gear_standard_part_workflow.md",
+      "tags": ["gear", "spur_gear", "standard_part", "asset_backed", "parameters", "secondary_edit", "interfaces"]
+    },
+    {
+      "id": "solidworks_part_api_reference",
+      "path": "references/solidworks_part_api_reference.md",
+      "tags": ["core", "solidworks_api", "api_reference", "code_generation", "local_edit"]
+    },
+    {
+      "id": "part_units_and_modeling_patterns",
+      "path": "references/part_units_and_modeling_patterns.md",
+      "tags": ["core", "units", "part_modeling", "modeling_plan", "code_generation"]
+    },
+    {
+      "id": "part_interface_implementation_rules",
+      "path": "references/part_interface_implementation_rules.md",
+      "tags": ["interfaces", "assembly_reuse", "reference_axis", "reference_plane"]
+    }
+  ],
+  "assets": [
+    {
+      "id": "standard_parts_placeholder",
+      "path": "assets/standard_parts/README.md",
+      "tags": ["standard_part", "asset_backed", "placeholder"]
+    },
+    {
+      "id": "spur_gear_standard_part",
+      "path": "assets/standard_parts/spur_gear.md",
+      "tags": ["gear", "spur_gear", "standard_part", "asset_backed"]
+    }
+  ]
+}

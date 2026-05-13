@@ -1,0 +1,35 @@
+{
+  "references": [
+    {
+      "id": "failure_taxonomy",
+      "path": "references/failure_taxonomy.md",
+      "tags": ["core", "failure", "taxonomy"]
+    },
+    {
+      "id": "screenshot_check_rules",
+      "path": "references/screenshot_check_rules.md",
+      "tags": ["screenshot", "dynamic_check", "geometry"]
+    },
+    {
+      "id": "execution_log_classification",
+      "path": "references/execution_log_classification.md",
+      "tags": ["execution_log", "classification", "failure"]
+    },
+    {
+      "id": "static_vs_dynamic_failure_rules",
+      "path": "references/static_vs_dynamic_failure_rules.md",
+      "tags": ["static_check", "dynamic_check", "repair"]
+    },
+    {
+      "id": "part_static_consistency_rules",
+      "path": "references/part_static_consistency_rules.md",
+      "tags": ["static_check", "part_validation", "requirement_consistency", "interfaces", "paths"]
+    },
+    {
+      "id": "spur_gear_validation_facts",
+      "path": "references/spur_gear_validation_facts.md",
+      "tags": ["static_check", "dynamic_check", "part_validation", "gear", "spur_gear", "standard_part", "units"]
+    }
+  ],
+  "assets": []
+}

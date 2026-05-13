@@ -1,0 +1,150 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "planetary_gearbox",
+    "summary": "2M 级单级行星减速机构，包含太阳轮、三个行星轮、内齿圈及行星架，传动比基于齿数比 Z_ring/Z_sun + 1",
+    "global_coordinate_system": {
+      "origin": "太阳轮旋转中心",
+      "x_direction": "1,0,0",
+      "y_direction": "0,1,0",
+      "z_direction": "0,0,1"
+    },
+    "design_rules": [
+      "所有齿轮模数必须匹配 (M=2)",
+      "行星轮必须在节圆直径 (72mm) 上等间距120度布置",
+      "齿圈中心与太阳轮中心重合且固定",
+      "所有齿轮宽度统一为10mm"
+    ],
+    "review_comments": [],
+    "instances": [
+      {
+        "instance_id": "planet_1",
+        "part_id": "planet_gear",
+        "name": "Planet Gear 1",
+        "instance_role": "Intermediate",
+        "placement_notes": "位于(36, 0, 0)",
+        "interface_usage": {
+          "faces": [
+            "front_face"
+          ],
+          "axes": [
+            "rotation_axis"
+          ],
+          "points": [
+            "center_point"
+          ]
+        }
+      },
+      {
+        "instance_id": "planet_2",
+        "part_id": "planet_gear",
+        "name": "Planet Gear 2",
+        "instance_role": "Intermediate",
+        "placement_notes": "位于(-18, 31.18, 0)",
+        "interface_usage": {
+          "faces": [
+            "front_face"
+          ],
+          "axes": [
+            "rotation_axis"
+          ],
+          "points": [
+            "center_point"
+          ]
+        }
+      },
+      {
+        "instance_id": "planet_3",
+        "part_id": "planet_gear",
+        "name": "Planet Gear 3",
+        "instance_role": "Intermediate",
+        "placement_notes": "位于(-18, -31.18, 0)",
+        "interface_usage": {
+          "faces": [
+            "front_face"
+          ],
+          "axes": [
+            "rotation_axis"
+          ],
+          "points": [
+            "center_point"
+          ]
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "1. 插入 ring_gear_inst 并固定",
+      "2. 插入 sun_gear_inst 并与全局轴线配合",
+      "3. 插入 carrier_inst 并与全局轴线配合",
+      "4. 依次插入 planet_1, planet_2, planet_3 并与行星架销轴配合",
+      "5. 添加所有齿轮的轴向对齐约束"
+    ]
+  },
+  "part": {
+    "part_id": "planet_gear",
+    "name": "行星轮",
+    "function": "传递动力并减速",
+    "shape": "直齿圆柱齿轮",
+    "key_dimensions": [
+      "M=2",
+      "Z=18",
+      "B=10",
+      "Hole_Dia=10"
+    ],
+    "material_or_notes": "45钢",
+    "quantity": 3,
+    "instance_ids": [
+      "planet_1",
+      "planet_2",
+      "planet_3"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "front_face",
+          "purpose": "轴向对齐面",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "rotation_axis",
+          "purpose": "安装孔中心轴",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": [
+        {
+          "name": "center_point",
+          "purpose": "行星轮几何中心",
+          "location_hint": "0,0,0"
+        }
+      ]
+    },
+    "assembly_relation_notes": [
+      "安装在行星架销轴上",
+      "与太阳轮外啮合",
+      "与齿圈内啮合"
+    ],
+    "workspace": {
+      "part_output_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output",
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\code",
+      "modeling_plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\modeling_plan\\latest_modeling_plan.md",
+      "modeling_plan_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\modeling_plan\\modeling_plan_history.jsonl",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\code\\latest_code.py",
+      "code_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\code\\code_history.jsonl",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\code\\planet_gear.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\execution\\execution_log.txt",
+      "execution_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\execution\\execution_report.json",
+      "screenshot_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\execution\\screenshots",
+      "static_validation_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\validation\\static_validation_report.json",
+      "dynamic_validation_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\validation\\dynamic_validation_report.json",
+      "repair_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\repair\\repair_history.jsonl",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox-20260512_170510\\parts\\planet_gear\\part_output\\part_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "使用标准齿轮资产生成M2 Z18齿轮",
+      "中心切除直径10mm通孔用于销轴配合"
+    ]
+  }
+}

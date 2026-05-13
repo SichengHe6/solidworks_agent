@@ -1,4 +1,4 @@
-from pyswassem import SldWorksApp, PartDoc, AssemDoc
+from pysw import SldWorksApp, PartDoc, AssemDoc
 
 def build_gripper_assembly():
     sw = SldWorksApp()

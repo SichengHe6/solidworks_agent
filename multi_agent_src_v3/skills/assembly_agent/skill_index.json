@@ -1,0 +1,56 @@
+{
+  "references": [
+    {
+      "id": "assembly_modeling_workflow",
+      "path": "references/assembly_modeling_workflow.md",
+      "tags": ["core", "assembly_modeling"]
+    },
+    {
+      "id": "mate_constraints_rules",
+      "path": "references/mate_constraints_rules.md",
+      "tags": ["mate", "constraint", "coincident", "concentric", "parallel", "distance"]
+    },
+    {
+      "id": "repeated_instances_rules",
+      "path": "references/repeated_instances_rules.md",
+      "tags": ["instances", "part_reuse", "repeated_parts"]
+    },
+    {
+      "id": "gear_pair_mate_protocol",
+      "path": "references/gear_pair_mate_protocol.md",
+      "tags": ["gear", "gear_pair", "gear_mate", "tangent_mate", "pitch_circle"]
+    },
+    {
+      "id": "kinematic_sampling_rules",
+      "path": "references/kinematic_sampling_rules.md",
+      "tags": ["kinematic", "motion", "sampling", "collision_check"]
+    },
+    {
+      "id": "assembly_repair_policy",
+      "path": "references/assembly_repair_policy.md",
+      "tags": ["repair", "assembly_failure", "constraint_failure"]
+    },
+    {
+      "id": "assembly_planning_protocol_rules",
+      "path": "references/assembly_planning_protocol_rules.md",
+      "tags": ["core", "assembly_protocol", "assembly_planning", "schema", "instances", "constraints"]
+    },
+    {
+      "id": "assembly_api_reference",
+      "path": "references/assembly_api_reference.md",
+      "tags": ["core", "assembly_api", "code_generation", "mate", "constraint"]
+    },
+    {
+      "id": "assembly_reuse_and_grounding_rules",
+      "path": "references/assembly_reuse_and_grounding_rules.md",
+      "tags": ["instances", "part_reuse", "ground", "assembly_sequence", "constraints"]
+    }
+  ],
+  "assets": [
+    {
+      "id": "assembly_templates_placeholder",
+      "path": "assets/assembly_templates/README.md",
+      "tags": ["assembly_template", "placeholder"]
+    }
+  ]
+}

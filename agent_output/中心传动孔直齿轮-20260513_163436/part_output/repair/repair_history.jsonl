@@ -1,0 +1,1 @@
+{"attempt": 1, "stage": "static_validation", "failure_type": "code_implementation_error", "feedback": "前端面和后端面参考面偏移量错误：front_face 应位于 Z=0.01（齿轮正端面），back_face 应位于 Z=0，但代码使用 HALF_WIDTH_M=0.005 导致它们实际在中面两侧。请修正为 front_face 偏移 0.01，back_face 偏移 0。"}

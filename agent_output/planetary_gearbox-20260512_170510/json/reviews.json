@@ -1,0 +1,52 @@
+{
+  "reviews": [
+    {
+      "scope": "requirement",
+      "context": {
+        "request_type": "assembly"
+      },
+      "review": {
+        "pass": true,
+        "severity": "warning",
+        "feedback": "行星齿轮系统几何参数基本合理，满足 Z_ring = Z_sun + 2 * Z_planet (54 = 18 + 2 * 18) 的装配条件。行星架销轴分布圆直径 Pin_Circle_Diameter=72mm 与节圆计算值一致。唯一潜在冲突是行星轮与太阳轮/齿圈的轴向定位约束在 constraint 列表中描述不全，且未明确行星轮之间的防干涉间隙（虽然计算上刚好相切），建议在建模时增加轴向平面对齐约束。",
+        "comments_for_next_agent": [
+          "建模建议：行星轮齿数Z=18，太阳轮Z=18，中心距为(18+18)*2/2 = 36mm，验证 Pin_Circle_Diameter=72mm 正确。",
+          "自动修正建议：在装配时，除了 concentric 约束，请自动添加 sun_gear_inst.front_face 与 planet_1.front_face 的 coincident 或 offset=0 约束，以确保轴向对齐。",
+          "干涉提醒：由于 Z_sun=18, Z_planet=18, N=3，行星轮之间的最小距离极小，生成网格或布尔运算时请确保精度，避免拓扑重叠。",
+          "接口补充：planet_carrier 的 pin_1_axis, pin_2_axis, pin_3_axis 应严格按照 120 度阵列，坐标计算参考 placement_notes 中的 (36,0,0), (-18, 31.18, 0) 等。"
+        ]
+      },
+      "comments_for_next_agent": [
+        "建模建议：行星轮齿数Z=18，太阳轮Z=18，中心距为(18+18)*2/2 = 36mm，验证 Pin_Circle_Diameter=72mm 正确。",
+        "自动修正建议：在装配时，除了 concentric 约束，请自动添加 sun_gear_inst.front_face 与 planet_1.front_face 的 coincident 或 offset=0 约束，以确保轴向对齐。",
+        "干涉提醒：由于 Z_sun=18, Z_planet=18, N=3，行星轮之间的最小距离极小，生成网格或布尔运算时请确保精度，避免拓扑重叠。",
+        "接口补充：planet_carrier 的 pin_1_axis, pin_2_axis, pin_3_axis 应严格按照 120 度阵列，坐标计算参考 placement_notes 中的 (36,0,0), (-18, 31.18, 0) 等。"
+      ]
+    },
+    {
+      "scope": "assembly_plan",
+      "context": {
+        "name": "planetary_gearbox"
+      },
+      "review": {
+        "pass": true,
+        "severity": "warning",
+        "feedback": "行星减速机装配协议逻辑严密，几何参数（Z_ring=54, Z_sun=18, Z_planet=18）满足装配条件，约束定义基本覆盖了运动副需求。主要风险点在于行星轮与行星架销轴的轴向限位约束在JSON中仅定义了planet_1与太阳轮的对齐，planet_2和planet_3缺失显式轴向约束，且未定义行星架与太阳轮/齿圈的轴向相对位置。建议通过统一的基准面对齐来解决。",
+        "comments_for_next_agent": [
+          "零件建模建议：请确保所有齿轮（太阳轮、行星轮、内齿圈）的 front_face 均位于零件局部坐标系的 Z=0 平面，以便于装配体一键对齐。",
+          "装配代码建议：对于 planet_2 和 planet_3，请自动补充与 planet_1.front_face 的 coincident 约束，或统一与 carrier_inst.base_face 保持固定 offset 距离。",
+          "约束优化：建议将 ring_gear_inst 设置为 Fix 状态后，将其 Front Plane 作为整个装配体的轴向基准面。",
+          "干涉检查预警：由于 Z_sun=18 且 Z_planet=18，三个行星轮在 72mm 节圆上分布时，其齿顶圆距离非常近，建模时齿顶高系数务必遵循标准值（如1.0m），避免产生几何干涉。",
+          "行星架建模补充：pin_1_axis 等轴线在建模时应作为构造几何体（Construction Axis）显式导出，方便 API 调用 SelectByID2 进行配合。"
+        ]
+      },
+      "comments_for_next_agent": [
+        "零件建模建议：请确保所有齿轮（太阳轮、行星轮、内齿圈）的 front_face 均位于零件局部坐标系的 Z=0 平面，以便于装配体一键对齐。",
+        "装配代码建议：对于 planet_2 和 planet_3，请自动补充与 planet_1.front_face 的 coincident 约束，或统一与 carrier_inst.base_face 保持固定 offset 距离。",
+        "约束优化：建议将 ring_gear_inst 设置为 Fix 状态后，将其 Front Plane 作为整个装配体的轴向基准面。",
+        "干涉检查预警：由于 Z_sun=18 且 Z_planet=18，三个行星轮在 72mm 节圆上分布时，其齿顶圆距离非常近，建模时齿顶高系数务必遵循标准值（如1.0m），避免产生几何干涉。",
+        "行星架建模补充：pin_1_axis 等轴线在建模时应作为构造几何体（Construction Axis）显式导出，方便 API 调用 SelectByID2 进行配合。"
+      ]
+    }
+  ]
+}

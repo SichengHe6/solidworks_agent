@@ -1,0 +1,102 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "planetary_gearbox_assembly",
+    "summary": "设计一个单级行星齿轮减速机构，包含太阳轮、三个行星轮、内齿圈及行星架，模数2mm，实现动力减速输出。",
+    "global_coordinate_system": {
+      "origin": "太阳轮中心",
+      "x_direction": "1, 0, 0",
+      "y_direction": "0, 1, 0",
+      "z_direction": "0, 0, 1"
+    },
+    "design_rules": [
+      "所有齿轮模数统一为2mm",
+      "满足安装条件：(Zr + Zs) / N = 整数",
+      "行星轮在行星架上呈120度均匀分布",
+      "所有零件轴向中点对齐于全局XY平面"
+    ],
+    "review_comments": [],
+    "instances": [
+      {
+        "instance_id": "ring_gear_inst",
+        "part_id": "ring_gear",
+        "name": "内齿圈实例",
+        "instance_role": "fixed_component",
+        "placement_notes": "固定于全局坐标系",
+        "interface_usage": {
+          "faces": [
+            "mid_plane"
+          ],
+          "axes": [
+            "central_axis"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "1. 插入内齿圈并固定",
+      "2. 插入太阳轮并与内齿圈同轴对齐",
+      "3. 插入行星架并与中心轴同轴",
+      "4. 依次插入三个行星轮，分别与行星架的销轴孔同轴并与太阳轮/内齿圈啮合"
+    ]
+  },
+  "part": {
+    "part_id": "ring_gear",
+    "name": "内齿圈",
+    "function": "固定基准与内啮合",
+    "shape": "内齿环结构",
+    "key_dimensions": [
+      "模数: 2mm",
+      "齿数: 54",
+      "齿宽: 20mm",
+      "外径: 120mm"
+    ],
+    "material_or_notes": "45钢",
+    "quantity": 1,
+    "instance_ids": [
+      "ring_gear_inst"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "mid_plane",
+          "purpose": "轴向对齐",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "central_axis",
+          "purpose": "装配中心轴",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "在装配体中固定不动"
+    ],
+    "workspace": {
+      "part_output_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output",
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\code",
+      "modeling_plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\modeling_plan\\latest_modeling_plan.md",
+      "modeling_plan_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\modeling_plan\\modeling_plan_history.jsonl",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\code\\latest_code.py",
+      "code_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\code\\code_history.jsonl",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\code\\ring_gear.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\execution\\execution_log.txt",
+      "execution_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\execution\\execution_report.json",
+      "screenshot_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\execution\\screenshots",
+      "static_validation_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\validation\\static_validation_report.json",
+      "dynamic_validation_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\validation\\dynamic_validation_report.json",
+      "repair_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\repair\\repair_history.jsonl",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\planetary_gearbox_assembly-20260511_172615\\parts\\ring_gear\\part_output\\part_spec.json"
+    },
+    "standalone_modeling_instructions": [
+      "拉伸外径120mm、内径108mm的圆环",
+      "在内壁生成54齿的内齿轮特征",
+      "拉伸高度20mm（两侧对称）"
+    ]
+  }
+}

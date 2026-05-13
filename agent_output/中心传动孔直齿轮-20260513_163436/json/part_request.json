@@ -1,0 +1,129 @@
+{
+  "request_type": "part",
+  "name": "中心传动孔直齿轮",
+  "detailed_requirement": "生成一个模数2、齿数30、齿宽10mm、压力角20°的直齿轮，中心带有直径为20mm的通孔作为传动孔。使用标准直齿轮零件模板，编辑参数后添加中心通孔。材料为普通钢。坐标系：齿轮中面位于前视基准面（XY平面），齿轮轴线与Z轴重合，中心位于原点。",
+  "summary": "带中心传动孔的直齿轮，标准参数，中心通孔φ20",
+  "key_requirements": [
+    "模数 M = 2 mm",
+    "齿数 Z = 30",
+    "齿宽 B = 10 mm",
+    "压力角 Alpha = 20 deg",
+    "齿顶高系数 Hax = 1",
+    "顶隙系数 Cx = 0.25",
+    "节圆直径 d = 60 mm",
+    "中心通孔直径 = 20 mm"
+  ],
+  "assumptions": [
+    "直齿轮标准件模板存在且可编辑参数",
+    "默认齿轮参数 M=2, Z=30, B=10, Alpha=20, Hax=1, Cx=0.25",
+    "中心通孔为圆柱直孔，直径20mm，完全贯穿",
+    "材料为普通钢，无其他表面处理",
+    "齿轮中面与XY平面重合，轴线沿Z轴，原点位于齿轮中心",
+    "无键槽、减重孔、倒角等其他特征",
+    "标准件中齿轮的前端面为齿顶所在侧平面（假设Z正方向），后端面为相反侧（Z负方向）"
+  ],
+  "requested_outputs": [
+    "中心传动孔直齿轮.SLDPRT",
+    "齿轮参数表（包含M, Z, B, Alpha, Hax, Cx, 通孔直径）"
+  ],
+  "interfaces": [
+    "前端面 front_face",
+    "后端面 back_face",
+    "齿轮中面 gear_mid_plane",
+    "中心孔内圆柱面 bore_cylindrical_face",
+    "齿轮轴线 shaft_axis"
+  ],
+  "workspace": {
+    "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436",
+    "part_output_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output",
+    "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\code",
+    "modeling_plan_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\modeling_plan",
+    "code_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\code",
+    "execution_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\execution",
+    "validation_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\validation",
+    "repair_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\repair",
+    "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\json",
+    "screenshots_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\execution\\screenshots",
+    "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\json\\part_request.json"
+  },
+  "part": {
+    "part_id": "spur_gear_with_bore",
+    "name": "中心传动孔直齿轮",
+    "function": "传递旋转运动和扭矩，通过中心孔与轴配合",
+    "shape": "直齿圆柱齿轮，中心有通孔",
+    "key_dimensions": [
+      "模数 M = 2 mm",
+      "齿数 Z = 30",
+      "齿宽 B = 10 mm",
+      "压力角 Alpha = 20 deg",
+      "齿顶高系数 Hax = 1",
+      "顶隙系数 Cx = 0.25",
+      "节圆直径 d = 60 mm",
+      "中心通孔直径 = 20 mm"
+    ],
+    "material_or_notes": "普通钢（默认）",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "front_face",
+          "purpose": "",
+          "normal_direction_relation": ""
+        },
+        {
+          "name": "back_face",
+          "purpose": "",
+          "normal_direction_relation": ""
+        },
+        {
+          "name": "gear_mid_plane",
+          "purpose": "",
+          "normal_direction_relation": ""
+        },
+        {
+          "name": "bore_cylindrical_face",
+          "purpose": "",
+          "normal_direction_relation": ""
+        }
+      ],
+      "axes": [
+        {
+          "name": "shaft_axis",
+          "purpose": "",
+          "direction_relation": ""
+        }
+      ],
+      "points": []
+    },
+    "standalone_modeling_instructions": [
+      "1. 从标准件库复制直齿轮模板文件：D:\\a_src\\python\\sw_agent\\standard_swpart\\gear\\spur_gear.SLDPRT 至工作区。",
+      "2. 在SolidWorks方程式中设置参数：M=2mm, Z=30, B=10mm, Alpha=20deg, Hax=1, Cx=0.25。",
+      "3. 重建模型。",
+      "4. 在齿轮前端面（或中面）创建草图，绘制与齿轮轴线同心的圆，直径20mm。",
+      "5. 使用拉伸切除（完全贯穿）生成中心通孔。",
+      "6. 定义接口：前端面（front_face）为齿顶所在侧平面，后端面（back_face）为另一侧平面，齿轮中面（gear_mid_plane）为通过齿宽中点的平面，孔内圆柱面（bore_cylindrical_face），轴心线（shaft_axis）。",
+      "7. 保存文件。",
+      "生成一个模数2、齿数30、齿宽10mm、压力角20°的直齿轮，中心带有直径为20mm的通孔作为传动孔。使用标准直齿轮零件模板，编辑参数后添加中心通孔。材料为普通钢。坐标系：齿轮中面位于前视基准面（XY平面），齿轮轴线与Z轴重合，中心位于原点。",
+      "使用标准齿轮模板时，请确认模板内参数变量名与需求一致（如M, Z, B, Alpha, Hax, Cx），设置后重建模型。",
+      "中心通孔拉伸切除时，注意完全贯穿并确保轴线与齿轮轴线重合（原点处）。",
+      "齿轮中面定义为通过齿宽中点的平面，建议在建模时参照坐标系设定：齿轮中面位于XY平面，轴线沿Z轴。",
+      "若模板中有默认键槽或其它特征，请移除或保持默认以避免干扰，除非需求明确要求。",
+      "保存文件时命名与需求一致：中心传动孔直齿轮.SLDPRT，并输出齿轮参数表。"
+    ],
+    "workspace": {
+      "part_output_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output",
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\code",
+      "modeling_plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\modeling_plan\\latest_modeling_plan.md",
+      "modeling_plan_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\modeling_plan\\modeling_plan_history.jsonl",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\code\\latest_code.py",
+      "code_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\code\\code_history.jsonl",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\code\\spur_gear_with_bore.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\execution\\execution_log.txt",
+      "execution_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\execution\\execution_report.json",
+      "screenshot_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\execution\\screenshots",
+      "static_validation_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\validation\\static_validation_report.json",
+      "dynamic_validation_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\validation\\dynamic_validation_report.json",
+      "repair_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\repair\\repair_history.jsonl",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\中心传动孔直齿轮-20260513_163436\\part_output\\part_spec.json"
+    }
+  }
+}

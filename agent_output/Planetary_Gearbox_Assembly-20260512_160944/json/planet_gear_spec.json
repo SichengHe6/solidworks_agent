@@ -1,0 +1,126 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Planetary_Gearbox_Assembly",
+    "summary": "基于模数2mm的直齿行星齿轮箱装配体，包含太阳轮、3个行星轮、内齿圈和行星架。",
+    "global_coordinate_system": {
+      "origin": "太阳轮中心轴线与底端面交点",
+      "x_direction": "指向第一个行星轮中心方向 (0°)",
+      "y_direction": "垂直于 X 轴在端面内",
+      "z_direction": "沿齿轮轴线向上"
+    },
+    "design_rules": [
+      "所有齿轮端面在 Z=0 平面对齐",
+      "行星轮分布半径严格为 36mm",
+      "内齿圈固定，太阳轮为输入，行星架为输出"
+    ],
+    "review_comments": [],
+    "instances": [
+      {
+        "instance_id": "planet_gear_1",
+        "part_id": "planet_gear",
+        "name": "行星轮1",
+        "instance_role": "行星传动件1",
+        "placement_notes": "安装在行星架1号销轴",
+        "interface_usage": {
+          "faces": [
+            "bottom_face"
+          ],
+          "axes": [
+            "center_axis"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "planet_gear_2",
+        "part_id": "planet_gear",
+        "name": "行星轮2",
+        "instance_role": "行星传动件2",
+        "placement_notes": "安装在行星架2号销轴",
+        "interface_usage": {
+          "faces": [
+            "bottom_face"
+          ],
+          "axes": [
+            "center_axis"
+          ],
+          "points": []
+        }
+      },
+      {
+        "instance_id": "planet_gear_3",
+        "part_id": "planet_gear",
+        "name": "行星轮3",
+        "instance_role": "行星传动件3",
+        "placement_notes": "安装在行星架3号销轴",
+        "interface_usage": {
+          "faces": [
+            "bottom_face"
+          ],
+          "axes": [
+            "center_axis"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "ring_gear_inst",
+      "sun_gear_inst",
+      "carrier_inst",
+      "planet_gear_1",
+      "planet_gear_2",
+      "planet_gear_3"
+    ]
+  },
+  "part": {
+    "part_id": "planet_gear",
+    "name": "行星轮",
+    "function": "传递动力并绕太阳轮公转",
+    "shape": "直齿圆柱齿轮，中心带通孔",
+    "key_dimensions": [
+      "模数: 2mm",
+      "齿数: 18",
+      "齿宽: 20mm",
+      "中心孔径: 8mm",
+      "分度圆直径: 36mm"
+    ],
+    "material_or_notes": "数量为3，几何完全相同",
+    "quantity": 3,
+    "instance_ids": [
+      "planet_gear_1",
+      "planet_gear_2",
+      "planet_gear_3"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "bottom_face",
+          "purpose": "装配基准面",
+          "normal_direction_relation": "normal -Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "center_axis",
+          "purpose": "旋转中心轴",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "轴线与行星架支撑轴同心"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\parts\\planet_gear",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\parts\\planet_gear\\planet_gear_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\parts\\planet_gear\\planet_gear.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\logs\\planet_gear_model.log",
+      "screenshot_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\screenshots\\planet_gear",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\json\\planet_gear_spec.json"
+    },
+    "standalone_modeling_instructions": "在XY平面绘制分度圆36mm的齿轮廓形，拉伸20mm，中心切除8mm通孔。"
+  }
+}

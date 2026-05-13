@@ -1,0 +1,109 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Planetary_Gearbox_Assembly",
+    "summary": "基于模数2mm的直齿行星齿轮箱装配体，包含太阳轮、3个行星轮、内齿圈和行星架。",
+    "global_coordinate_system": {
+      "origin": "太阳轮中心轴线与底端面交点",
+      "x_direction": "指向第一个行星轮中心方向 (0°)",
+      "y_direction": "垂直于 X 轴在端面内",
+      "z_direction": "沿齿轮轴线向上"
+    },
+    "design_rules": [
+      "所有齿轮端面在 Z=0 平面对齐",
+      "行星轮分布半径严格为 36mm",
+      "内齿圈固定，太阳轮为输入，行星架为输出"
+    ],
+    "review_comments": [],
+    "instances": [
+      {
+        "instance_id": "carrier_inst",
+        "part_id": "planet_carrier",
+        "name": "行星架实例",
+        "instance_role": "输出件",
+        "placement_notes": "位于中心，承载行星轮",
+        "interface_usage": {
+          "faces": [
+            "top_surface"
+          ],
+          "axes": [
+            "main_axis",
+            "pin_axis_1",
+            "pin_axis_2",
+            "pin_axis_3"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "ring_gear_inst",
+      "sun_gear_inst",
+      "carrier_inst",
+      "planet_gear_1",
+      "planet_gear_2",
+      "planet_gear_3"
+    ]
+  },
+  "part": {
+    "part_id": "planet_carrier",
+    "name": "行星架",
+    "function": "支撑行星轮并输出扭矩",
+    "shape": "带三个支撑轴的圆盘结构",
+    "key_dimensions": [
+      "盘径: 100mm",
+      "支撑轴分布半径: 36mm",
+      "支撑轴直径: 8mm",
+      "支撑轴高度: 20mm"
+    ],
+    "material_or_notes": "支撑轴角度 0, 120, 240",
+    "quantity": 1,
+    "instance_ids": [
+      "carrier_inst"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "top_surface",
+          "purpose": "行星轮承载面",
+          "normal_direction_relation": "normal +Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "main_axis",
+          "purpose": "主旋转轴",
+          "direction_relation": "along local Z"
+        },
+        {
+          "name": "pin_axis_1",
+          "purpose": "1号行星轮轴",
+          "direction_relation": "along local Z at (36,0)"
+        },
+        {
+          "name": "pin_axis_2",
+          "purpose": "2号行星轮轴",
+          "direction_relation": "along local Z at (-18, 31.17)"
+        },
+        {
+          "name": "pin_axis_3",
+          "purpose": "3号行星轮轴",
+          "direction_relation": "along local Z at (-18, -31.17)"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "主轴与太阳轮轴线重合"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\parts\\planet_carrier",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\parts\\planet_carrier\\planet_carrier_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\parts\\planet_carrier\\planet_carrier.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\logs\\planet_carrier_model.log",
+      "screenshot_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\screenshots\\planet_carrier",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\json\\planet_carrier_spec.json"
+    },
+    "standalone_modeling_instructions": "在XY面画100mm圆拉伸5mm作为底盘，在半径36mm处按120度间隔拉伸三个直径8mm高20mm的圆柱销。"
+  }
+}

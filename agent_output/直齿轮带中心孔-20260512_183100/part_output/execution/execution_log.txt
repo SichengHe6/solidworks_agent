@@ -1,0 +1,68 @@
+===== Clear SolidWorks =====
+
+returncode=0
+STDOUT:
+[pysw] 已获得 SOLIDWORKS 跨进程任务锁: C:\Users\12617\AppData\Local\Temp\pysw_solidworks_task.lock
+[pysw] 当前进程开始执行 SW 任务前，自动关闭所有已打开文档
+已关闭当前 SOLIDWORKS 会话中的所有文档
+SolidWorks initialized with close_before_task=True
+[pysw] 已释放 SOLIDWORKS 跨进程任务锁
+STDERR:
+(empty)
+
+===== Execute Script =====
+
+returncode=0
+STDOUT:
+[pysw] 已获得 SOLIDWORKS 跨进程任务锁: C:\Users\12617\AppData\Local\Temp\pysw_solidworks_task.lock
+[pysw] 当前进程开始执行 SW 任务前，自动关闭所有已打开文档
+已关闭当前 SOLIDWORKS 会话中的所有文档
+Copying standard part to D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\code\spur_gear_m2_z24_h12.SLDPRT...
+[Warn] 目标文件已存在，将覆盖: D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\code\spur_gear_m2_z24_h12.SLDPRT
+----------------------------------------
+Python 成功复制标准零件到当前工作目录: D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\code\spur_gear_m2_z24_h12.SLDPRT
+----------------------------------------
+Updating global variables: M=2, Z=24, B=10...
+全局变量修改成功: M = 2
+全局变量修改成功: Z = 24
+全局变量修改成功: B = 10
+Creating center bore (12mm)...
+创建草图成功: Sketch1
+检测到当前有未退出的草图，正在自动退出以继续操作...
+草图选择失败，无法拉伸
+Creating named interfaces...
+✅ 成功创建基准轴 [shaft_axis]
+Saving part to D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\code\spur_gear_m2_z24_h12.SLDPRT
+正在保存零件到: D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\code\spur_gear_m2_z24_h12.SLDPRT ...
+零件已保存至: D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\code\spur_gear_m2_z24_h12.SLDPRT
+Modeling completed successfully.
+[pysw] 已释放 SOLIDWORKS 跨进程任务锁
+STDERR:
+(empty)
+
+===== Capture Screenshots =====
+
+returncode=0
+STDOUT:
+[pysw] 已获得 SOLIDWORKS 跨进程任务锁: C:\Users\12617\AppData\Local\Temp\pysw_solidworks_task.lock
+SolidWorks initialized with close_before_task=False
+开始截取当前模型视图，输出目录: D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\execution\screenshots
+[OK] 已保存 front: D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\execution\screenshots\spur_gear_m2_z24_h12_attempt_3_front.png
+[OK] 已保存 top: D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\execution\screenshots\spur_gear_m2_z24_h12_attempt_3_top.png
+[OK] 已保存 right: D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\execution\screenshots\spur_gear_m2_z24_h12_attempt_3_right.png
+[OK] 已保存 isometric: D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\execution\screenshots\spur_gear_m2_z24_h12_attempt_3_isometric.png
+===== Screenshot Result =====
+front
+top
+right
+isometric
+[pysw] 已释放 SOLIDWORKS 跨进程任务锁
+STDERR:
+(empty)
+
+===== Screenshot Files =====
+
+D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\execution\screenshots\spur_gear_m2_z24_h12_attempt_3_front.png
+D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\execution\screenshots\spur_gear_m2_z24_h12_attempt_3_isometric.png
+D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\execution\screenshots\spur_gear_m2_z24_h12_attempt_3_right.png
+D:\a_src\python\sw_agent\agent_output\直齿轮带中心孔-20260512_183100\part_output\execution\screenshots\spur_gear_m2_z24_h12_attempt_3_top.png

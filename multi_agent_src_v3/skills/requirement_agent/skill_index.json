@@ -1,0 +1,35 @@
+{
+  "references": [
+    {
+      "id": "requirement_completion_rules",
+      "path": "references/requirement_completion_rules.md",
+      "tags": ["core", "requirement_completion", "default_assumptions"]
+    },
+    {
+      "id": "part_vs_assembly_rules",
+      "path": "references/part_vs_assembly_rules.md",
+      "tags": ["core", "part_vs_assembly", "routing"]
+    },
+    {
+      "id": "default_engineering_assumptions",
+      "path": "references/default_engineering_assumptions.md",
+      "tags": ["default_assumptions", "dimensions", "interfaces", "materials"]
+    },
+    {
+      "id": "output_protocol_schema",
+      "path": "references/output_protocol_schema.md",
+      "tags": ["output_protocol", "schema", "part_spec", "assembly_protocol"]
+    },
+    {
+      "id": "gear_requirement_capabilities",
+      "path": "references/gear_requirement_capabilities.md",
+      "tags": ["gear", "spur_gear", "standard_part", "secondary_edit", "parameters"]
+    },
+    {
+      "id": "solidworks_capability_boundary",
+      "path": "references/solidworks_capability_boundary.md",
+      "tags": ["core", "capability_boundary", "solidworks_api", "requirement_completion"]
+    }
+  ],
+  "assets": []
+}

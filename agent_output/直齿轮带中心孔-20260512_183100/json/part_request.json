@@ -1,0 +1,116 @@
+{
+  "request_type": "part",
+  "name": "直齿轮",
+  "detailed_requirement": "基于标准直齿轮资产生成一个模数为2、齿数为24的直齿轮。在齿轮几何中心添加一个直径为12mm的贯穿通孔，用于轴向安装。齿轮宽度设定为10mm，压力角为标准20度。该零件需包含用于装配的轴线和端面接口。",
+  "summary": "模数2、齿数24、带12mm中心孔的直齿轮",
+  "key_requirements": [
+    "模数 (M): 2",
+    "齿数 (Z): 24",
+    "分度圆直径: 48mm",
+    "齿宽 (B): 10mm",
+    "中心孔径: 12mm"
+  ],
+  "assumptions": [
+    "齿宽 B 默认设定为 10mm",
+    "压力角 Alpha 默认设定为 20度",
+    "中心通孔直径根据经验假设为 12mm（约等于分度圆半径的1/4）",
+    "材料默认为普通钢材",
+    "坐标系原点位于齿轮中心，Z轴为旋转轴"
+  ],
+  "requested_outputs": [
+    "spur_gear_m2_z24_h12.SLDPRT",
+    "step_file"
+  ],
+  "interfaces": [
+    "shaft_axis: 齿轮中心旋转轴",
+    "front_face: 齿轮前端面",
+    "bore_cylindrical_face: 中心安装孔内表面"
+  ],
+  "workspace": {
+    "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100",
+    "part_output_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output",
+    "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\code",
+    "modeling_plan_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\modeling_plan",
+    "code_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\code",
+    "execution_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\execution",
+    "validation_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\validation",
+    "repair_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\repair",
+    "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\json",
+    "screenshots_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\execution\\screenshots",
+    "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\json\\part_request.json"
+  },
+  "part": {
+    "part_id": "spur_gear_m2_z24_h12",
+    "name": "直齿轮",
+    "function": "动力传递与轴向定位",
+    "shape": "齿轮盘状结构，中心带圆孔",
+    "key_dimensions": [
+      "模数 (M): 2",
+      "齿数 (Z): 24",
+      "分度圆直径: 48mm",
+      "齿宽 (B): 10mm",
+      "中心孔径: 12mm"
+    ],
+    "material_or_notes": "默认工程钢材",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "front_face",
+          "purpose": "",
+          "normal_direction_relation": ""
+        },
+        {
+          "name": "back_face",
+          "purpose": "",
+          "normal_direction_relation": ""
+        },
+        {
+          "name": "bore_cylindrical_face",
+          "purpose": "",
+          "normal_direction_relation": ""
+        }
+      ],
+      "axes": [
+        {
+          "name": "shaft_axis",
+          "purpose": "",
+          "direction_relation": ""
+        }
+      ],
+      "points": [
+        {
+          "name": "origin",
+          "purpose": "",
+          "location_hint": ""
+        }
+      ]
+    },
+    "standalone_modeling_instructions": [
+      "1. 加载标准直齿轮模板并设置全局变量 M=2, Z=24, B=10。",
+      "2. 在前断面中心草图平面绘制直径12mm的圆。",
+      "3. 执行完全贯穿切除以生成中心孔。",
+      "4. 命名中心孔内壁为 bore_cylindrical_face。",
+      "5. 确保中心轴线接口 shaft_axis 穿过原点并垂直于端面。",
+      "基于标准直齿轮资产生成一个模数为2、齿数为24的直齿轮。在齿轮几何中心添加一个直径为12mm的贯穿通孔，用于轴向安装。齿轮宽度设定为10mm，压力角为标准20度。该零件需包含用于装配的轴线和端面接口。",
+      "确保在执行extrude_cut之前，基础齿轮实体的全局变量M, Z, B已正确更新，以避免切除特征因父项几何变化而失效。",
+      "建议将shaft_axis约束为穿过原点且与bore_cylindrical_face同轴。",
+      "检查齿轮模板的基准面命名，确保sketch_plane指向正确的front_face。"
+    ],
+    "workspace": {
+      "part_output_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output",
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\code",
+      "modeling_plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\modeling_plan\\latest_modeling_plan.md",
+      "modeling_plan_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\modeling_plan\\modeling_plan_history.jsonl",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\code\\latest_code.py",
+      "code_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\code\\code_history.jsonl",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\code\\spur_gear_m2_z24_h12.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\execution\\execution_log.txt",
+      "execution_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\execution\\execution_report.json",
+      "screenshot_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\execution\\screenshots",
+      "static_validation_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\validation\\static_validation_report.json",
+      "dynamic_validation_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\validation\\dynamic_validation_report.json",
+      "repair_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\repair\\repair_history.jsonl",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\直齿轮带中心孔-20260512_183100\\part_output\\part_spec.json"
+    }
+  }
+}

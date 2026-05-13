@@ -1,0 +1,92 @@
+{
+  "request_type": "assembly_part",
+  "assembly_context": {
+    "name": "Planetary_Gearbox_Assembly",
+    "summary": "基于模数2mm的直齿行星齿轮箱装配体，包含太阳轮、3个行星轮、内齿圈和行星架。",
+    "global_coordinate_system": {
+      "origin": "太阳轮中心轴线与底端面交点",
+      "x_direction": "指向第一个行星轮中心方向 (0°)",
+      "y_direction": "垂直于 X 轴在端面内",
+      "z_direction": "沿齿轮轴线向上"
+    },
+    "design_rules": [
+      "所有齿轮端面在 Z=0 平面对齐",
+      "行星轮分布半径严格为 36mm",
+      "内齿圈固定，太阳轮为输入，行星架为输出"
+    ],
+    "review_comments": [],
+    "instances": [
+      {
+        "instance_id": "sun_gear_inst",
+        "part_id": "sun_gear",
+        "name": "太阳轮实例",
+        "instance_role": "输入件",
+        "placement_notes": "位于中心",
+        "interface_usage": {
+          "faces": [
+            "bottom_face"
+          ],
+          "axes": [
+            "center_axis"
+          ],
+          "points": []
+        }
+      }
+    ],
+    "assembly_sequence": [
+      "ring_gear_inst",
+      "sun_gear_inst",
+      "carrier_inst",
+      "planet_gear_1",
+      "planet_gear_2",
+      "planet_gear_3"
+    ]
+  },
+  "part": {
+    "part_id": "sun_gear",
+    "name": "太阳轮",
+    "function": "中心驱动齿轮",
+    "shape": "直齿圆柱齿轮，中心带通孔",
+    "key_dimensions": [
+      "模数: 2mm",
+      "齿数: 18",
+      "齿宽: 20mm",
+      "中心孔径: 10mm",
+      "分度圆直径: 36mm"
+    ],
+    "material_or_notes": "压力角20度",
+    "quantity": 1,
+    "instance_ids": [
+      "sun_gear_inst"
+    ],
+    "interfaces": {
+      "faces": [
+        {
+          "name": "bottom_face",
+          "purpose": "装配基准面",
+          "normal_direction_relation": "normal -Z"
+        }
+      ],
+      "axes": [
+        {
+          "name": "center_axis",
+          "purpose": "旋转中心轴",
+          "direction_relation": "along local Z"
+        }
+      ],
+      "points": []
+    },
+    "assembly_relation_notes": [
+      "轴线与全局 Z 轴重合"
+    ],
+    "workspace": {
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\parts\\sun_gear",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\parts\\sun_gear\\sun_gear_model.py",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\parts\\sun_gear\\sun_gear.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\logs\\sun_gear_model.log",
+      "screenshot_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\screenshots\\sun_gear",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\Planetary_Gearbox_Assembly-20260512_160944\\json\\sun_gear_spec.json"
+    },
+    "standalone_modeling_instructions": "在XY平面绘制分度圆36mm的齿轮廓形，拉伸20mm，中心切除10mm通孔。"
+  }
+}

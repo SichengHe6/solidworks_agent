@@ -1,0 +1,339 @@
+from __future__ import annotations
+
+import json
+import os
+import queue
+import threading
+from http import HTTPStatus
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import urlparse
+from uuid import uuid4
+
+try:
+    from .agents import extract_json_payload
+    from .config import MODEL_PROFILE_LABELS, MODEL_PROFILE_ORDER, MODEL_ROUTE_TABLE, get_model_client_config
+    from .orchestrator import MultiAgentOrchestrator
+except ImportError:
+    from agents import extract_json_payload
+    from config import MODEL_PROFILE_LABELS, MODEL_PROFILE_ORDER, MODEL_ROUTE_TABLE, get_model_client_config
+    from orchestrator import MultiAgentOrchestrator
+
+
+WEB_ROOT = Path(__file__).resolve().parent / "web"
+SESSION_LOCK = threading.Lock()
+SESSIONS: dict[str, "DemoConversationSession"] = {}
+
+
+class DemoConversationSession:
+    def __init__(self):
+        self.event_queue: queue.Queue[dict] = queue.Queue()
+        self.orchestrator = MultiAgentOrchestrator(event_callback=self.push_event)
+        self.stage = "requirement"
+
+    def push_event(self, event: dict):
+        self.event_queue.put(event)
+
+    def iter_turn_events(self, user_message: str):
+        if self.stage == "requirement":
+            if self.orchestrator.can_handle_followup_modification(user_message):
+                self.stage = "executing"
+                yield {
+                    "type": "status",
+                    "message": "检测到这是基于当前零件的小幅修改，将复用上一轮工作目录并直接进入零件修改智能体。",
+                }
+                yield from self._run_followup_modification(user_message)
+                self.stage = "requirement"
+                yield {
+                    "type": "status",
+                    "message": "本轮修改流程已完成，可以继续输入新需求或继续修改当前模型。",
+                }
+                return
+
+            requirement_prompt = (
+                "请直接补全下面的用户需求，输出 [CONFIRMED] 和严格 JSON。"
+                "不要反问用户；缺失信息用工程假设补足。\n\n"
+                f"用户需求：{user_message}"
+            )
+            message_id = uuid4().hex
+            yield {
+                "type": "message_start",
+                "role": "agent",
+                "agent_name": "RequirementCompletionAgent",
+                "message_id": message_id,
+            }
+            for chunk in self.orchestrator.requirement_agent.stream_chat(requirement_prompt):
+                yield {"type": "delta", "content": chunk, "message_id": message_id}
+            yield {"type": "message_end", "message_id": message_id}
+
+            latest_reply = self.orchestrator.requirement_agent.history[-1]["content"]
+            try:
+                requirement_payload = extract_json_payload(latest_reply)
+            except ValueError:
+                yield {
+                    "type": "status",
+                    "message": "需求补全阶段未返回可解析 JSON，后续流程未启动。",
+                }
+                return
+
+            requirement_payload = self.orchestrator.normalize_requirement_payload(
+                requirement_payload,
+                raw_user_input=user_message,
+            )
+            yield {
+                "type": "status",
+                "message": f"需求已补全，类型：{requirement_payload.get('request_type')}。进入 v3 自动流程。",
+            }
+            self.stage = "executing"
+            yield from self._run_pipeline(requirement_payload)
+            self.stage = "requirement"
+            yield {
+                "type": "status",
+                "message": "本轮 v3 自动流程已完成，可以继续输入新需求或补充修改内容。",
+            }
+            return
+
+        if self.stage == "executing":
+            yield {
+                "type": "status",
+                "message": "当前任务仍在执行中，请等待本轮自动流程完成。",
+            }
+            return
+
+        if self.stage == "finished":
+            self.stage = "requirement"
+            yield {
+                "type": "status",
+                "message": "当前会话已回到需求补全阶段，请继续输入需求。",
+            }
+
+    def _run_pipeline(self, requirement_payload: dict):
+        sentinel = {"type": "_pipeline_done"}
+
+        def worker():
+            try:
+                self.orchestrator.process_confirmed_requirement(requirement_payload)
+            except Exception as exc:
+                self.push_event({"type": "error", "error": str(exc)})
+            finally:
+                self.push_event(sentinel)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+        while True:
+            event = self.event_queue.get()
+            if event is sentinel or event.get("type") == "_pipeline_done":
+                break
+            yield event
+
+    def _run_followup_modification(self, user_message: str):
+        sentinel = {"type": "_pipeline_done"}
+
+        def worker():
+            try:
+                handled = self.orchestrator.process_followup_modification(user_message)
+                if not handled:
+                    self.push_event({"type": "status", "message": "未找到可复用的当前零件，将回到需求补全。"})
+            except Exception as exc:
+                self.push_event({"type": "error", "error": str(exc)})
+            finally:
+                self.push_event(sentinel)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+        while True:
+            event = self.event_queue.get()
+            if event is sentinel or event.get("type") == "_pipeline_done":
+                break
+            yield event
+
+
+def get_or_create_session(session_id: str | None) -> tuple[str, DemoConversationSession]:
+    if not session_id:
+        session_id = uuid4().hex
+
+    with SESSION_LOCK:
+        session = SESSIONS.get(session_id)
+        if session is None:
+            session = DemoConversationSession()
+            SESSIONS[session_id] = session
+    return session_id, session
+
+
+class DemoHandler(BaseHTTPRequestHandler):
+    server_version = "MultiAgentDemo/3.0"
+
+    def do_GET(self):
+        parsed = urlparse(self.path)
+        if parsed.path == "/":
+            self.serve_file("index.html", "text/html; charset=utf-8")
+            return
+        if parsed.path == "/app.css":
+            self.serve_file("app.css", "text/css; charset=utf-8")
+            return
+        if parsed.path == "/app.js":
+            self.serve_file("app.js", "application/javascript; charset=utf-8")
+            return
+        if parsed.path == "/api/model-config":
+            self.send_json(build_model_config_payload())
+            return
+
+        self.send_error(HTTPStatus.NOT_FOUND, "Not Found")
+
+    def do_POST(self):
+        parsed = urlparse(self.path)
+        if parsed.path not in {"/api/chat", "/api/chat-sse"}:
+            self.send_error(HTTPStatus.NOT_FOUND, "Not Found")
+            return
+
+        user_message, session_id, session = self.parse_chat_request()
+        if user_message is None or session_id is None or session is None:
+            return
+
+        if parsed.path == "/api/chat-sse":
+            self.stream_sse_events(session_id, session, user_message)
+            return
+
+        self.stream_jsonl_events(session_id, session, user_message)
+
+    def parse_chat_request(self) -> tuple[str | None, str | None, DemoConversationSession | None]:
+        length = int(self.headers.get("Content-Length", "0"))
+        raw_body = self.rfile.read(length).decode("utf-8") if length else "{}"
+
+        try:
+            payload = json.loads(raw_body)
+        except json.JSONDecodeError:
+            self.send_json({"error": "Request body must be valid JSON."}, status=HTTPStatus.BAD_REQUEST)
+            return None, None, None
+
+        user_message = str(payload.get("message", "")).strip()
+        if not user_message:
+            self.send_json({"error": "Message cannot be empty."}, status=HTTPStatus.BAD_REQUEST)
+            return None, None, None
+
+        session_id, session = get_or_create_session(self.headers.get("X-Session-Id"))
+        return user_message, session_id, session
+
+    def stream_jsonl_events(self, session_id: str, session: DemoConversationSession, user_message: str) -> None:
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Connection", "close")
+        self.send_header("X-Session-Id", session_id)
+        self.end_headers()
+        self.close_connection = True
+
+        try:
+            for event in session.iter_turn_events(user_message):
+                line = json.dumps(event, ensure_ascii=False) + "\n"
+                self.wfile.write(line.encode("utf-8"))
+                self.wfile.flush()
+
+            done = json.dumps({"type": "done"}, ensure_ascii=False) + "\n"
+            self.wfile.write(done.encode("utf-8"))
+            self.wfile.flush()
+        except Exception as exc:
+            error_line = json.dumps({"type": "error", "error": str(exc)}, ensure_ascii=False) + "\n"
+            try:
+                self.wfile.write(error_line.encode("utf-8"))
+                self.wfile.flush()
+            except BrokenPipeError:
+                pass
+
+    def stream_sse_events(self, session_id: str, session: DemoConversationSession, user_message: str) -> None:
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Connection", "close")
+        self.send_header("X-Session-Id", session_id)
+        self.end_headers()
+        self.close_connection = True
+
+        try:
+            for event in session.iter_turn_events(user_message):
+                self.write_sse_event("message", event)
+
+            self.write_sse_event("message", {"type": "done"})
+        except Exception as exc:
+            try:
+                self.write_sse_event("message", {"type": "error", "error": str(exc)})
+            except BrokenPipeError:
+                pass
+
+    def write_sse_event(self, event_name: str, payload: dict) -> None:
+        body = json.dumps(payload, ensure_ascii=False)
+        message = f"event: {event_name}\ndata: {body}\n\n"
+        self.wfile.write(message.encode("utf-8"))
+        self.wfile.flush()
+
+    def serve_file(self, filename: str, content_type: str):
+        path = WEB_ROOT / filename
+        if not path.exists():
+            self.send_error(HTTPStatus.NOT_FOUND, "Not Found")
+            return
+
+        content = path.read_bytes()
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(content)))
+        self.end_headers()
+        self.wfile.write(content)
+
+    def send_json(self, payload: dict, status: HTTPStatus = HTTPStatus.OK):
+        body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Connection", "close")
+        self.end_headers()
+        self.close_connection = True
+        self.wfile.write(body)
+
+    def log_message(self, format: str, *args):
+        return
+
+
+def build_model_config_payload() -> dict:
+    profiles = {}
+    for profile in MODEL_PROFILE_ORDER:
+        config = get_model_client_config(profile)
+        profiles[profile] = {
+            "label": MODEL_PROFILE_LABELS.get(profile, profile),
+            "model": config["model"],
+            "provider": config["provider"],
+            "base_url": config["base_url"],
+            "api_key_env": config["api_key_env"],
+            "api_key_source": config["api_key_source"],
+            "api_key_configured": config["api_key"] != "your-api-key",
+        }
+
+    route_table = [
+        {
+            "provider": route.provider,
+            "match_prefixes": list(route.match_prefixes),
+            "base_url": route.base_url,
+            "api_key_env": route.api_key_env,
+        }
+        for route in MODEL_ROUTE_TABLE
+    ]
+
+    return {
+        "profiles": profiles,
+        "profile_order": list(MODEL_PROFILE_ORDER),
+        "profile_labels": MODEL_PROFILE_LABELS,
+        "route_table": route_table,
+        "server": {
+            "pid": os.getpid(),
+            "web_demo_file": str(Path(__file__).resolve()),
+        },
+    }
+
+
+def run(host: str = "127.0.0.1", port: int = 8000):
+    server = ThreadingHTTPServer((host, port), DemoHandler)
+    print(f"Multi-agent v3 demo server running at http://{host}:{port}")
+    server.serve_forever()
+
+
+if __name__ == "__main__":
+    run()

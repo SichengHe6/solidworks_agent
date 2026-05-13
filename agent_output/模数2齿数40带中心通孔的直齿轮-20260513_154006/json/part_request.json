@@ -1,0 +1,118 @@
+{
+  "request_type": "part",
+  "name": "模数2齿数40直齿轮",
+  "detailed_requirement": "创建一个直齿轮零件，模数M=2，齿数Z=40，齿宽B=10mm，压力角Alpha=20°，齿顶高系数Hax=1，顶隙系数Cx=0.25，并在齿轮中心添加直径25mm的通孔。通孔贯穿整个齿宽方向。需要定义用于后续装配的接口：齿轮旋转轴（shaft_axis），前端面（front_face），后端面（back_face），通孔内圆柱面（bore_cylindrical_face），以及齿轮中面（gear_mid_plane）。",
+  "summary": "标准直齿轮，模数2、齿数40、中心通孔直径25mm，齿宽10mm，普通钢材质。",
+  "key_requirements": [
+    "分度圆直径80mm",
+    "齿顶圆直径84mm",
+    "齿根圆直径75mm",
+    "齿宽10mm",
+    "中心通孔直径25mm"
+  ],
+  "assumptions": [
+    "齿宽未指定，默认取10mm。",
+    "压力角未指定，默认20°。",
+    "齿顶高系数和顶隙系数未指定，默认标准值Hax=1, Cx=0.25。",
+    "通孔大小未指定，假设直径25mm（约分度圆直径的31%），满足一般安装需求。",
+    "材料未指定，默认普通钢。",
+    "坐标系默认Z轴作为齿轮轴线，齿轮中面位于Z=0平面，前端面为Z=+5，后端面为Z=-5。"
+  ],
+  "requested_outputs": [
+    "spur_gear_m2_z40_b10.SLDPRT"
+  ],
+  "interfaces": [
+    "front_face: 齿轮前端平面，垂直于轴线的端面。",
+    "back_face: 齿轮后端平面，与前端面平行。",
+    "bore_cylindrical_face: 中心通孔的内圆柱面，用于与轴配合。",
+    "gear_mid_plane: 齿宽方向的中间平面，用于装配对齐。",
+    "shaft_axis: 齿轮旋转轴，即孔轴线和齿轮中心轴线。"
+  ],
+  "workspace": {
+    "root_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006",
+    "part_output_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output",
+    "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\code",
+    "modeling_plan_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\modeling_plan",
+    "code_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\code",
+    "execution_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\execution",
+    "validation_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\validation",
+    "repair_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\repair",
+    "json_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\json",
+    "screenshots_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\execution\\screenshots",
+    "plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\json\\part_request.json"
+  },
+  "part": {
+    "part_id": "spur_gear_m2_z40_b10",
+    "name": "模数2齿数40直齿轮",
+    "function": "作为传动齿轮，通过中心通孔安装在轴上传递扭矩。",
+    "shape": "标准直齿圆柱齿轮，带中心通孔的圆盘形零件。",
+    "key_dimensions": [
+      "分度圆直径80mm",
+      "齿顶圆直径84mm",
+      "齿根圆直径75mm",
+      "齿宽10mm",
+      "中心通孔直径25mm"
+    ],
+    "material_or_notes": "材料：普通钢。",
+    "interfaces": {
+      "faces": [
+        {
+          "name": "front_face",
+          "purpose": "",
+          "normal_direction_relation": ""
+        },
+        {
+          "name": "back_face",
+          "purpose": "",
+          "normal_direction_relation": ""
+        },
+        {
+          "name": "bore_cylindrical_face",
+          "purpose": "",
+          "normal_direction_relation": ""
+        },
+        {
+          "name": "gear_mid_plane",
+          "purpose": "",
+          "normal_direction_relation": ""
+        }
+      ],
+      "axes": [
+        {
+          "name": "shaft_axis",
+          "purpose": "",
+          "direction_relation": ""
+        }
+      ],
+      "points": []
+    },
+    "standalone_modeling_instructions": [
+      "1. 从标准直齿轮模板 spur_gear.SLDPRT 开始。",
+      "2. 设置全局变量：M=2mm, Z=40, B=10mm, Alpha=20deg, Hax=1, Cx=0.25，重建模型。",
+      "3. 在 front_face 上创建草图，绘制圆心在原点、直径25mm的圆。",
+      "4. 使用拉伸切除，方向 Back，贯穿整个零件（或深度至少10mm），生成通孔。",
+      "5. 命名界面：front_face, back_face, bore_cylindrical_face(孔内壁), gear_mid_plane(齿宽中面), shaft_axis(齿轮轴线)。",
+      "6. 保存为零件文件。",
+      "创建一个直齿轮零件，模数M=2，齿数Z=40，齿宽B=10mm，压力角Alpha=20°，齿顶高系数Hax=1，顶隙系数Cx=0.25，并在齿轮中心添加直径25mm的通孔。通孔贯穿整个齿宽方向。需要定义用于后续装配的接口：齿轮旋转轴（shaft_axis），前端面（front_face），后端面（back_face），通孔内圆柱面（bore_cylindrical_face），以及齿轮中面（gear_mid_plane）。",
+      "拉伸切除深度建议使用“完全贯穿”选项，确保通孔贯穿整个齿宽。",
+      "接口命名需准确：front_face 应为齿宽正侧端面，back_face 为对侧端面，bore_cylindrical_face 是孔内圆柱面，gear_mid_plane 为齿宽中间平面，shaft_axis 为齿轮旋转轴线（即孔轴线）。",
+      "默认坐标系建议 Z 轴为轴线，齿轮中面位于 Z=0，前端面 Z=+5，后端面 Z=-5。"
+    ],
+    "workspace": {
+      "part_output_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output",
+      "part_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\code",
+      "modeling_plan_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\modeling_plan\\latest_modeling_plan.md",
+      "modeling_plan_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\modeling_plan\\modeling_plan_history.jsonl",
+      "code_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\code\\latest_code.py",
+      "code_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\code\\code_history.jsonl",
+      "model_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\code\\spur_gear_m2_z40_b10.SLDPRT",
+      "log_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\execution\\execution_log.txt",
+      "execution_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\execution\\execution_report.json",
+      "screenshot_dir": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\execution\\screenshots",
+      "static_validation_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\validation\\static_validation_report.json",
+      "dynamic_validation_report_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\validation\\dynamic_validation_report.json",
+      "repair_history_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\repair\\repair_history.jsonl",
+      "spec_file": "D:\\a_src\\python\\sw_agent\\agent_output\\模数2齿数40带中心通孔的直齿轮-20260513_154006\\part_output\\part_spec.json"
+    }
+  }
+}
