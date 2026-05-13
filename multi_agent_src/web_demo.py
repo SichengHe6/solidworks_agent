@@ -57,22 +57,25 @@ class DemoConversationSession:
 
     def iter_turn_events(self, user_message: str):
         if self.stage == "requirement":
-            LOG.info(
-                "turn_start stage=requirement msg_len=%d preview=%r",
-                len(user_message),
-                user_message[:200],
-            )
-            t0 = time.perf_counter()
-            yield {"type": "message_start", "role": "agent", "agent_name": "RequirementAgent"}
-            try:
-                for chunk in self.orchestrator.requirement_agent.stream_chat(user_message):
-                    yield {"type": "delta", "content": chunk}
-            except Exception as exc:
-                LOG.exception("requirement_agent.stream_chat failed: %s", exc)
-                yield {"type": "error", "error": f"RequirementAgent 流式调用失败: {exc!s}"}
+            if self.orchestrator.can_handle_followup_modification(user_message):
+                self.stage = "executing"
+                yield {
+                    "type": "status",
+                    "message": "检测到这是基于当前零件的小幅修改，将复用上一轮工作目录并直接进入零件修改智能体。",
+                }
+                yield from self._run_followup_modification(user_message)
+                self.stage = "requirement"
+                yield {
+                    "type": "status",
+                    "message": "本轮修改流程已完成，可以继续输入新需求或继续修改当前模型。",
+                }
                 return
-            yield {"type": "message_end"}
-            LOG.info("requirement_stream_done elapsed_s=%.2f", time.perf_counter() - t0)
+
+            message_id = uuid4().hex
+            yield {"type": "message_start", "role": "agent", "agent_name": "RequirementAgent", "message_id": message_id}
+            for chunk in self.orchestrator.requirement_agent.stream_chat(user_message):
+                yield {"type": "delta", "content": chunk, "message_id": message_id}
+            yield {"type": "message_end", "message_id": message_id}
 
             latest_reply = self.orchestrator.requirement_agent.history[-1]["content"]
             if "[CONFIRMED]" not in latest_reply:
@@ -98,8 +101,11 @@ class DemoConversationSession:
             )
             self.stage = "executing"
             yield from self._run_pipeline(requirement_payload)
-            self.stage = "finished"
-            LOG.info("pipeline_finished stage=finished")
+            self.stage = "requirement"
+            yield {
+                "type": "status",
+                "message": "本轮自动流程已完成，可以继续输入新需求或补充修改内容，系统会重新判断需要调用的智能体。",
+            }
             return
 
         if self.stage == "executing":
@@ -111,10 +117,10 @@ class DemoConversationSession:
             return
 
         if self.stage == "finished":
-            LOG.info("turn_blocked stage=finished")
+            self.stage = "requirement"
             yield {
                 "type": "status",
-                "message": "当前会话的自动流程已完成。如需重新开始，请刷新页面开启新会话。",
+                "message": "当前会话已回到需求判断阶段，请继续输入需求。",
             }
 
     def _run_pipeline(self, requirement_payload: dict):
@@ -124,10 +130,7 @@ class DemoConversationSession:
             try:
                 LOG.info("pipeline_worker_start payload_keys=%s", list(requirement_payload.keys()))
                 self.orchestrator.process_confirmed_requirement(requirement_payload)
-                LOG.info("pipeline_worker_ok")
             except Exception as exc:
-                tb = traceback.format_exc()
-                LOG.error("pipeline_worker_failed err=%s\n%s", exc, tb)
                 self.push_event({"type": "error", "error": str(exc)})
             finally:
                 self.push_event(sentinel)
@@ -137,15 +140,28 @@ class DemoConversationSession:
         while True:
             event = self.event_queue.get()
             if event is sentinel or event.get("type") == "_pipeline_done":
-                LOG.info("pipeline_queue_drained")
                 break
-            et = event.get("type")
-            if et == "error":
-                LOG.error("pipeline_event_error %s", event)
-            elif et == "status":
-                LOG.info("pipeline_event_status %s", event.get("message", "")[:200])
-            else:
-                LOG.debug("pipeline_event type=%s", et)
+            yield event
+
+    def _run_followup_modification(self, user_message: str):
+        sentinel = {"type": "_pipeline_done"}
+
+        def worker():
+            try:
+                handled = self.orchestrator.process_followup_modification(user_message)
+                if not handled:
+                    self.push_event({"type": "status", "message": "未找到可复用的当前零件，将回到需求分析。"})
+            except Exception as exc:
+                self.push_event({"type": "error", "error": str(exc)})
+            finally:
+                self.push_event(sentinel)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+        while True:
+            event = self.event_queue.get()
+            if event is sentinel or event.get("type") == "_pipeline_done":
+                break
             yield event
 
 
